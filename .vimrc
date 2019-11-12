@@ -15,6 +15,7 @@ set shiftround
 set noswapfile
 set hidden
 set mouse=a
+set formatoptions-=cro                             "disable auto comments on new lines
 
 " allow saving of files as sudo
 cmap w!! w !sudo tee > /dev/null %
@@ -52,9 +53,18 @@ map <C-l> <C-W>l
 
 au FocusLost * :wa              " Set vim to save the file on focus out.
 
+
 " ==================== FZF ====================
 set rtp+=/usr/local/opt/fzf
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler nonumber norelativenumber
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 nnoremap <C-p> :FZF<CR>
+
+
+" ==================== netrw ====================
+let g:netrw_banner=0
+let g:netrw_winsize=20
+let g:netrw_liststyle=3
+let g:netrw_localrmdir='rm -r'
+nnoremap <leader>n :Lexplore<CR>
