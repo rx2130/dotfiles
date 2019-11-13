@@ -1,5 +1,5 @@
 set clipboard=unnamed
-set number relativenumber
+set number
 
 set splitright
 set splitbelow
@@ -27,8 +27,9 @@ let mapleader=","
 nnoremap <leader><space> :nohlsearch<CR>
 nmap <leader>w :w!<CR>
 nmap <leader>q :q<CR>
-" Trim all whitespaces away
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
+nnoremap <leader>S :setlocal spell! spell?<CR>
+
 au FileType python nnoremap <buffer> <leader>r :exec '!python3' shellescape(@%, 1)<CR>
 
 " Center the screen
@@ -40,8 +41,12 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 inoremap jk <esc>l
+
 inoremap <C-a> <esc>I
 inoremap <C-e> <esc>A
+
+inoremap <C-f> <Right>
+inoremap <C-b> <Left>
 
 tnoremap <Esc> <C-\><C-n>
 
@@ -52,6 +57,13 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 au FocusLost * :wa              " Set vim to save the file on focus out.
+
+" Automatic toggling between line number modes
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
 
 
 " ==================== FZF ====================
