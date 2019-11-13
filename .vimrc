@@ -25,11 +25,11 @@ highlight LineNr ctermfg=grey
 " Leader keys
 let mapleader=","
 nnoremap <leader><space> :nohlsearch<CR>
-nmap <leader>w :w!<cr>
-nmap <leader>q :q<cr>
+nmap <leader>w :w!<CR>
+nmap <leader>q :q<CR>
 " Trim all whitespaces away
-nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
-au FileType python nnoremap <buffer> <leader>r :exec '!python3' shellescape(@%, 1)<cr>
+nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
+au FileType python nnoremap <buffer> <leader>r :exec '!python3' shellescape(@%, 1)<CR>
 
 " Center the screen
 nnoremap <space> zz
@@ -67,4 +67,4 @@ let g:netrw_banner=0
 let g:netrw_winsize=20
 let g:netrw_liststyle=3
 let g:netrw_localrmdir='rm -r'
-nnoremap <leader>n :Lexplore<CR>
+nnoremap <C-n> :Lexplore<CR>
