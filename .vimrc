@@ -67,7 +67,11 @@ augroup END
 
 
 " ==================== FZF ====================
-set rtp+=/usr/local/opt/fzf
+if has("macunix")
+    set rtp+=/usr/local/opt/fzf
+else
+    set rtp+=/usr/share/doc/fzf/examples
+endif
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler nonumber norelativenumber
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
