@@ -30,7 +30,7 @@ nmap <leader>q :q<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader>S :setlocal spell! spell?<CR>
 
-au FileType python nnoremap <buffer> <leader>r :exec '!python3' shellescape(@%, 1)<CR>
+au FileType python nnoremap <buffer> <leader>r :w<CR> :exec '!python3' shellescape(@%, 1)<CR>
 
 " Center the screen
 nnoremap <space> zz
@@ -64,6 +64,17 @@ augroup numbertoggle
   autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
+
+
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid or when inside an event handler
+" (happens when dropping a file on gvim).
+" Also don't do it when the mark is in the first line, that is the default
+" position when opening a file.
+autocmd BufReadPost *
+        \ if line("'\"") > 1 && line("'\"") <= line("$") |
+        \	exe "normal! g`\"" |
+        \ endif
 
 
 " ==================== FZF ====================
