@@ -29,6 +29,7 @@ nmap <leader>w :w!<CR>
 nmap <leader>q :q<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader>S :setlocal spell! spell?<CR>
+nnoremap <leader>. :e $MYVIMRC<CR>
 
 au FileType python nnoremap <buffer> <leader>r :w<CR> :exec '!python3' shellescape(@%, 1)<CR>
 
