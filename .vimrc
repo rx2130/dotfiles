@@ -78,6 +78,12 @@ autocmd BufReadPost *
         \ endif
 
 
+"-- FOLDING --
+set foldmethod=indent
+set foldlevelstart=99 "start file with all folds opened
+nnoremap <Tab> za
+
+
 " ==================== FZF ====================
 if has("macunix")
     set rtp+=/usr/local/opt/fzf
