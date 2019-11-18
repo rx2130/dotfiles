@@ -2,8 +2,14 @@
 
 call plug#begin('~/.vim/plugged')
 
-Plug '/usr/local/opt/fzf'
+if has("macunix")
+    Plug '/usr/local/opt/fzf'
+else
+    Plug '/usr/share/doc/fzf/examples'
+endif
 Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
 
 call plug#end()
 
