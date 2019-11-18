@@ -60,7 +60,7 @@ nmap <leader>q :q<CR>
 nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader>S :setlocal spell! spell?<CR>
-nnoremap <leader>. :e $MYVIMRC<CR>
+nnoremap <leader>. :e ~/dotfiles/.vimrc<CR>
 
 inoremap jk <esc>l
 inoremap <C-a> <esc>I
