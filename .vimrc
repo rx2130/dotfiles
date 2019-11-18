@@ -55,6 +55,8 @@ nnoremap <Tab> za
 nnoremap <space> zz
 nnoremap n nzzzv
 nnoremap N Nzzzv
+nnoremap * *zzzv
+nnoremap # #zzzv
 " leader
 nmap <leader>w :w!<CR>
 nmap <leader>q :q<CR>
@@ -114,8 +116,9 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler nonumber norelativenum
 
 
 " ==================== netrw ====================
-let g:netrw_banner=0
-let g:netrw_winsize=20
-let g:netrw_liststyle=3
-let g:netrw_localrmdir='rm -r'
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 25
 nnoremap <C-n> :Lexplore<CR>
