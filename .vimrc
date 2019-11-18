@@ -32,9 +32,6 @@ set tabstop=4
 set shiftwidth=4
 set shiftround
 
-set foldmethod=indent
-set foldlevelstart=99 "start file with all folds opened
-
 set hidden
 set mouse=a
 set formatoptions-=cro                             "disable auto comments on new lines
@@ -51,7 +48,6 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-nnoremap <Tab> za
 nnoremap <space> zz
 nnoremap n nzzzv
 nnoremap N Nzzzv
