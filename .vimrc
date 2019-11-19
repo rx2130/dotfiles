@@ -38,7 +38,6 @@ set hidden
 set mouse=a
 set undofile
 set autowrite
-set formatoptions-=qrn1                             "disable auto comments on new lines
 
 highlight LineNr ctermfg=grey
 
@@ -120,7 +119,9 @@ nnoremap <C-n> :Lexplore<CR>
 
 " ==================== Fugitive ====================
 nnoremap <leader>ga :Git add %:p<CR><CR>
+nnoremap <leader>gc :Gcommit -q<CR>
 nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gd :Gdiffsplit<CR>
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gb :Gblame<CR>
 vnoremap <leader>gb :Gblame<CR>
