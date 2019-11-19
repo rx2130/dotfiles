@@ -45,9 +45,9 @@ highlight LineNr ctermfg=grey
 " ==================== Mappings ====================
 
 " Better split switching
+map <C-h> <C-W>h
 map <C-j> <C-W>j
 map <C-k> <C-W>k
-map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 nnoremap <space> zz
@@ -82,7 +82,7 @@ autocmd FocusLost * :wa
 
 " Automatically source .vimrc on save
 augroup Vimrc
-  autocmd! bufwritepost .vimrc source $MYVIMRC
+  autocmd! BufWritePost .vimrc source $MYVIMRC
 augroup END
 
 " Remember last cursor position
@@ -98,20 +98,33 @@ au FileType python nnoremap <buffer> <leader>r :w<CR> :exec '!python3' shellesca
 command! -nargs=* -complete=help Help vertical belowright help <args>
 autocmd FileType help wincmd L
 
-" no line number in Terminal
-autocmd TermOpen * setlocal nonumber norelativenumber
-
 " spell check for git commits
 autocmd FileType gitcommit setlocal spell
 
+autocmd BufEnter * silent! lcd %:p:h
+
+
 " ==================== FZF ====================
+
 nnoremap <C-p> :FZF<CR>
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler nonumber norelativenumber
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
 
+" ==================== terminal ====================
+
+" no line number in Terminal
+autocmd TermOpen * setlocal nonumber norelativenumber
+
+" use vim as prefered editor
+if executable('nvr')
+    let $VISUAL="nvr -cc split --remote-wait + 'set bufhidden=wipe'"
+endif
+
+
 " ==================== netrw ====================
+
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
@@ -121,7 +134,8 @@ nnoremap <C-n> :Lexplore<CR>
 
 
 " ==================== Fugitive ====================
-nnoremap <leader>gac :Git add %:p<CR>
+
+nnoremap <leader>ga :Git add %:p<CR>
 nnoremap <leader>gc :Gcommit -q<CR>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiffsplit<CR>

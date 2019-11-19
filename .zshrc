@@ -102,6 +102,11 @@ source $ZSH/oh-my-zsh.sh
 export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git/'"
 
 alias v="nvim"
+if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
+    if [ -x "$(command -v nvr)" ]; then
+        alias v=nvr
+    fi
+fi
 alias www="python3 -m http.server"
 alias ss="https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7891"
 alias gg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all"
