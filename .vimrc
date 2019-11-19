@@ -83,14 +83,14 @@ autocmd FocusLost * :wa
 
 " Automatically source .vimrc on save
 augroup Vimrc
-  autocmd! BufWritePost .vimrc source $MYVIMRC
+    autocmd! BufWritePost .vimrc source $MYVIMRC
 augroup END
 
 " Remember last cursor position
 autocmd BufReadPost *
-        \ if line("'\"") > 1 && line("'\"") <= line("$") |
-        \	exe "normal! g`\"" |
-        \ endif
+            \ if line("'\"") > 1 && line("'\"") <= line("$") |
+            \	exe "normal! g`\"" |
+            \ endif
 
 " Run python file
 au FileType python nnoremap <buffer> <leader>r :w<CR> :exec '!python3' shellescape(@%, 1)<CR>
@@ -112,13 +112,21 @@ nnoremap <C-p> :Files<CR>
 nnoremap <C-n> :Buffers<CR>
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler nonumber norelativenumber
-  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+            \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+autocmd FileType fzf nnoremap <buffer> <Esc> i<C-c>
 
 
-" ==================== terminal ====================
+" ==================== Terminal ====================
 
-" no line number in Terminal
-autocmd TermOpen * setlocal nonumber norelativenumber
+augroup neovim_terminal
+    autocmd!
+
+    " Enter Terminal-mode (insert) automatically
+    autocmd TermOpen * startinsert
+
+    " Disables number lines on terminal buffers
+    autocmd TermOpen * :set nonumber norelativenumber
+augroup END
 
 " use vim as prefered editor
 if executable('nvr')
