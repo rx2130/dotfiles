@@ -101,6 +101,9 @@ autocmd FileType help wincmd L
 " no line number in Terminal
 autocmd TermOpen * setlocal nonumber norelativenumber
 
+" spell check for git commits
+autocmd FileType gitcommit setlocal spell
+
 " ==================== FZF ====================
 nnoremap <C-p> :FZF<CR>
 autocmd! FileType fzf
@@ -118,7 +121,7 @@ nnoremap <C-n> :Lexplore<CR>
 
 
 " ==================== Fugitive ====================
-nnoremap <leader>ga :Git add %:p<CR><CR>
+nnoremap <leader>gac :Git add %:p<CR>
 nnoremap <leader>gc :Gcommit -q<CR>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiffsplit<CR>
