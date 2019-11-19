@@ -21,6 +21,7 @@ let mapleader=","
 
 set clipboard=unnamed
 set number
+set relativenumber
 
 set splitright
 set splitbelow
@@ -35,8 +36,9 @@ set shiftround
 
 set hidden
 set mouse=a
-set formatoptions-=cro                             "disable auto comments on new lines
 set undofile
+set autowrite
+set formatoptions-=qrn1                             "disable auto comments on new lines
 
 highlight LineNr ctermfg=grey
 
@@ -84,13 +86,6 @@ augroup Vimrc
   autocmd! bufwritepost .vimrc source $MYVIMRC
 augroup END
 
-" Automatic toggling between line number modes
-augroup numbertoggle
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-augroup END
-
 " Remember last cursor position
 autocmd BufReadPost *
         \ if line("'\"") > 1 && line("'\"") <= line("$") |
@@ -104,6 +99,8 @@ au FileType python nnoremap <buffer> <leader>r :w<CR> :exec '!python3' shellesca
 command! -nargs=* -complete=help Help vertical belowright help <args>
 autocmd FileType help wincmd L
 
+" no line number in Terminal
+autocmd TermOpen * setlocal nonumber norelativenumber
 
 " ==================== FZF ====================
 nnoremap <C-p> :FZF<CR>
