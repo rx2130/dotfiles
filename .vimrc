@@ -62,6 +62,7 @@ nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader>S :setlocal spell! spell?<CR>
 nnoremap <leader>. :e ~/dotfiles/.vimrc<CR>
+nnoremap <leader>cz :e ~/dotfiles/.zshrc<CR>
 
 inoremap jk <esc>l
 inoremap <C-a> <esc>I
@@ -101,12 +102,14 @@ autocmd FileType help wincmd L
 " spell check for git commits
 autocmd FileType gitcommit setlocal spell
 
+" change current directory to file path
 autocmd BufEnter * silent! lcd %:p:h
 
 
 " ==================== FZF ====================
 
-nnoremap <C-p> :FZF<CR>
+nnoremap <C-p> :Files<CR>
+nnoremap <C-n> :Buffers<CR>
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler nonumber norelativenumber
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
@@ -130,7 +133,7 @@ let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 let g:netrw_winsize = 25
-nnoremap <C-n> :Lexplore<CR>
+nnoremap <leader>n :Lexplore<CR>
 
 
 " ==================== Fugitive ====================
