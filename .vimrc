@@ -11,6 +11,10 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-unimpaired'
+Plug 'nelstrom/vim-visual-star-search'
+Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
+Plug 'ap/vim-buftabline'
 Plug 'altercation/vim-colors-solarized'
 
 call plug#end()
@@ -39,6 +43,7 @@ set hidden
 set mouse=a
 set undofile
 set autowrite
+set cursorline
 
 let g:solarized_termcolors=256
 colorscheme solarized
@@ -59,7 +64,7 @@ nnoremap * *zzzv
 nnoremap # #zzzv
 " leader
 nmap <leader>w :w!<CR>
-nmap <leader>q :q<CR>
+nnoremap <leader>q :Sayonara<CR>
 nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader>S :setlocal spell! spell?<CR>
@@ -128,7 +133,7 @@ augroup neovim_terminal
     autocmd TermOpen * :set nonumber norelativenumber
 
     " Enter Terminal-mode (insert) automatically
-    autocmd BufEnter,BufNew * 
+    autocmd BufEnter,BufNew *
                 \ if &buftype == 'terminal' |
                 \   startinsert |
                 \ endif
