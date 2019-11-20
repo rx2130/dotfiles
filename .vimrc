@@ -79,31 +79,29 @@ cmap w!! w !sudo tee > /dev/null %
 " ==================== Autocommands ====================
 
 " Set vim to save the file on focus out
-autocmd FocusLost * :wa
+autocmd! FocusLost * :wa
 
 " Automatically source .vimrc on save
-augroup Vimrc
-    autocmd! BufWritePost .vimrc source $MYVIMRC
-augroup END
+autocmd! BufWritePost .vimrc source $MYVIMRC
 
 " Remember last cursor position
-autocmd BufReadPost *
+autocmd! BufReadPost *
             \ if line("'\"") > 1 && line("'\"") <= line("$") |
-            \	exe "normal! g`\"" |
+            \   exe "normal! g`\"" |
             \ endif
 
 " Run python file
-au FileType python nnoremap <buffer> <leader>r :w<CR> :exec '!python3' shellescape(@%, 1)<CR>
+autocmd! FileType python nnoremap <buffer> <leader>r :w<CR> :exec '!python3' shellescape(@%, 1)<CR>
 
 " open help vertically
 command! -nargs=* -complete=help Help vertical belowright help <args>
-autocmd FileType help wincmd L
+autocmd! FileType help wincmd L
 
 " spell check for git commits
-autocmd FileType gitcommit setlocal spell
+autocmd! FileType gitcommit setlocal spell
 
 " change current directory to file path
-autocmd BufEnter * silent! lcd %:p:h
+autocmd! BufEnter * silent! lcd %:p:h
 
 
 " ==================== FZF ====================
