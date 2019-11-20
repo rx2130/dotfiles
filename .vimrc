@@ -11,6 +11,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
+Plug 'altercation/vim-colors-solarized'
 
 call plug#end()
 
@@ -39,7 +40,8 @@ set mouse=a
 set undofile
 set autowrite
 
-highlight LineNr ctermfg=grey
+let g:solarized_termcolors=256
+colorscheme solarized
 
 
 " ==================== Mappings ====================
