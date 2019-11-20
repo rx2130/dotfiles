@@ -124,12 +124,13 @@ augroup neovim_terminal
 
     " Disables number lines on terminal buffers
     autocmd TermOpen * :set nonumber norelativenumber
-augroup END
 
-" use vim as prefered editor
-if executable('nvr')
-    let $VISUAL="nvr -cc split --remote-wait + 'set bufhidden=wipe'"
-endif
+    " Enter Terminal-mode (insert) automatically
+    autocmd BufEnter,BufNew * 
+                \ if &buftype == 'terminal' |
+                \   startinsert |
+                \ endif
+augroup END
 
 
 " ==================== netrw ====================

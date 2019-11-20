@@ -98,12 +98,14 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-
+export EDITOR='nvim'
 export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git/'"
+
 
 alias v="nvim"
 if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
     if [ -x "$(command -v nvr)" ]; then
+        export EDITOR='nvr'
         alias v=nvr
     fi
 fi
