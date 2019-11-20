@@ -65,7 +65,7 @@ nnoremap N Nzzzv
 nnoremap * *zzzv
 nnoremap # #zzzv
 " leader
-nmap <leader>w :w!<CR>
+nnoremap <leader>w :w!<CR>
 nnoremap <leader>q :Sayonara<CR>
 nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
@@ -73,7 +73,6 @@ nnoremap <leader>S :setlocal spell! spell?<CR>
 nnoremap <leader>. :e ~/dotfiles/.vimrc<CR>
 nnoremap <leader>cz :e ~/dotfiles/.zshrc<CR>
 
-inoremap jk <esc>l
 inoremap <C-a> <esc>I
 inoremap <C-e> <esc>A
 inoremap <C-f> <Right>
@@ -116,7 +115,10 @@ autocmd! BufEnter * silent! lcd %:p:h
 " ==================== FZF ====================
 
 nnoremap <C-p> :Files<CR>
-nnoremap <C-n> :Buffers<CR>
+nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>B :History<CR>
+nnoremap <leader>m :Commands<CR>
+nnoremap <leader>M :History:<CR>
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler nonumber norelativenumber
             \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
@@ -166,5 +168,5 @@ vnoremap <leader>gb :Gblame<CR>
 " ==================== lightline ====================
 
 let g:lightline = {
-      \ 'colorscheme': 'solarized',
-      \ }
+            \ 'colorscheme': 'solarized',
+            \ }
