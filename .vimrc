@@ -15,6 +15,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'nelstrom/vim-visual-star-search'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'ap/vim-buftabline'
+Plug 'itchyny/lightline.vim'
 Plug 'altercation/vim-colors-solarized'
 
 call plug#end()
@@ -44,6 +45,7 @@ set mouse=a
 set undofile
 set autowrite
 set cursorline
+set noshowmode
 
 let g:solarized_termcolors=256
 colorscheme solarized
@@ -160,3 +162,9 @@ nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gb :Gblame<CR>
 vnoremap <leader>gb :Gblame<CR>
 
+
+" ==================== lightline ====================
+
+let g:lightline = {
+      \ 'colorscheme': 'solarized',
+      \ }
