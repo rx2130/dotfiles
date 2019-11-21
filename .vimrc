@@ -90,7 +90,7 @@ cmap w!! w !sudo tee > /dev/null %
 autocmd! FocusLost * :wa
 
 " Automatically source .vimrc on save
-autocmd! BufWritePost .vimrc source $MYVIMRC
+autocmd! BufWritePost .vimrc nested source $MYVIMRC
 
 " Remember last cursor position
 autocmd! BufReadPost *
@@ -135,12 +135,6 @@ augroup neovim_terminal
 
     " Disables number lines on terminal buffers
     autocmd TermOpen * :set nonumber norelativenumber
-
-    " Enter Terminal-mode (insert) automatically
-    autocmd BufEnter,BufNew *
-                \ if &buftype == 'terminal' |
-                \   startinsert |
-                \ endif
 augroup END
 
 
