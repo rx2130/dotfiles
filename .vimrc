@@ -16,6 +16,8 @@ Plug 'nelstrom/vim-visual-star-search'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'ap/vim-buftabline'
 Plug 'itchyny/lightline.vim'
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+Plug 'kassio/neoterm'
 Plug 'altercation/vim-colors-solarized'
 
 call plug#end()
@@ -127,15 +129,14 @@ autocmd FileType fzf nnoremap <buffer> <Esc> i<C-c>
 
 " ==================== Terminal ====================
 
-augroup neovim_terminal
-    autocmd!
+nnoremap <leader>tt :Topen<CR>
+nnoremap <leader>ts :sp \| Topen<CR>
+nnoremap <leader>tv :vert Topen<CR>
+nnoremap <leader>tk :call neoterm#close()<CR>
+nnoremap <leader>tc :call neoterm#clear()<CR>
+nnoremap <leader>tr :call neoterm#clear() \| call neoterm#exec(['!!', '', ''])<CR>
 
-    " Enter Terminal-mode (insert) automatically
-    autocmd TermOpen * startinsert
-
-    " Disables number lines on terminal buffers
-    autocmd TermOpen * :set nonumber norelativenumber
-augroup END
+let g:neoterm_autoscroll = 1
 
 
 " ==================== netrw ====================
