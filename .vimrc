@@ -18,6 +18,7 @@ Plug 'ap/vim-buftabline'
 Plug 'itchyny/lightline.vim'
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'kassio/neoterm'
+Plug 'yggdroot/indentline', { 'on': 'IndentLinesToggle' }
 Plug 'altercation/vim-colors-solarized'
 
 call plug#end()
@@ -48,6 +49,7 @@ set undofile
 set autowrite
 set cursorline
 set noshowmode
+set lazyredraw
 
 let g:solarized_termcolors=256
 colorscheme solarized
@@ -66,12 +68,16 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap * *zzzv
 nnoremap # #zzzv
+nnoremap <C-o> <C-o>zzzv
+nnoremap <C-i> <C-i>zzzv
 " leader
 nnoremap <leader>w :w!<CR>
 nnoremap <leader>q :Sayonara<CR>
+nnoremap <leader>d "_d<CR>
 nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader>S :setlocal spell! spell?<CR>
+nnoremap <leader>N :enew<CR>
 nnoremap <leader>. :e ~/dotfiles/.vimrc<CR>
 nnoremap <leader>cz :e ~/dotfiles/.zshrc<CR>
 
@@ -79,8 +85,7 @@ inoremap <C-a> <esc>I
 inoremap <C-e> <esc>A
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
-
-tnoremap <Esc> <C-\><C-n>
+inoremap <C-d> <Right><BS>
 
 " allow saving of files as sudo
 cmap w!! w !sudo tee > /dev/null %
@@ -119,24 +124,22 @@ autocmd! BufEnter * silent! lcd %:p:h
 nnoremap <C-p> :Files<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>B :History<CR>
-nnoremap <leader>m :Commands<CR>
-nnoremap <leader>M :History:<CR>
+nnoremap <leader>m :Marks<CR>
+nnoremap <leader>; :Commands<CR>
+nnoremap <leader>: :History:<CR>
+nnoremap <leader>F :Filetypes<CR>
 autocmd! FileType fzf
-autocmd  FileType fzf set laststatus=0 noshowmode noruler nonumber norelativenumber
-            \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-autocmd FileType fzf nnoremap <buffer> <Esc> i<C-c>
+autocmd  FileType fzf set laststatus=0 noruler nonumber norelativenumber
+            \| autocmd BufLeave <buffer> set laststatus=2 ruler
+autocmd TermOpen * tnoremap <buffer> <Esc> <C-\><C-n>
+autocmd FileType fzf tunmap <buffer> <Esc>
 
 
 " ==================== Terminal ====================
 
-nnoremap <leader>tt :Topen<CR>
-nnoremap <leader>ts :sp \| Topen<CR>
-nnoremap <leader>tv :vert Topen<CR>
-nnoremap <leader>tk :call neoterm#close()<CR>
-nnoremap <leader>tc :call neoterm#clear()<CR>
-nnoremap <leader>tr :call neoterm#clear() \| call neoterm#exec(['!!', '', ''])<CR>
-
 let g:neoterm_autoscroll = 1
+nnoremap <leader>T :bel Tnew<CR>
+nnoremap <leader>t :vert Tnew<CR>
 
 
 " ==================== netrw ====================
