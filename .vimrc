@@ -19,6 +19,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'kassio/neoterm'
 Plug 'yggdroot/indentline', { 'on': 'IndentLinesToggle' }
+Plug 'thalesmello/tabfold'
 Plug 'altercation/vim-colors-solarized'
 
 call plug#end()
@@ -49,7 +50,7 @@ set undofile
 set autowrite
 set cursorline
 set noshowmode
-set lazyredraw
+set inccommand=nosplit
 
 let g:solarized_termcolors=256
 colorscheme solarized
@@ -57,12 +58,12 @@ colorscheme solarized
 
 " ==================== Mappings ====================
 
-" Better split switching
-map <C-h> <C-W>h
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-l> <C-W>l
-
+nnoremap <C-h> <C-W>h
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-l> <C-W>l
+nnoremap Y y$
+nnoremap Q @q
 nnoremap <space> zz
 nnoremap n nzzzv
 nnoremap N Nzzzv
@@ -73,7 +74,8 @@ nnoremap <C-i> <C-i>zzzv
 " leader
 nnoremap <leader>w :w!<CR>
 nnoremap <leader>q :Sayonara<CR>
-nnoremap <leader>d "_d<CR>
+nnoremap <leader>Q :qa<CR>
+nnoremap <leader>d "_d
 nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader>S :setlocal spell! spell?<CR>
@@ -122,12 +124,21 @@ autocmd! BufEnter * silent! lcd %:p:h
 " ==================== FZF ====================
 
 nnoremap <C-p> :Files<CR>
+nnoremap <leader>f :GFiles?<CR>
+nnoremap <leader>F :GFiles<CR>
 nnoremap <leader>b :Buffers<CR>
-nnoremap <leader>B :History<CR>
-nnoremap <leader>m :Marks<CR>
-nnoremap <leader>; :Commands<CR>
+nnoremap <leader>h :History<CR>
+nnoremap <leader>r :BTags<CR>
+nnoremap <leader>R :Tags<CR>
+nnoremap <leader>l :BLines<CR>
+nnoremap <leader>L :Lines<CR>
+nnoremap <leader>' :Marks<CR>
+nnoremap <leader>C :Commands<CR>
 nnoremap <leader>: :History:<CR>
-nnoremap <leader>F :Filetypes<CR>
+nnoremap <leader>s :Filetypes<CR>
+nnoremap <leader>H :Helptags!<CR>
+nnoremap <leader>M :Maps<CR>
+nnoremap <leader>/ :Rg<Space>
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noruler nonumber norelativenumber
             \| autocmd BufLeave <buffer> set laststatus=2 ruler
