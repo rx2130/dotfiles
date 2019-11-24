@@ -23,6 +23,7 @@ Plug 'yggdroot/indentline', { 'on': 'IndentLinesToggle' }
 Plug 'thalesmello/tabfold'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'raimondi/delimitmate'
+Plug 'wellle/targets.vim'
 Plug 'altercation/vim-colors-solarized'
 
 call plug#end()
@@ -46,6 +47,10 @@ set expandtab
 set tabstop=4
 set shiftwidth=4
 set shiftround
+
+set foldmethod=indent
+set foldnestmax=3
+set nofoldenable
 
 set hidden
 set mouse=a
@@ -196,35 +201,48 @@ let g:lightline = {
             \ }
 
 
+" ==================== delimitMate ====================
+
+let g:delimitMate_expand_cr = 1
+let g:delimitMate_expand_space = 1
+
+
 " ==================== coc.vim ====================
 
-if has_key(g:plugs, 'coc.nvim')
-    set shortmess+=c
+set shortmess+=c
 
-    function! s:check_back_space() abort
-        let col = col('.') - 1
-        return !col || getline('.')[col - 1]  =~# '\s'
-    endfunction
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
 
-    inoremap <silent><expr> <TAB>
-                \ pumvisible() ? "\<C-n>" :
-                \ <SID>check_back_space() ? "\<TAB>" :
-                \ coc#refresh()
-    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <silent><expr> <Tab>
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<Tab>" :
+            \ coc#refresh()
 
-    inoremap <silent><expr> <C-Space> coc#refresh()
+" Use <Tab> and <S-Tab> to navigate the completion list
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" use <C-Space>for trigger completion
+inoremap <expr> <C-Space> coc#refresh()
 
-    function! s:show_documentation()
-        if (index(['vim','help'], &filetype) >= 0)
-            execute 'h '.expand('<cword>')
-        else
-            call CocAction('doHover')
-        endif
-    endfunction
+" Use <cr> to confirm completion
+imap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<Plug>delimitMateCR"
 
-    nnoremap <silent> K :call <SID>show_documentation()<CR>
+" Close the preview window when completion is done.
+" autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
-    nmap <silent> gd <Plug>(coc-definition)
-endif
+function! s:show_documentation()
+    if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+    else
+        call CocAction('doHover')
+    endif
+endfunction
+
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+nmap <silent> gd <Plug>(coc-definition)
+
