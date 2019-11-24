@@ -24,6 +24,7 @@ Plug 'thalesmello/tabfold'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'raimondi/delimitmate'
 Plug 'wellle/targets.vim'
+Plug 'andrewradev/splitjoin.vim'
 Plug 'altercation/vim-colors-solarized'
 
 call plug#end()
@@ -245,4 +246,6 @@ endfunction
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 nmap <silent> gd <Plug>(coc-definition)
-
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
