@@ -100,6 +100,7 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR='nvim'
 export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git/'"
+export PATH=/usr/local/opt/python/libexec/bin:$PATH
 
 
 alias v="nvim"

@@ -19,12 +19,13 @@ Plug 'ap/vim-buftabline'
 Plug 'itchyny/lightline.vim'
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'kassio/neoterm'
-Plug 'yggdroot/indentline'
+Plug 'yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
 Plug 'thalesmello/tabfold'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'raimondi/delimitmate'
 Plug 'wellle/targets.vim'
 Plug 'andrewradev/splitjoin.vim'
+Plug 'thinca/vim-quickrun'
 Plug 'altercation/vim-colors-solarized'
 
 call plug#end()
@@ -122,9 +123,6 @@ autocmd! BufReadPost *
             \   exe "normal! g`\"" |
             \ endif
 
-" Run python file
-autocmd! FileType python nnoremap <buffer> <leader>r :w<CR> :exec '!python3' shellescape(@%, 1)<CR>
-
 " open help vertically
 command! -nargs=* -complete=help Help vertical belowright help <args>
 autocmd! FileType help wincmd L
@@ -136,7 +134,7 @@ autocmd! FileType gitcommit setlocal spell
 autocmd! BufEnter * silent! lcd %:p:h
 
 " Resize panes when window/terminal gets resize
-autocmd VimResized * :wincmd =
+autocmd! VimResized * :wincmd =
 
 
 " ==================== FZF ====================
@@ -146,7 +144,7 @@ nnoremap <leader>f :GFiles?<CR>
 nnoremap <leader>F :GFiles<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>h :History<CR>
-nnoremap <leader>r :BTags<CR>
+" nnoremap <leader>r :BTags<CR>
 nnoremap <leader>R :Tags<CR>
 nnoremap <leader>l :BLines<CR>
 nnoremap <leader>L :Lines<CR>
@@ -154,9 +152,12 @@ nnoremap <leader>' :Marks<CR>
 nnoremap <leader>c :Commands<CR>
 nnoremap <leader>: :History:<CR>
 nnoremap <leader>s :Filetypes<CR>
-nnoremap <leader>H :Helptags!<CR>
+nnoremap <leader>H :Helptags<CR>
 nnoremap <leader>M :Maps<CR>
-nnoremap <leader>/ :Rg!<CR>
+nnoremap <leader>/ :Rg<CR>
+nnoremap <leader>gh :Commits<CR>
+nnoremap <leader>gH :BCommits<CR>
+
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noruler nonumber norelativenumber
             \| autocmd BufLeave <buffer> set laststatus=2 ruler
@@ -188,8 +189,12 @@ nnoremap <leader>gc :Gcommit -q<CR>
 nnoremap <leader>gg :Gstatus<CR>
 nnoremap <leader>gd :Gdiffsplit<CR>
 nnoremap <leader>gp :Gpush<CR>
+nnoremap <leader>gf :Gfetch<CR>
+nnoremap <leader>gl :Gpull<CR>
 nnoremap <leader>gb :Gblame<CR>
 vnoremap <leader>gb :Gblame<CR>
+
+autocmd BufReadPost fugitive:///*//0/* setlocal nomodifiable readonly
 
 
 " ==================== lightline ====================
@@ -253,3 +258,4 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
