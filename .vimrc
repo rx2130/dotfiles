@@ -19,7 +19,7 @@ Plug 'ap/vim-buftabline'
 Plug 'itchyny/lightline.vim'
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'kassio/neoterm'
-Plug 'yggdroot/indentline', { 'on': 'IndentLinesToggle' }
+Plug 'yggdroot/indentline'
 Plug 'thalesmello/tabfold'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'raimondi/delimitmate'
@@ -51,6 +51,7 @@ set shiftround
 
 set foldmethod=indent
 set foldnestmax=3
+set foldlevel=99
 set nofoldenable
 
 set hidden
@@ -87,7 +88,7 @@ nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader>N :enew<CR>
 nnoremap <leader>. :e ~/dotfiles/.vimrc<CR>
-nnoremap <leader>cz :e ~/dotfiles/.zshrc<CR>
+nnoremap <leader>Cz :e ~/dotfiles/.zshrc<CR>
 
 inoremap <C-a> <C-o>^
 inoremap <C-e> <C-o>$
@@ -150,7 +151,7 @@ nnoremap <leader>R :Tags<CR>
 nnoremap <leader>l :BLines<CR>
 nnoremap <leader>L :Lines<CR>
 nnoremap <leader>' :Marks<CR>
-nnoremap <leader>C :Commands<CR>
+nnoremap <leader>c :Commands<CR>
 nnoremap <leader>: :History:<CR>
 nnoremap <leader>s :Filetypes<CR>
 nnoremap <leader>H :Helptags!<CR>
@@ -210,6 +211,9 @@ let g:delimitMate_expand_space = 1
 
 " ==================== coc.vim ====================
 
+" You will have bad experience for diagnostic messages when it's default 4000.
+" set updatetime=300
+" don't give |ins-completion-menu| messages.
 set shortmess+=c
 
 " use <tab> for trigger completion and navigate to the next complete item
