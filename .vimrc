@@ -19,7 +19,7 @@ Plug 'ap/vim-buftabline'
 Plug 'itchyny/lightline.vim'
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'kassio/neoterm'
-Plug 'yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
+Plug 'yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
 Plug 'thalesmello/tabfold'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'raimondi/delimitmate'
@@ -80,6 +80,8 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap * *zzzv
 nnoremap # #zzzv
+" mimic unimpaired toggling option
+nnoremap yod :IndentLinesToggle<CR>
 " leader
 nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <leader>w :w!<CR>
@@ -105,7 +107,7 @@ cnoremap <C-f> <Right>
 cnoremap <C-b> <Left>
 cnoremap <C-d> <Del>
 
-vnoremap Q :norm @q<cr>
+vnoremap Q :norm @q<CR>
 
 
 " ==================== Autocommands ====================
@@ -206,6 +208,9 @@ let g:lightline = {
             \     'right': [['lineinfo'], ['percent'], ['filetype']]
             \   },
             \ }
+" easier to observe if vim active
+autocmd FocusGained * call setwinvar(winnr(), '&statusline', lightline#statusline(0))
+autocmd FocusLost   * call setwinvar(winnr(), '&statusline', lightline#statusline(1))
 
 
 " ==================== delimitMate ====================
