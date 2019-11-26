@@ -14,6 +14,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 Plug 'nelstrom/vim-visual-star-search'
+Plug 'tommcdo/vim-exchange'
+Plug 'myusuf3/numbers.vim'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'kassio/neoterm'
@@ -39,14 +41,10 @@ let mapleader=","
 
 set clipboard=unnamed
 set number
-set relativenumber
-
 set splitright
 set splitbelow
-
 set ignorecase
 set smartcase
-
 set expandtab
 set tabstop=4
 set shiftwidth=4
@@ -190,13 +188,13 @@ nnoremap <leader>n :Lexplore<CR>
 
 " ==================== Fugitive ====================
 
-nnoremap <leader>ga :Git add %:p<CR>
 nnoremap <leader>gc :Gcommit -q<CR>
 nnoremap <leader>gg :Gstatus<CR>
 nnoremap <leader>gd :Gdiffsplit<CR>
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gf :Gfetch<CR>
 nnoremap <leader>gl :Gpull<CR>
+nnoremap <leader>gw :Gwrite<CR>
 nnoremap <leader>gb :Gblame<CR>
 vnoremap <leader>gb :Gblame<CR>
 
@@ -266,3 +264,7 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
+
+" ==================== numbers.vim ====================
+
+let g:numbers_exclude = ['help']
