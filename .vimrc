@@ -81,13 +81,14 @@ nnoremap N Nzzzv
 nnoremap * *zzzv
 nnoremap # #zzzv
 " leader
+nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <leader>w :w!<CR>
+nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
+" allow saving of files as sudo
+nnoremap <leader>W!! :w !sudo tee > /dev/null %
 nnoremap <leader>q :Sayonara<CR>
 nnoremap <leader>Q :qa<CR>
 nnoremap <leader>d "_d
-nnoremap <leader><space> :nohlsearch<CR>
-nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
-nnoremap <leader>N :enew<CR>
 nnoremap <leader>. :e ~/dotfiles/.vimrc<CR>
 nnoremap <leader>Cz :e ~/dotfiles/.zshrc<CR>
 
@@ -99,8 +100,6 @@ inoremap <C-d> <Del>
 inoremap <C-p> <Up>
 inoremap <C-n> <Down>
 
-" allow saving of files as sudo
-cmap w!! w !sudo tee > /dev/null %
 cnoremap <C-a> <Home>
 cnoremap <C-f> <Right>
 cnoremap <C-b> <Left>
@@ -124,7 +123,6 @@ autocmd! BufReadPost *
             \ endif
 
 " open help vertically
-command! -nargs=* -complete=help Help vertical belowright help <args>
 autocmd! FileType help wincmd L
 
 " spell check for git commits
@@ -134,7 +132,11 @@ autocmd! FileType gitcommit setlocal spell
 autocmd! BufEnter * silent! lcd %:p:h
 
 " Resize panes when window/terminal gets resize
-autocmd! VimResized * :wincmd =
+autocmd! VimResized * wincmd =
+
+" prevent unintended write
+autocmd BufReadPost fugitive:///*//0/* setlocal nomodifiable readonly
+autocmd BufReadPost .vim/plugged/* setlocal nomodifiable readonly
 
 
 " ==================== FZF ====================
@@ -193,8 +195,6 @@ nnoremap <leader>gf :Gfetch<CR>
 nnoremap <leader>gl :Gpull<CR>
 nnoremap <leader>gb :Gblame<CR>
 vnoremap <leader>gb :Gblame<CR>
-
-autocmd BufReadPost fugitive:///*//0/* setlocal nomodifiable readonly
 
 
 " ==================== lightline ====================
