@@ -8,25 +8,27 @@ else
     Plug '/usr/share/doc/fzf/examples'
 endif
 Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-repeat'
 Plug 'nelstrom/vim-visual-star-search'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
-Plug 'ap/vim-buftabline'
-Plug 'itchyny/lightline.vim'
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'kassio/neoterm'
 Plug 'yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
 Plug 'thalesmello/tabfold'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'raimondi/delimitmate'
 Plug 'wellle/targets.vim'
 Plug 'andrewradev/splitjoin.vim'
 Plug 'thinca/vim-quickrun'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'ap/vim-buftabline'
+Plug 'itchyny/lightline.vim'
 Plug 'altercation/vim-colors-solarized'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 
