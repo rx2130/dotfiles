@@ -49,12 +49,6 @@ set expandtab
 set tabstop=4
 set shiftwidth=4
 set shiftround
-
-set foldmethod=indent
-set foldnestmax=3
-set foldlevel=99
-set nofoldenable
-
 set hidden
 set mouse=a
 set undofile
@@ -159,8 +153,6 @@ nnoremap <leader>s :Filetypes<CR>
 nnoremap <leader>H :Helptags<CR>
 nnoremap <leader>M :Maps<CR>
 nnoremap <leader>/ :Rg<CR>
-nnoremap <leader>gh :Commits<CR>
-nnoremap <leader>gH :BCommits<CR>
 
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noruler nonumber norelativenumber
@@ -172,8 +164,8 @@ autocmd FileType fzf tunmap <buffer> <Esc>
 " ==================== Terminal ====================
 
 let g:neoterm_autoscroll = 1
-nnoremap <leader>T :bel Tnew<CR>
-nnoremap <leader>t :vert Tnew<CR>
+nnoremap <leader>T :bel Ttoggle<CR>
+nnoremap <leader>t :vert Ttoggle<CR>
 
 
 " ==================== netrw ====================
@@ -188,16 +180,17 @@ nnoremap <leader>n :Lexplore<CR>
 
 " ==================== Fugitive ====================
 
-nnoremap <leader>gc :Gcommit -q<CR>
 nnoremap <leader>gg :Gstatus<CR>
 nnoremap <leader>gd :Gdiffsplit<CR>
+nnoremap <leader>gc :Gcommit -q<CR>
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gf :Gfetch<CR>
 nnoremap <leader>gl :Gpull<CR>
-nnoremap <leader>gw :Gwrite<CR>
 nnoremap <leader>gb :Gblame<CR>
 vnoremap <leader>gb :Gblame<CR>
-
+" via FZF
+nnoremap <leader>gh :Commits<CR>
+nnoremap <leader>gH :BCommits<CR>
 
 " ==================== lightline ====================
 
@@ -267,4 +260,22 @@ nmap <silent> gr <Plug>(coc-references)
 
 " ==================== numbers.vim ====================
 
-let g:numbers_exclude = ['help']
+let g:numbers_exclude = ['help', 'neoterm']
+
+
+" ==================== buftabline ====================
+
+let g:buftabline_show = 1
+let g:buftabline_numbers = 2
+let g:buftabline_indicators = 1
+
+nmap <leader>1 <Plug>BufTabLine.Go(1)
+nmap <leader>2 <Plug>BufTabLine.Go(2)
+nmap <leader>3 <Plug>BufTabLine.Go(3)
+nmap <leader>4 <Plug>BufTabLine.Go(4)
+nmap <leader>5 <Plug>BufTabLine.Go(5)
+nmap <leader>6 <Plug>BufTabLine.Go(6)
+nmap <leader>7 <Plug>BufTabLine.Go(7)
+nmap <leader>8 <Plug>BufTabLine.Go(8)
+nmap <leader>9 <Plug>BufTabLine.Go(9)
+nmap <leader>0 <Plug>BufTabLine.Go(-1)
