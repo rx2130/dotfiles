@@ -1,4 +1,6 @@
-" load plugins
+" vim: set fdm=marker fmr={{{,}}} fdl=0 :
+
+" load plugins {{{
 
 call plug#begin('~/.vim/plugged')
 
@@ -15,7 +17,6 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 Plug 'nelstrom/vim-visual-star-search'
 Plug 'tommcdo/vim-exchange'
-Plug 'myusuf3/numbers.vim'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'kassio/neoterm'
@@ -23,24 +24,25 @@ Plug 'yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
 Plug 'thalesmello/tabfold'
 Plug 'raimondi/delimitmate'
 Plug 'wellle/targets.vim'
-Plug 'andrewradev/splitjoin.vim'
 Plug 'thinca/vim-quickrun'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'ap/vim-buftabline'
 Plug 'itchyny/lightline.vim'
-Plug 'altercation/vim-colors-solarized'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'lifepillar/vim-solarized8'
 
 call plug#end()
 
+"}}}
 
-" ==================== Settings ====================
+" Settings {{{
 
 let mapleader=","
 
 set clipboard=unnamed
 set number
+set relativenumber
 set splitright
 set splitbelow
 set ignorecase
@@ -57,11 +59,12 @@ set cursorline
 set noshowmode
 set inccommand=nosplit
 
-let g:solarized_termcolors=256
-colorscheme solarized
+set termguicolors
+colorscheme solarized8
 
+"}}}
 
-" ==================== Mappings ====================
+" Mappings {{{
 
 nnoremap <C-h> <C-W>h
 nnoremap <C-j> <C-W>j
@@ -80,11 +83,10 @@ nnoremap yod :IndentLinesToggle<CR>
 nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <leader>w :w!<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
-" allow saving of files as sudo
-nnoremap <leader>W!! :w !sudo tee > /dev/null %
 nnoremap <leader>q :Sayonara<CR>
 nnoremap <leader>Q :qa<CR>
 nnoremap <leader>d "_d
+nnoremap <leader>N :enew<CR>
 nnoremap <leader>. :e ~/dotfiles/.vimrc<CR>
 nnoremap <leader>Cz :e ~/dotfiles/.zshrc<CR>
 
@@ -103,8 +105,12 @@ cnoremap <C-d> <Del>
 
 vnoremap Q :norm @q<CR>
 
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cnoremap W!! w !sudo tee > /dev/null %
 
-" ==================== Autocommands ====================
+"}}}
+
+" Autocommands {{{
 
 " Set vim to save the file on focus out
 autocmd! FocusLost * silent! :wa
@@ -132,10 +138,17 @@ autocmd! VimResized * wincmd =
 
 " prevent unintended write
 autocmd BufReadPost fugitive:///*//0/* setlocal nomodifiable readonly
-autocmd BufReadPost .vim/plugged/* setlocal nomodifiable readonly
 
+" only show cursor line in active window
+augroup cursorlineToggle
+    autocmd!
+    autocmd InsertLeave,WinEnter * set cursorline
+    autocmd InsertEnter,WinLeave * set nocursorline
+augroup END
 
-" ==================== FZF ====================
+"}}}
+
+" FZF {{{
 
 nnoremap <C-p> :Files<CR>
 nnoremap <leader>f :GFiles?<CR>
@@ -160,15 +173,17 @@ autocmd  FileType fzf set laststatus=0 noruler nonumber norelativenumber
 autocmd TermOpen * tnoremap <buffer> <Esc> <C-\><C-n>
 autocmd FileType fzf tunmap <buffer> <Esc>
 
+"}}}
 
-" ==================== Terminal ====================
+" Terminal {{{
 
 let g:neoterm_autoscroll = 1
 nnoremap <leader>T :bel Ttoggle<CR>
 nnoremap <leader>t :vert Ttoggle<CR>
 
+"}}}
 
-" ==================== netrw ====================
+" netrw {{{
 
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
@@ -177,8 +192,9 @@ let g:netrw_altv = 1
 let g:netrw_winsize = 25
 nnoremap <leader>n :Lexplore<CR>
 
+"}}}
 
-" ==================== Fugitive ====================
+" Fugitive {{{
 
 nnoremap <leader>gg :Gstatus<CR>
 nnoremap <leader>gd :Gdiffsplit<CR>
@@ -192,7 +208,9 @@ vnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gh :Commits<CR>
 nnoremap <leader>gH :BCommits<CR>
 
-" ==================== lightline ====================
+"}}}
+
+" lightline {{{
 
 let g:lightline = {
             \ 'colorscheme': 'solarized',
@@ -205,14 +223,16 @@ let g:lightline = {
 autocmd FocusGained * call setwinvar(winnr(), '&statusline', lightline#statusline(0))
 autocmd FocusLost   * call setwinvar(winnr(), '&statusline', lightline#statusline(1))
 
+"}}}
 
-" ==================== delimitMate ====================
+" delimitMate {{{
 
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
 
+"}}}
 
-" ==================== coc.vim ====================
+" coc.vim {{{
 
 " You will have bad experience for diagnostic messages when it's default 4000.
 " set updatetime=300
@@ -257,13 +277,15 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
 
-" ==================== numbers.vim ====================
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
-let g:numbers_exclude = ['help', 'neoterm']
+"}}}
 
-
-" ==================== buftabline ====================
+" buftabline {{{
 
 let g:buftabline_show = 1
 let g:buftabline_numbers = 2
@@ -279,3 +301,6 @@ nmap <leader>7 <Plug>BufTabLine.Go(7)
 nmap <leader>8 <Plug>BufTabLine.Go(8)
 nmap <leader>9 <Plug>BufTabLine.Go(9)
 nmap <leader>0 <Plug>BufTabLine.Go(-1)
+
+"}}}
+
