@@ -146,6 +146,12 @@ augroup cursorlineToggle
     autocmd InsertEnter,WinLeave * set nocursorline
 augroup END
 
+" refresh changed content of file
+autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
+autocmd FileChangedShellPost *
+            \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+
+
 "}}}
 
 " FZF {{{
@@ -196,12 +202,12 @@ nnoremap <leader>n :Lexplore<CR>
 
 " Fugitive {{{
 
-nnoremap <leader>gg :Gstatus<CR>
+nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiffsplit<CR>
 nnoremap <leader>gc :Gcommit -q<CR>
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gf :Gfetch<CR>
-nnoremap <leader>gl :Gpull<CR>
+nnoremap <leader>gl :Glog<CR>
 nnoremap <leader>gb :Gblame<CR>
 vnoremap <leader>gb :Gblame<CR>
 " via FZF
