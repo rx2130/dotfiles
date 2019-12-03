@@ -4,33 +4,46 @@
 
 call plug#begin('~/.vim/plugged')
 
+" Vim enhancements
+Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+Plug 'yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
+Plug 'kassio/neoterm'
+Plug 'thalesmello/tabfold'
+Plug 'thinca/vim-quickrun'
+
+" Edit enhancements
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-unimpaired'
+Plug 'nelstrom/vim-visual-star-search'
+Plug 'raimondi/delimitmate'
+Plug 'godlygeek/tabular'
+
+" GUI enhancements
+Plug 'lifepillar/vim-solarized8'
+Plug 'ap/vim-buftabline'
+Plug 'itchyny/lightline.vim'
+Plug 'machakann/vim-highlightedyank'
+
+" Fuzzy finder
 if has("macunix")
     Plug '/usr/local/opt/fzf'
 else
     Plug '/usr/share/doc/fzf/examples'
 endif
 Plug 'junegunn/fzf.vim'
-Plug 'tpope/vim-repeat'
+Plug 'airblade/vim-rooter'
+
+" Git enhancements
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-unimpaired'
-Plug 'nelstrom/vim-visual-star-search'
-Plug 'tommcdo/vim-exchange'
-Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
-Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
-Plug 'kassio/neoterm'
-Plug 'yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
-Plug 'thalesmello/tabfold'
-Plug 'raimondi/delimitmate'
-Plug 'wellle/targets.vim'
-Plug 'thinca/vim-quickrun'
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-Plug 'ap/vim-buftabline'
-Plug 'itchyny/lightline.vim'
+
+" Semantic language support
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'lifepillar/vim-solarized8'
+
+" Syntactic language support
+Plug 'plasticboy/vim-markdown'
 
 call plug#end()
 
@@ -84,7 +97,7 @@ nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <leader>w :w!<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader>q :Sayonara<CR>
-nnoremap <leader>Q :qa<CR>
+nnoremap <leader>Q :Sayonara!<CR>
 nnoremap <leader>d "_d
 nnoremap <leader>N :enew<CR>
 nnoremap <leader>. :e ~/dotfiles/.vimrc<CR>
@@ -130,9 +143,6 @@ autocmd! FileType help wincmd L
 " spell check for git commits
 autocmd! FileType gitcommit setlocal spell
 
-" change current directory to file path
-autocmd! BufEnter * silent! lcd %:p:h
-
 " Resize panes when window/terminal gets resize
 autocmd! VimResized * wincmd =
 
@@ -150,7 +160,6 @@ augroup END
 autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
 autocmd FileChangedShellPost *
             \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
-
 
 "}}}
 
@@ -294,7 +303,6 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 " buftabline {{{
 
 let g:buftabline_show = 1
-let g:buftabline_numbers = 2
 let g:buftabline_indicators = 1
 
 for s:n in range(10)
