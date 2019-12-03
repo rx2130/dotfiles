@@ -186,6 +186,9 @@ autocmd  FileType fzf set laststatus=0 noruler nonumber norelativenumber
 autocmd TermOpen * tnoremap <buffer> <Esc> <C-\><C-n>
 autocmd FileType fzf tunmap <buffer> <Esc>
 
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
 "}}}
 
 " Terminal {{{
