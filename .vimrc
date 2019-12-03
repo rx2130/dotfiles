@@ -51,7 +51,7 @@ call plug#end()
 
 " Settings {{{
 
-let mapleader=","
+let mapleader="\<Space>"
 
 set clipboard=unnamed
 set number
@@ -85,7 +85,6 @@ nnoremap <C-k> <C-W>k
 nnoremap <C-l> <C-W>l
 nnoremap Y y$
 nnoremap Q @q
-nnoremap <space> zz
 nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap * *zzzv
@@ -93,14 +92,14 @@ nnoremap # #zzzv
 " mimic unimpaired toggling option
 nnoremap yod :IndentLinesToggle<CR>
 " leader
-nnoremap <leader><space> :nohlsearch<CR>
+nnoremap <leader><Space> zz:nohlsearch<CR>
 nnoremap <leader>w :w!<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader>q :Sayonara<CR>
 nnoremap <leader>Q :Sayonara!<CR>
 nnoremap <leader>d "_d
 nnoremap <leader>N :enew<CR>
-nnoremap <leader>. :e ~/dotfiles/.vimrc<CR>
+nnoremap <leader>Cv :e ~/dotfiles/.vimrc<CR>
 nnoremap <leader>Cz :e ~/dotfiles/.zshrc<CR>
 
 inoremap <C-a> <C-o>^
@@ -165,9 +164,8 @@ autocmd FileChangedShellPost *
 
 " FZF {{{
 
-nnoremap <C-p> :Files<CR>
-nnoremap <leader>f :GFiles?<CR>
-nnoremap <leader>F :GFiles<CR>
+nnoremap <leader>f :Files<CR>
+nnoremap <leader>F :GFiles?<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>h :History<CR>
 " nnoremap <leader>r :BTags<CR>
@@ -193,8 +191,8 @@ autocmd FileType fzf tunmap <buffer> <Esc>
 " Terminal {{{
 
 let g:neoterm_autoscroll = 1
-nnoremap <leader>T :bel Ttoggle<CR>
-nnoremap <leader>t :vert Ttoggle<CR>
+nnoremap <leader>t :bel Ttoggle<CR>
+nnoremap <leader>T :vert Ttoggle<CR>
 
 "}}}
 
@@ -304,12 +302,16 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 let g:buftabline_show = 1
 let g:buftabline_indicators = 1
-
-for s:n in range(10)
-    let s:b = s:n == 0 ? -1 : s:n
-    execute printf("map <A-%d> <Plug>BufTabLine.Go(%d)", s:n, s:b)
-    execute printf("tmap <A-%d> <C-\\><C-n> <Plug>BufTabLine.Go(%d)", s:n, s:b)
-endfor
+nmap <leader>1 <Plug>BufTabLine.Go(1)
+nmap <leader>2 <Plug>BufTabLine.Go(2)
+nmap <leader>3 <Plug>BufTabLine.Go(3)
+nmap <leader>4 <Plug>BufTabLine.Go(4)
+nmap <leader>5 <Plug>BufTabLine.Go(5)
+nmap <leader>6 <Plug>BufTabLine.Go(6)
+nmap <leader>7 <Plug>BufTabLine.Go(7)
+nmap <leader>8 <Plug>BufTabLine.Go(8)
+nmap <leader>9 <Plug>BufTabLine.Go(9)
+nmap <leader>0 <Plug>BufTabLine.Go(-1)
 
 "}}}
 
