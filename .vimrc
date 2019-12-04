@@ -8,7 +8,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'kassio/neoterm'
 Plug 'thalesmello/tabfold'
 Plug 'thinca/vim-quickrun'
@@ -24,10 +24,10 @@ Plug 'raimondi/delimitmate'
 Plug 'godlygeek/tabular'
 
 " GUI enhancements
-Plug 'lifepillar/vim-solarized8'
 Plug 'ap/vim-buftabline'
 Plug 'itchyny/lightline.vim'
 Plug 'machakann/vim-highlightedyank'
+Plug 'dracula/vim'
 
 " Fuzzy finder
 if has("macunix")
@@ -70,12 +70,11 @@ set hidden
 set mouse=a
 set undofile
 set autowrite
-set cursorline
 set noshowmode
 set inccommand=nosplit
 
 set termguicolors
-colorscheme solarized8
+colorscheme dracula
 
 "}}}
 
@@ -101,6 +100,7 @@ nnoremap <leader>q :Sayonara<CR>
 nnoremap <leader>Q :Sayonara!<CR>
 nnoremap <leader>d "_d
 nnoremap <leader>, :e ~/dotfiles/.vimrc<CR>
+nnoremap <leader><Tab> <C-^>
 
 inoremap <C-a> <C-o>^
 inoremap <C-e> <C-o>$
@@ -148,13 +148,6 @@ autocmd! VimResized * wincmd =
 " prevent unintended write
 autocmd BufReadPost fugitive:///*//0/* setlocal nomodifiable readonly
 
-" only show cursor line in active window
-augroup cursorlineToggle
-    autocmd!
-    autocmd InsertLeave,WinEnter * set cursorline
-    autocmd InsertEnter,WinLeave * set nocursorline
-augroup END
-
 " refresh changed content of file
 autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
 autocmd FileChangedShellPost *
@@ -187,7 +180,7 @@ autocmd TermOpen * tnoremap <buffer> <Esc> <C-\><C-n>
 autocmd FileType fzf tunmap <buffer> <Esc>
 
 command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+            \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 "}}}
 
@@ -232,7 +225,7 @@ nnoremap <leader>gH :BCommits<CR>
 " lightline {{{
 
 let g:lightline = {
-            \ 'colorscheme': 'solarized',
+            \ 'colorscheme': 'wombat',
             \   'active': {
             \     'left': [['mode', 'paste'], ['filename', 'readonly', 'modified']],
             \     'right': [['lineinfo'], ['percent'], ['filetype']]
