@@ -8,9 +8,11 @@ call plug#begin('~/.vim/plugged')
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'kassio/neoterm'
 Plug 'thalesmello/tabfold'
 Plug 'thinca/vim-quickrun'
+
 
 " Edit enhancements
 Plug 'tpope/vim-repeat'
@@ -98,9 +100,7 @@ nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader>q :Sayonara<CR>
 nnoremap <leader>Q :Sayonara!<CR>
 nnoremap <leader>d "_d
-nnoremap <leader>N :enew<CR>
-nnoremap <leader>Cv :e ~/dotfiles/.vimrc<CR>
-nnoremap <leader>Cz :e ~/dotfiles/.zshrc<CR>
+nnoremap <leader>, :e ~/dotfiles/.vimrc<CR>
 
 inoremap <C-a> <C-o>^
 inoremap <C-e> <C-o>$
@@ -194,19 +194,22 @@ command! -bang -nargs=? -complete=dir Files
 " Terminal {{{
 
 let g:neoterm_autoscroll = 1
-nnoremap <leader>t :bel Ttoggle<CR>
+let g:neoterm_autoinsert = 1
+let g:neoterm_default_mod = 'belowright'
+nnoremap <leader>t :Ttoggle<CR>
 nnoremap <leader>T :vert Ttoggle<CR>
 
 "}}}
 
-" netrw {{{
+" NerdTree {{{
 
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
-let g:netrw_altv = 1
-let g:netrw_winsize = 25
-nnoremap <leader>n :Lexplore<CR>
+let NERDTreeShowHidden=1
+let NERDTreeIgnore=['\.vim$', '\~$', '\.git$', '.DS_Store']
+nnoremap <Leader>n :NERDTreeToggle<CR>
+nnoremap <Leader>N :NERDTreeFind<CR>
+
+" close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 "}}}
 
