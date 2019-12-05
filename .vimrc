@@ -8,7 +8,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
-Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeFind' }
 Plug 'kassio/neoterm'
 Plug 'thalesmello/tabfold'
 Plug 'thinca/vim-quickrun'
@@ -196,10 +196,18 @@ nnoremap <leader>T :vert Ttoggle<CR>
 
 " NerdTree {{{
 
+function! s:nerdtreeToggle()
+    if &filetype == 'nerdtree'
+        :NERDTreeToggle
+    else
+        :NERDTreeFind
+    endif
+endfunction
+
 let NERDTreeShowHidden=1
+let NERDTreeQuitOnOpen=1
 let NERDTreeIgnore=['\.vim$', '\~$', '\.git$', '.DS_Store']
-nnoremap <Leader>n :NERDTreeToggle<CR>
-nnoremap <Leader>N :NERDTreeFind<CR>
+nnoremap <Leader>n  :call <SID>nerdtreeToggle()<CR>
 
 " close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
