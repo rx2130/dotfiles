@@ -93,7 +93,7 @@ nnoremap # #zzzv
 " mimic unimpaired toggling option
 nnoremap yod :IndentLinesToggle<CR>
 " leader
-nnoremap <leader><Space> zz:nohlsearch<CR>
+nnoremap <silent><leader><Space> zz:nohlsearch<CR>
 nnoremap <leader>w :w!<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader>q :Sayonara<CR>
