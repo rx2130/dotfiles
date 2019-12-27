@@ -73,6 +73,12 @@ set noshowmode
 set inccommand=nosplit
 set nobackup
 set nowritebackup
+set diffopt+=algorithm:patience
+set diffopt+=indent-heuristic
+set diffopt+=iwhite
+set diffopt+=vertical
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
 
 set termguicolors
 colorscheme dracula
@@ -257,8 +263,6 @@ let g:delimitMate_expand_space = 1
 
 " You will have bad experience for diagnostic messages when it's default 4000.
 " set updatetime=300
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
 
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
@@ -297,6 +301,9 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gD <Plug>(coc-references)
+" Remap for format selected region
+nmap <silent> gf <Plug>(coc-format-selected)
+xmap <silent> gf <Plug>(coc-format-selected)
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
