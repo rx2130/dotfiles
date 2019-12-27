@@ -13,7 +13,6 @@ Plug 'kassio/neoterm'
 Plug 'thalesmello/tabfold'
 Plug 'thinca/vim-quickrun'
 
-
 " Edit enhancements
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -72,6 +71,8 @@ set undofile
 set autowrite
 set noshowmode
 set inccommand=nosplit
+set nobackup
+set nowritebackup
 
 set termguicolors
 colorscheme dracula
@@ -216,7 +217,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " Fugitive {{{
 
-nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gg :Gstatus<CR>
 nnoremap <leader>gd :Gdiffsplit<CR>
 nnoremap <leader>gc :Gcommit -q<CR>
 nnoremap <leader>gp :Gpush<CR>
@@ -262,7 +263,7 @@ set shortmess+=c
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
     let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
+    return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 inoremap <silent><expr> <Tab>
@@ -295,7 +296,7 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gD <Plug>(coc-references)
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
