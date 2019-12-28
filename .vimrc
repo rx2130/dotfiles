@@ -1,4 +1,4 @@
-" vim: set fdm=marker fmr={{{,}}} fdl=0 :
+" vim: set fdm=marker fmr={{{,}}} fdl=99 :
 
 " load plugins {{{
 
@@ -12,6 +12,7 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeFind' }
 Plug 'kassio/neoterm'
 Plug 'thalesmello/tabfold'
 Plug 'thinca/vim-quickrun'
+Plug 'tpope/vim-sleuth'
 
 " Edit enhancements
 Plug 'tpope/vim-repeat'
@@ -26,7 +27,7 @@ Plug 'godlygeek/tabular'
 Plug 'ap/vim-buftabline'
 Plug 'itchyny/lightline.vim'
 Plug 'machakann/vim-highlightedyank'
-Plug 'dracula/vim'
+Plug 'morhetz/gruvbox'
 
 " Fuzzy finder
 if has("macunix")
@@ -81,7 +82,7 @@ set diffopt+=vertical
 set shortmess+=c
 
 set termguicolors
-colorscheme dracula
+colorscheme gruvbox
 
 "}}}
 
@@ -97,17 +98,19 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap * *zzzv
 nnoremap # #zzzv
-" mimic unimpaired toggling option
-nnoremap yod :IndentLinesToggle<CR>
 " leader
+nnoremap <Space> <Nop>
 nnoremap <silent><leader><Space> zz:nohlsearch<CR>
 nnoremap <leader>w :w!<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader>q :Sayonara<CR>
 nnoremap <leader>Q :Sayonara!<CR>
 nnoremap <leader>d "_d
-nnoremap <leader>, :e ~/dotfiles/.vimrc<CR>
+nnoremap <leader>N :enew<CR>
 nnoremap <leader><Tab> <C-^>
+nnoremap <leader>op :e ~/dotfiles/.vimrc<CR>
+nnoremap <leader>oi :IndentLinesToggle<CR>
+nnoremap <leader>ou :UndotreeToggle<CR>
 
 inoremap <C-a> <C-o>^
 inoremap <C-e> <C-o>$
@@ -116,6 +119,7 @@ inoremap <C-b> <Left>
 inoremap <C-d> <Del>
 inoremap <C-p> <Up>
 inoremap <C-n> <Down>
+inoremap <C-k> <C-o>D
 
 cnoremap <C-a> <Home>
 cnoremap <C-f> <Right>
@@ -169,11 +173,11 @@ nnoremap <leader>F :GFiles?<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>h :History<CR>
 " nnoremap <leader>r :BTags<CR>
-nnoremap <leader>R :Tags<CR>
+" nnoremap <leader>R :Tags<CR>
 nnoremap <leader>l :BLines<CR>
 nnoremap <leader>L :Lines<CR>
 nnoremap <leader>' :Marks<CR>
-nnoremap <leader>c :Commands<CR>
+nnoremap <leader>; :Commands<CR>
 nnoremap <leader>: :History:<CR>
 nnoremap <leader>s :Filetypes<CR>
 nnoremap <leader>H :Helptags<CR>
@@ -211,6 +215,8 @@ function! s:nerdtreeToggle()
     endif
 endfunction
 
+" disable netrw
+let loaded_netrwPlugin = 1
 let NERDTreeShowHidden=1
 let NERDTreeQuitOnOpen=1
 let NERDTreeIgnore=['\.vim$', '\~$', '\.git$', '.DS_Store']
@@ -301,15 +307,10 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gD <Plug>(coc-references)
-" Remap for format selected region
-nmap <silent> gf <Plug>(coc-format-selected)
-xmap <silent> gf <Plug>(coc-format-selected)
 
+nnoremap <leader>c :CocCommand<CR>
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
-
-" Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 "}}}
 
