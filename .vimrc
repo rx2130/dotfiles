@@ -108,9 +108,13 @@ nnoremap <leader>Q :Sayonara!<CR>
 nnoremap <leader>d "_d
 nnoremap <leader>N :enew<CR>
 nnoremap <leader><Tab> <C-^>
+nnoremap <leader>= gg=G<C-o>
 nnoremap <leader>op :e ~/dotfiles/.vimrc<CR>
 nnoremap <leader>oi :IndentLinesToggle<CR>
 nnoremap <leader>ou :UndotreeToggle<CR>
+nnoremap <leader>oy :let @+=expand("%:p")<CR>
+nnoremap <leader>od :windo diffthis<CR>
+nnoremap <leader>oD :windo diffoff<CR>
 
 inoremap <C-a> <C-o>^
 inoremap <C-e> <C-o>$
@@ -217,6 +221,7 @@ endfunction
 
 " disable netrw
 let loaded_netrwPlugin = 1
+let NERDTreeMinimalUI = 1
 let NERDTreeShowHidden=1
 let NERDTreeQuitOnOpen=1
 let NERDTreeIgnore=['\.vim$', '\~$', '\.git$', '.DS_Store']
@@ -246,7 +251,7 @@ nnoremap <leader>gH :BCommits<CR>
 " lightline {{{
 
 let g:lightline = {
-            \ 'colorscheme': 'wombat',
+            \ 'colorscheme': 'gruvbox',
             \   'active': {
             \     'left': [['mode', 'paste'], ['filename', 'readonly', 'modified']],
             \     'right': [['lineinfo'], ['percent'], ['filetype']]
@@ -338,5 +343,15 @@ nnoremap <Leader>a: :Tabularize /:\zs<CR>
 vnoremap <Leader>a: :Tabularize /:\zs<CR>
 nnoremap <Leader>a, :Tabularize /,\zs<CR>
 vnoremap <Leader>a, :Tabularize /,\zs<CR>
+
+"}}}
+
+" quickrun {{{
+
+let g:quickrun_config = {
+            \ '_': {
+            \          'runner': 'shell'
+            \      }
+            \ }
 
 "}}}
