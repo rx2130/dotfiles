@@ -13,6 +13,7 @@ Plug 'kassio/neoterm'
 Plug 'thalesmello/tabfold'
 Plug 'thinca/vim-quickrun'
 Plug 'tpope/vim-sleuth'
+Plug 'chiel92/vim-autoformat'
 
 " Edit enhancements
 Plug 'tpope/vim-repeat'
@@ -112,11 +113,10 @@ nnoremap <leader>Q :Sayonara!<CR>
 nnoremap <leader>d "_d
 nnoremap <leader>N :enew<CR>
 nnoremap <leader><Tab> <C-^>
-nnoremap <leader>= gg=G<C-o>
 nnoremap <leader>op :e ~/dotfiles/.vimrc<CR>
 nnoremap <leader>oi :IndentLinesToggle<CR>
 nnoremap <leader>ou :UndotreeToggle<CR>
-nnoremap <leader>oy :let @+=expand("%:p")<CR>
+nnoremap <leader>oy :let @+=expand("%:p")<CR> :echo expand("%:p")<CR>
 nnoremap <leader>od :windo diffthis<CR>
 nnoremap <leader>oD :windo diffoff<CR>
 
@@ -173,6 +173,12 @@ autocmd FileChangedShellPost *
             \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 "}}}
+
+" {{{ File Type settings
+
+autocmd BufNewFile,BufRead Podfile,podlocal,*.podspec setfiletype ruby
+
+" }}}
 
 " FZF {{{
 
@@ -317,8 +323,6 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gD <Plug>(coc-references)
 
-nnoremap <leader>c :CocCommand<CR>
-" Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
 
 "}}}
@@ -357,5 +361,18 @@ let g:quickrun_config = {
             \          'runner': 'shell'
             \      }
             \ }
+
+"}}}
+
+" highlightedyank {{{
+
+let g:highlightedyank_highlight_duration = 100
+
+"}}}
+
+" autoformat {{{
+
+nnoremap <leader>= :Autoformat<CR>
+vnoremap <leader>= :Autoformat<CR>
 
 "}}}
