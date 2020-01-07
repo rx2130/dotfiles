@@ -73,6 +73,7 @@ set undofile
 set autowrite
 set noshowmode
 set inccommand=nosplit
+set noswapfile
 set nobackup
 set nowritebackup
 set diffopt+=algorithm:patience
@@ -267,9 +268,6 @@ let g:lightline = {
             \     'right': [['lineinfo'], ['percent'], ['filetype']]
             \   },
             \ }
-" easier to observe if vim active
-autocmd FocusGained * call setwinvar(winnr(), '&statusline', lightline#statusline(0))
-autocmd FocusLost   * call setwinvar(winnr(), '&statusline', lightline#statusline(1))
 
 "}}}
 
