@@ -179,8 +179,8 @@ tmux_conf_theme_right_separator_sub='|'
 #     - #{uptime_s}
 #     - #{username}
 #     - #{username_ssh}
-tmux_conf_theme_status_left=' ❐ #S | ● #{loadavg} '
-tmux_conf_theme_status_right='#{prefix}#{pairing}#{synchronized} #{?battery_status, #{battery_status},}#{?battery_hbar, #{battery_hbar},}#{?battery_percentage, #{battery_percentage},} , %R , %b %d | #{username_ssh}#{root} | #{hostname_ssh} '
+tmux_conf_theme_status_left=''
+tmux_conf_theme_status_right='#{prefix}#{pairing}#{synchronized} %R '
 
 # status left style
 tmux_conf_theme_status_left_fg='#000000,#e4e4e4,#e4e4e4'  # black, white , white
