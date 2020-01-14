@@ -80,14 +80,15 @@ set diffopt+=algorithm:patience
 set diffopt+=indent-heuristic
 set diffopt+=iwhite
 set diffopt+=vertical
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
+set shortmess+=c      " don't give ins-completion-menu messages
+set foldmethod=indent
+set foldlevelstart=99 " start file with all folds opened
 
 colorscheme gruvbox
 if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    set termguicolors
 endif
 
 "}}}
@@ -109,8 +110,8 @@ nnoremap <Space> <Nop>
 nnoremap <silent><leader><Space> zz:nohlsearch<CR>
 nnoremap <leader>w :w!<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
-nnoremap <leader>q :Sayonara<CR>
-nnoremap <leader>Q :Sayonara!<CR>
+nnoremap <silent><leader>q :Sayonara<CR>
+nnoremap <silent><leader>Q :Sayonara!<CR>
 nnoremap <leader>d "_d
 nnoremap <leader>N :enew<CR>
 nnoremap <leader><Tab> <C-^>
@@ -183,25 +184,23 @@ autocmd BufNewFile,BufRead Podfile,podlocal,*.podspec setfiletype ruby
 
 " FZF {{{
 
-nnoremap <leader>f :Files<CR>
-nnoremap <leader>F :GFiles?<CR>
-nnoremap <leader>b :Buffers<CR>
-nnoremap <leader>h :History<CR>
-" nnoremap <leader>r :BTags<CR>
-" nnoremap <leader>R :Tags<CR>
-nnoremap <leader>l :BLines<CR>
-nnoremap <leader>L :Lines<CR>
-nnoremap <leader>' :Marks<CR>
-nnoremap <leader>; :Commands<CR>
-nnoremap <leader>: :History:<CR>
-nnoremap <leader>s :Filetypes<CR>
-nnoremap <leader>H :Helptags<CR>
-nnoremap <leader>M :Maps<CR>
-nnoremap <leader>/ :Rg<CR>
+nnoremap <silent><leader>f :Files<CR>
+nnoremap <silent><leader>F :GFiles?<CR>
+nnoremap <silent><leader>b :Buffers<CR>
+nnoremap <silent><leader>h :History<CR>
+nnoremap <silent><leader>L :BLines<CR>
+nnoremap <silent><leader>l :Lines<CR>
+nnoremap <silent><leader>' :Marks<CR>
+nnoremap <silent><leader>; :Commands<CR>
+nnoremap <silent><leader>: :History:<CR>
+nnoremap <silent><leader>s :Filetypes<CR>
+nnoremap <silent><leader>H :Helptags<CR>
+nnoremap <silent><leader>M :Maps<CR>
+nnoremap <silent><leader>/ :Rg<CR>
 
 autocmd! FileType fzf
-autocmd  FileType fzf set laststatus=0 noruler nonumber norelativenumber
-            \| autocmd BufLeave <buffer> set laststatus=2 ruler
+autocmd  FileType fzf set laststatus=0 noruler nonumber norelativenumber |
+            \ autocmd BufLeave <buffer> set laststatus=2 ruler
 autocmd TermOpen * tnoremap <buffer> <Esc> <C-\><C-n>
 autocmd FileType fzf tunmap <buffer> <Esc>
 
@@ -236,7 +235,7 @@ let NERDTreeMinimalUI = 1
 let NERDTreeShowHidden=1
 let NERDTreeQuitOnOpen=1
 let NERDTreeIgnore=['\.vim$', '\~$', '\.git$', '.DS_Store']
-nnoremap <Leader>n  :call <SID>nerdtreeToggle()<CR>
+nnoremap <silent><leader>n  :call <SID>nerdtreeToggle()<CR>
 
 " close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -245,17 +244,17 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " Fugitive {{{
 
-nnoremap <leader>gg :Gstatus<CR>
-nnoremap <leader>gd :Gdiffsplit<CR>
-nnoremap <leader>gc :Gcommit -q<CR>
-nnoremap <leader>gp :Gpush<CR>
-nnoremap <leader>gf :Gfetch<CR>
-nnoremap <leader>gl :Glog<CR>
-nnoremap <leader>gb :Gblame<CR>
-vnoremap <leader>gb :Gblame<CR>
+nnoremap <silent><leader>gg :Gstatus<CR>
+nnoremap <silent><leader>gd :Gdiffsplit<CR>
+nnoremap <silent><leader>gc :Gcommit -q<CR>
+nnoremap <silent><leader>gp :Gpush<CR>
+nnoremap <silent><leader>gf :Gfetch<CR>
+nnoremap <silent><leader>gl :Glog<CR>
+nnoremap <silent><leader>gb :Gblame<CR>
+vnoremap <silent><leader>gb :Gblame<CR>
 " via FZF
-nnoremap <leader>gh :Commits<CR>
-nnoremap <leader>gH :BCommits<CR>
+nnoremap <silent><leader>gh :Commits<CR>
+nnoremap <silent><leader>gH :BCommits<CR>
 
 "}}}
 
