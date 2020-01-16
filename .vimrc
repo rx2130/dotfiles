@@ -8,7 +8,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeFind' }
+Plug 'scrooloose/nerdtree'
 Plug 'kassio/neoterm'
 Plug 'thalesmello/tabfold'
 Plug 'thinca/vim-quickrun'
@@ -85,11 +85,6 @@ set foldmethod=indent
 set foldlevelstart=99 " start file with all folds opened
 
 colorscheme gruvbox
-if exists('+termguicolors')
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-    set termguicolors
-endif
 
 "}}}
 
