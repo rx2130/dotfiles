@@ -87,7 +87,7 @@ tmux_conf_theme_mode_attr='bold'
 
 # status line style
 tmux_conf_theme_status_fg='#8a8a8a'                     # light gray
-tmux_conf_theme_status_bg='#080808'                     # dark gray
+tmux_conf_theme_status_bg='#212121'                     # dark gray
 tmux_conf_theme_status_attr='none'
 
 # terminal title
@@ -109,7 +109,7 @@ tmux_conf_theme_terminal_title='#h ❐ #S ● #I #W'
 #     - #{username}
 #     - #{username_ssh}
 tmux_conf_theme_window_status_fg='#8a8a8a'              # light gray
-tmux_conf_theme_window_status_bg='#080808'              # dark gray
+tmux_conf_theme_window_status_bg='#212121'              # dark gray
 tmux_conf_theme_window_status_attr='none'
 #tmux_conf_theme_window_status_format='#I #W'
 #tmux_conf_theme_window_status_format='#{circled_window_index} #W'
@@ -189,7 +189,7 @@ tmux_conf_theme_status_left_attr='bold,none,none'
 
 # status right style
 tmux_conf_theme_status_right_fg='#8a8a8a,#949494,#262626' # light gray, white, black
-tmux_conf_theme_status_right_bg='#080808,#504945,#949494' # dark gray, red, white
+tmux_conf_theme_status_right_bg='#212121,#504945,#949494' # dark gray, red, white
 tmux_conf_theme_status_right_attr='none,none,none'
 
 # pairing indicator
@@ -295,5 +295,5 @@ bind C-Space send-prefix
 # move status line to top
 #set -g status-position top
 
-set -g @tpm_plugins 'tmux-plugins/tpm tmux-plugins/tmux-cpu'
+set -g @tpm_plugins 'tmux-plugins/tpm tmux-plugins/tmux-cpu christoomey/vim-tmux-navigator'
 

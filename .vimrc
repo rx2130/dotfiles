@@ -14,6 +14,7 @@ Plug 'thalesmello/tabfold'
 Plug 'thinca/vim-quickrun'
 Plug 'tpope/vim-sleuth'
 Plug 'chiel92/vim-autoformat'
+Plug 'christoomey/vim-tmux-navigator'
 
 " Edit enhancements
 Plug 'tpope/vim-repeat'
