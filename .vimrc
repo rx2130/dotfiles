@@ -58,7 +58,6 @@ let mapleader="\<Space>"
 
 set clipboard=unnamed
 set number
-set relativenumber
 set splitright
 set splitbelow
 set ignorecase
@@ -83,6 +82,7 @@ set diffopt+=vertical
 set shortmess+=c      " don't give ins-completion-menu messages
 set foldmethod=indent
 set foldlevelstart=99 " start file with all folds opened
+set cursorline
 
 colorscheme gruvbox
 
@@ -169,11 +169,26 @@ autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checkti
 autocmd FileChangedShellPost *
             \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
+" only show cursorline in active window
+augroup cusorlineToggle
+    autocmd!
+    autocmd InsertLeave,WinEnter * set cursorline
+    autocmd InsertEnter,WinLeave * set nocursorline
+augroup END
+
+" toggle relativenumber when lost focus
+augroup numbertoggle
+    autocmd!
+    autocmd BufEnter,FocusGained,InsertLeave * if &buftype != 'terminal' && &filetype != 'nerdtree' | set relativenumber | endif
+    autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
+    autocmd TermOpen * setlocal nonumber norelativenumber
+augroup END
+
 "}}}
 
 " {{{ File Type settings
 
-autocmd BufNewFile,BufRead Podfile,podlocal,*.podspec setfiletype ruby
+autocmd BufNewFile,BufRead Podfile,podlocal,*.podspec,Fastfile setfiletype ruby
 
 " }}}
 
