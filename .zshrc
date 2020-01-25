@@ -10,7 +10,7 @@ source $ZSH/oh-my-zsh.sh
 
 # export {{{
 export EDITOR='nvim'
-export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git/'"
+export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git/' --glob '!node_modules'"
 
 if [ $(uname) = "Darwin" ]; then
     export PATH=/usr/local/opt/python/libexec/bin:$PATH

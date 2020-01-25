@@ -108,7 +108,6 @@ nnoremap <leader>w :w!<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <silent><leader>q :Sayonara<CR>
 nnoremap <silent><leader>Q :Sayonara!<CR>
-nnoremap <leader>d "_d
 nnoremap <leader>N :enew<CR>
 nnoremap <leader><Tab> <C-^>
 nnoremap <leader>op :e ~/dotfiles/.vimrc<CR>
