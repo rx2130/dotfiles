@@ -179,7 +179,7 @@ augroup END
 " toggle relativenumber when lost focus
 augroup numbertoggle
     autocmd!
-    autocmd BufEnter,FocusGained,InsertLeave * if &buftype != 'terminal' && &filetype != 'nerdtree' | set relativenumber | endif
+    autocmd BufEnter,FocusGained,InsertLeave * if &buftype != 'terminal' && &filetype != 'nerdtree' && &filetype != 'help' | set relativenumber | endif
     autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
     autocmd TermOpen * setlocal nonumber norelativenumber
 augroup END

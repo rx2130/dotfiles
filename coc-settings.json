@@ -1,0 +1,5 @@
+{
+    "xml.format.splitAttributes": true,
+    "python.jediEnabled": false,
+    "coc.preferences.useQuickfixForLocations": true
+}
