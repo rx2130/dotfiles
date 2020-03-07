@@ -48,6 +48,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Syntactic language support
 Plug 'plasticboy/vim-markdown'
+Plug 'sheerun/vim-polyglot'
 
 call plug#end()
 

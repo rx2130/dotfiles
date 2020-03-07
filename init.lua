@@ -55,7 +55,7 @@ function reloadConfig(files)
     hs.reload()
   end
 end
-myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
+myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/dotfiles/init.lua", reloadConfig):start()
 hs.notify.new({title = "Hammerspoon", informativeText = "Config loaded"}):send()
 
 -- Application keybinding
@@ -74,7 +74,7 @@ hs.hotkey.bind({"cmd", "ctrl"}, "p", open("Preview"))
 hs.hotkey.bind({"cmd", "ctrl"}, "w", open("Telegram"))
 hs.hotkey.bind({"cmd", "ctrl"}, "s", open("Safari"))
 hs.hotkey.bind({"cmd", "ctrl"}, "a", open("Visual Studio Code"))
-hs.hotkey.bind({"cmd", "ctrl"}, "i", open("Terminal"))
+hs.hotkey.bind({"cmd", "ctrl"}, "i", open("Alacritty"))
 hs.hotkey.bind({"cmd", "ctrl"}, "e", open("DingTalk"))
 hs.hotkey.bind({"cmd", "ctrl"}, "r", open("Finder"))
 hs.hotkey.bind({"cmd", "ctrl"}, "[", open("Tower"))
