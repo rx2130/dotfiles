@@ -29,7 +29,8 @@ Plug 'godlygeek/tabular'
 Plug 'ap/vim-buftabline'
 Plug 'itchyny/lightline.vim'
 Plug 'machakann/vim-highlightedyank'
-Plug 'morhetz/gruvbox'
+Plug 'haya14busa/is.vim'
+Plug 'gruvbox-community/gruvbox'
 
 " Fuzzy finder
 if has("macunix")
@@ -98,11 +99,7 @@ nnoremap <C-k> <C-W>k
 nnoremap <C-l> <C-W>l
 nnoremap Y y$
 nnoremap Q @q
-nnoremap n nzzzv
-nnoremap N Nzzzv
-nnoremap * *zzzv
-nnoremap # #zzzv
-" leader
+vnoremap Q :norm @q<CR>
 nnoremap <Space> <Nop>
 nnoremap <silent><leader><Space> zz:nohlsearch<CR>
 nnoremap <leader>w :w!<CR>
@@ -132,10 +129,22 @@ cnoremap <C-f> <Right>
 cnoremap <C-b> <Left>
 cnoremap <C-d> <Del>
 
-vnoremap Q :norm @q<CR>
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cnoremap W!! w !sudo tee > /dev/null %
+
+" Type a replacement term and press . to repeat the replacement again. Useful
+" for replacing a few instances of the term (comparable to multiple cursors).
+nnoremap <silent><leader>s :let @/='\<'.expand('<cword>').'\>'<CR>cgn
+xnoremap <silent><leader>s "sy:let @/=@s<CR>cgn
+
+" Prevent selecting and pasting from overwriting what you originally copied.
+xnoremap p pgvy
+
+" Press * to search for the term under the cursor or a visual selection and
+" then press a key below to replace all instances of it in the current file.
+nnoremap <leader>R :%s///g<Left><Left>
+xnoremap <leader>R :s///g<Left><Left>
 
 "}}}
 
@@ -204,7 +213,7 @@ nnoremap <silent><leader>l :Lines<CR>
 nnoremap <silent><leader>' :Marks<CR>
 nnoremap <silent><leader>; :Commands<CR>
 nnoremap <silent><leader>: :History:<CR>
-nnoremap <silent><leader>s :Filetypes<CR>
+nnoremap <silent><leader>S :Filetypes<CR>
 nnoremap <silent><leader>H :Helptags<CR>
 nnoremap <silent><leader>M :Maps<CR>
 nnoremap <silent><leader>/ :Rg<CR>
