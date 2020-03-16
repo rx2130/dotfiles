@@ -7,7 +7,6 @@ call plug#begin('~/.vim/plugged')
 " Vim enhancements
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
-Plug 'yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
 Plug 'scrooloose/nerdtree'
 Plug 'kassio/neoterm'
 Plug 'thalesmello/tabfold'
@@ -26,6 +25,7 @@ Plug 'raimondi/delimitmate'
 Plug 'godlygeek/tabular'
 
 " GUI enhancements
+Plug 'yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
 Plug 'ap/vim-buftabline'
 Plug 'itchyny/lightline.vim'
 Plug 'machakann/vim-highlightedyank'
@@ -43,6 +43,7 @@ Plug 'airblade/vim-rooter'
 
 " Git enhancements
 Plug 'tpope/vim-fugitive'
+Plug 'mhinz/vim-signify'
 
 " Semantic language support
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -57,7 +58,7 @@ call plug#end()
 
 " Settings {{{
 
-let mapleader="\<Space>"
+let mapleader=' '
 
 set clipboard=unnamed
 set number
@@ -305,7 +306,7 @@ let g:delimitMate_expand_space = 1
 " coc.vim {{{
 
 " You will have bad experience for diagnostic messages when it's default 4000.
-" set updatetime=300
+set updatetime=100
 
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
@@ -396,5 +397,14 @@ let g:highlightedyank_highlight_duration = 100
 
 nnoremap <leader>= :Autoformat<CR>
 vnoremap <leader>= :Autoformat<CR>
+
+"}}}
+
+" signify {{{
+
+let g:signify_sign_add               = '|'
+let g:signify_sign_delete            = '|'
+let g:signify_sign_delete_first_line = '|'
+let g:signify_sign_change            = '|'
 
 "}}}
