@@ -1,5 +1,11 @@
 " vim: set fdm=marker fmr={{{,}}} fdl=99 :
 
+augroup vimrc
+    autocmd!
+augroup END
+
+let mapleader=' '
+
 " load plugins {{{
 
 call plug#begin('~/.vim/plugged')
@@ -58,8 +64,6 @@ call plug#end()
 
 " Settings {{{
 
-let mapleader=' '
-
 set clipboard=unnamed
 set number
 set splitright
@@ -90,9 +94,9 @@ set cursorline
 
 colorscheme gruvbox
 if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    set termguicolors
 endif
 
 "}}}
