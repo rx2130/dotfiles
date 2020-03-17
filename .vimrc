@@ -159,6 +159,20 @@ xnoremap p pgvy
 nnoremap <leader>R :%s///g<Left><Left>
 xnoremap <leader>R :s///g<Left><Left>
 
+" Zoom
+function! s:zoom()
+    if winnr('$') > 1
+        tab split
+    elseif len(filter(map(range(tabpagenr('$')), 'tabpagebuflist(v:val + 1)'),
+                \ 'index(v:val, '.bufnr('').') >= 0')) > 1
+        tabclose
+    endif
+endfunction
+nnoremap <silent> <leader>z :call <sid>zoom()<cr>
+
+" Last inserted text
+nnoremap g. :normal! `[v`]<cr><left>
+
 "}}}
 
 " Autocommands {{{
