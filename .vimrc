@@ -29,6 +29,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'nelstrom/vim-visual-star-search'
 Plug 'raimondi/delimitmate'
 Plug 'godlygeek/tabular'
+Plug 'AndrewRadev/switch.vim'
 
 " GUI enhancements
 Plug 'yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
@@ -50,6 +51,8 @@ Plug 'airblade/vim-rooter'
 " Git enhancements
 Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
+Plug 'tpope/vim-rhubarb'
+Plug 'shumphrey/fugitive-gitlab.vim'
 
 " Semantic language support
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -124,6 +127,7 @@ nnoremap <leader>ou :UndotreeToggle<CR>
 nnoremap <leader>oy :let @+=expand("%:p")<CR> :echo expand("%:p")<CR>
 nnoremap <leader>od :windo diffthis<CR>
 nnoremap <leader>oD :windo diffoff<CR>
+nnoremap <silent><leader>~ :Switch<CR>
 
 inoremap <C-a> <C-o>^
 inoremap <C-e> <C-o>$
@@ -138,7 +142,6 @@ cnoremap <C-a> <Home>
 cnoremap <C-f> <Right>
 cnoremap <C-b> <Left>
 cnoremap <C-d> <Del>
-
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cnoremap W!! w !sudo tee > /dev/null %
@@ -259,8 +262,6 @@ function! s:nerdtreeToggle()
     endif
 endfunction
 
-" disable netrw
-let loaded_netrwPlugin = 1
 let NERDTreeMinimalUI = 1
 let NERDTreeShowHidden=1
 let NERDTreeQuitOnOpen=1
@@ -285,6 +286,8 @@ vnoremap <silent><leader>gb :Gblame<CR>
 " via FZF
 nnoremap <silent><leader>gh :Commits<CR>
 nnoremap <silent><leader>gH :BCommits<CR>
+
+let g:fugitive_gitlab_domains = ['http://gitlab.alibaba-inc.com']
 
 "}}}
 
