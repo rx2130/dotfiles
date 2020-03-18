@@ -29,6 +29,7 @@ Plug 'nelstrom/vim-visual-star-search'
 Plug 'raimondi/delimitmate'
 Plug 'godlygeek/tabular'
 Plug 'AndrewRadev/switch.vim'
+Plug 'vim-scripts/ReplaceWithRegister'
 
 " GUI enhancements
 Plug 'yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
@@ -52,6 +53,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-rhubarb'
 Plug 'shumphrey/fugitive-gitlab.vim'
+Plug 'junegunn/gv.vim'
 
 " Semantic language support
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -150,9 +152,6 @@ cnoremap W!! w !sudo tee > /dev/null %
 nnoremap <silent><leader>s :let @/='\<'.expand('<cword>').'\>'<CR>cgn
 xnoremap <silent><leader>s "sy:let @/=@s<CR>cgn
 
-" Prevent selecting and pasting from overwriting what you originally copied.
-xnoremap p pgvy
-
 " Press * to search for the term under the cursor or a visual selection and
 " then press a key below to replace all instances of it in the current file.
 nnoremap <leader>R :%s///g<Left><Left>
@@ -219,6 +218,9 @@ augroup numbertoggle
     autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
     autocmd TermOpen * setlocal nonumber norelativenumber
 augroup END
+
+" lazy load indentLine
+autocmd! User indentLine doautocmd indentLine Syntax
 
 "}}}
 
@@ -300,6 +302,8 @@ vnoremap <silent><leader>gb :Gblame<CR>
 " via FZF
 nnoremap <silent><leader>gh :Commits<CR>
 nnoremap <silent><leader>gH :BCommits<CR>
+" via GV
+nnoremap <silent><leader>gv :GV<CR>
 
 let g:fugitive_gitlab_domains = ['http://gitlab.alibaba-inc.com']
 
