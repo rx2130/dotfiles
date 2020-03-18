@@ -13,13 +13,12 @@ call plug#begin('~/.vim/plugged')
 " Vim enhancements
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeFind' }
 Plug 'kassio/neoterm'
 Plug 'thalesmello/tabfold'
 Plug 'thinca/vim-quickrun'
 Plug 'tpope/vim-sleuth'
 Plug 'chiel92/vim-autoformat'
-Plug 'christoomey/vim-tmux-navigator'
 
 " Edit enhancements
 Plug 'tpope/vim-repeat'
@@ -244,6 +243,7 @@ nnoremap <silent><leader>S :Filetypes<CR>
 nnoremap <silent><leader>H :Helptags<CR>
 nnoremap <silent><leader>M :Maps<CR>
 nnoremap <silent><leader>/ :Rg<CR>
+nnoremap <silent><leader>? :History/<CR>
 
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noruler nonumber norelativenumber |

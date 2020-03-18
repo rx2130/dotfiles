@@ -295,5 +295,5 @@ bind C-Space send-prefix
 # move status line to top
 #set -g status-position top
 
-set -g @tpm_plugins 'tmux-plugins/tpm tmux-plugins/tmux-cpu christoomey/vim-tmux-navigator'
+set -g @tpm_plugins 'tmux-plugins/tpm tmux-plugins/tmux-cpu'
 
