@@ -14,7 +14,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeFind' }
-Plug 'kassio/neoterm'
 Plug 'thalesmello/tabfold'
 Plug 'thinca/vim-quickrun'
 Plug 'tpope/vim-sleuth'
@@ -214,7 +213,10 @@ augroup END
 " toggle relativenumber when lost focus
 augroup numbertoggle
     autocmd!
-    autocmd BufEnter,FocusGained,InsertLeave * if &buftype != 'terminal' && &filetype != 'nerdtree' && &filetype != 'help' | set relativenumber | endif
+    autocmd BufEnter,FocusGained,InsertLeave *
+                \ if &buftype != 'terminal' && &filetype != 'nerdtree' && &filetype != 'help' |
+                \     set relativenumber |
+                \ endif
     autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
     autocmd TermOpen * setlocal nonumber norelativenumber
 augroup END
@@ -255,16 +257,6 @@ autocmd FileType fzf tunmap <buffer> <Esc>
 
 command! -bang -nargs=? -complete=dir Files
             \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
-"}}}
-
-" Terminal {{{
-
-let g:neoterm_autoscroll = 1
-let g:neoterm_autoinsert = 1
-let g:neoterm_default_mod = 'belowright'
-nnoremap <leader>t :Ttoggle<CR>
-nnoremap <leader>T :vert Ttoggle<CR>
 
 "}}}
 

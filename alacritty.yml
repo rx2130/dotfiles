@@ -42,4 +42,4 @@ key_bindings:
   - { key: H,     mods: Alt,      chars: "\x1bh" }
   - { key: D,     mods: Alt,      chars: "\x1bd" }
   - { key: Space, mods: Control,  chars: "\x00"  }
-
+  - { key: F,     mods: Command|Control, action: None }
