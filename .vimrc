@@ -32,7 +32,6 @@ Plug 'vim-scripts/ReplaceWithRegister'
 
 " GUI enhancements
 Plug 'yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
-Plug 'ap/vim-buftabline'
 Plug 'itchyny/lightline.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'haya14busa/is.vim'
@@ -81,6 +80,7 @@ set hidden
 set mouse=a
 set undofile
 set autowrite
+set autowriteall
 set noshowmode
 set inccommand=nosplit
 set noswapfile
@@ -141,6 +141,8 @@ inoremap <C-k> <C-o>D
 cnoremap <C-a> <Home>
 cnoremap <C-f> <Right>
 cnoremap <C-b> <Left>
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
 cnoremap <C-d> <Del>
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
@@ -148,13 +150,13 @@ cnoremap W!! w !sudo tee > /dev/null %
 
 " Type a replacement term and press . to repeat the replacement again. Useful
 " for replacing a few instances of the term (comparable to multiple cursors).
-nnoremap <silent><leader>s :let @/='\<'.expand('<cword>').'\>'<CR>cgn
-xnoremap <silent><leader>s "sy:let @/=@s<CR>cgn
+nnoremap <silent><leader>s #*cgn
+xnoremap <silent><leader>s #*cgn
 
 " Press * to search for the term under the cursor or a visual selection and
 " then press a key below to replace all instances of it in the current file.
-nnoremap <leader>R :%s///g<Left><Left>
-xnoremap <leader>R :s///g<Left><Left>
+nnoremap <leader>R #*:%s///g<Left><Left>
+xnoremap <leader>R #*:s///g<Left><Left>
 
 " Zoom
 function! s:zoom()
@@ -166,9 +168,6 @@ function! s:zoom()
     endif
 endfunction
 nnoremap <silent> <leader>z :call <sid>zoom()<cr>
-
-" Last inserted text
-nnoremap g. :normal! `[v`]<cr><left>
 
 "}}}
 
@@ -258,6 +257,12 @@ autocmd FileType fzf tunmap <buffer> <Esc>
 command! -bang -nargs=? -complete=dir Files
             \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
+let g:fzf_action = {
+        \ 'ctrl-t': 'tab split',
+        \ 'ctrl-s': 'split',
+        \ 'ctrl-v': 'vsplit',
+        \ }
+
 "}}}
 
 " NerdTree {{{
@@ -288,7 +293,7 @@ nnoremap <silent><leader>gd :Gdiffsplit<CR>
 nnoremap <silent><leader>gc :Gcommit -q<CR>
 nnoremap <silent><leader>gp :Gpush<CR>
 nnoremap <silent><leader>gf :Gfetch<CR>
-nnoremap <silent><leader>gl :Glog<CR>
+nnoremap <silent><leader>gl :Gpull<CR>
 nnoremap <silent><leader>gb :Gblame<CR>
 vnoremap <silent><leader>gb :Gblame<CR>
 " via FZF
@@ -364,24 +369,6 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gD <Plug>(coc-references)
 
 command! -nargs=0 Format :call CocAction('format')
-
-"}}}
-
-" buftabline {{{
-
-let g:buftabline_show = 1
-let g:buftabline_numbers = 2
-let g:buftabline_indicators = 1
-nmap <leader>1 <Plug>BufTabLine.Go(1)
-nmap <leader>2 <Plug>BufTabLine.Go(2)
-nmap <leader>3 <Plug>BufTabLine.Go(3)
-nmap <leader>4 <Plug>BufTabLine.Go(4)
-nmap <leader>5 <Plug>BufTabLine.Go(5)
-nmap <leader>6 <Plug>BufTabLine.Go(6)
-nmap <leader>7 <Plug>BufTabLine.Go(7)
-nmap <leader>8 <Plug>BufTabLine.Go(8)
-nmap <leader>9 <Plug>BufTabLine.Go(9)
-nmap <leader>0 <Plug>BufTabLine.Go(-1)
 
 "}}}
 
