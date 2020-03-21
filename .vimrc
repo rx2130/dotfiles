@@ -1,10 +1,6 @@
 " vim: set fdm=marker fmr={{{,}}} fdl=99 :
 
-augroup vimrc
-    autocmd!
-augroup END
-
-let mapleader=' '
+let mapleader = ' '
 
 " load plugins {{{
 
@@ -12,14 +8,44 @@ call plug#begin('~/.vim/plugged')
 
 " Vim enhancements
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
+nnoremap <silent><leader>q :Sayonara<CR>
+nnoremap <silent>q<leader> :Sayonara<CR>
+nnoremap <silent><leader>Q :Sayonara!<CR>
+
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+nnoremap <leader>ou :UndotreeToggle<CR>
+
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeFind' }
+function! s:nerdtreeToggle()
+    if &filetype == 'nerdtree'
+        :NERDTreeToggle
+    else
+        :NERDTreeFind
+    endif
+endfunction
+
+let NERDTreeMinimalUI=1
+let NERDTreeShowHidden=1
+let NERDTreeQuitOnOpen=1
+let NERDTreeIgnore=['\.vim$', '\~$', '\.git$', '.DS_Store']
+nnoremap <silent><leader>n  :call <SID>nerdtreeToggle()<CR>
+
+" close vim if the only window left open is a NERDTree
+autocmd! bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
 Plug 'thalesmello/tabfold'
 Plug 'thinca/vim-quickrun'
 Plug 'lambdalisue/vim-quickrun-neovim-job'
+let g:quickrun_config = {'_': {}}
+let g:quickrun_config._.runner = 'neovim_job'
+
 Plug 'tpope/vim-sleuth'
 Plug 'chiel92/vim-autoformat'
+nnoremap <leader>= :Autoformat<CR>
+vnoremap <leader>= :Autoformat<CR>
+
 Plug 'tpope/vim-dispatch'
+let g:dispatch_no_tmux_make = 1
 
 " Edit enhancements
 Plug 'tpope/vim-repeat'
@@ -28,16 +54,42 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 Plug 'nelstrom/vim-visual-star-search'
 Plug 'raimondi/delimitmate'
+let g:delimitMate_expand_cr = 1
+let g:delimitMate_expand_space = 1
+
 Plug 'godlygeek/tabular'
+nnoremap <Leader>a: :Tabularize /:\zs<CR>
+vnoremap <Leader>a: :Tabularize /:\zs<CR>
+nnoremap <Leader>a, :Tabularize /,\zs<CR>
+vnoremap <Leader>a, :Tabularize /,\zs<CR>
+
 Plug 'AndrewRadev/switch.vim'
+nnoremap <silent><leader>~ :Switch<CR>
+
 Plug 'vim-scripts/ReplaceWithRegister'
 
 " GUI enhancements
-Plug 'yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
-Plug 'itchyny/lightline.vim'
-Plug 'machakann/vim-highlightedyank'
-Plug 'haya14busa/is.vim'
 Plug 'gruvbox-community/gruvbox'
+
+Plug 'yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
+nnoremap <leader>oi :IndentLinesToggle<CR>
+
+Plug 'itchyny/lightline.vim'
+let g:lightline = {
+            \ 'colorscheme': 'gruvbox',
+            \   'active': {
+            \     'left': [['mode', 'paste'], ['filename', 'readonly', 'modified']],
+            \     'right': [['lineinfo'], ['percent'], ['filetype']]
+            \   },
+            \ }
+
+" lazy load indentLine
+autocmd! User indentLine doautocmd indentLine Syntax
+
+Plug 'machakann/vim-highlightedyank'
+let g:highlightedyank_highlight_duration = 100
+
+Plug 'haya14busa/is.vim'
 
 " Fuzzy finder
 if has("macunix")
@@ -46,21 +98,108 @@ else
     Plug '/usr/share/doc/fzf/examples'
 endif
 Plug 'junegunn/fzf.vim'
+let g:fzf_action = {
+            \ 'ctrl-t': 'tab split',
+            \ 'ctrl-s': 'split',
+            \ 'ctrl-v': 'vsplit',
+            \ }
+
+nnoremap <silent> <expr> <leader>f (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<CR>"
+nnoremap <silent><leader>F :GFiles?<CR>
+nnoremap <silent><leader>b :Buffers<CR>
+nnoremap <silent><leader>h :History<CR>
+nnoremap <silent><leader>L :BLines<CR>
+nnoremap <silent><leader>l :Lines<CR>
+nnoremap <silent><leader>' :Marks<CR>
+nnoremap <silent><leader>; :Commands<CR>
+nnoremap <silent><leader>: :History:<CR>
+nnoremap <silent><leader>S :Filetypes<CR>
+nnoremap <silent><leader>H :Helptags<CR>
+nnoremap <silent><leader>M :Maps<CR>
+nnoremap <silent><leader>/ :Rg<CR>
+nnoremap <silent><leader>? :History/<CR>
+
+autocmd! FileType fzf
+autocmd FileType fzf set laststatus=0 noruler nonumber norelativenumber |
+            \ autocmd BufLeave <buffer> set laststatus=2 ruler
+autocmd FileType fzf tunmap <buffer> <Esc>
+
+command! -bang -nargs=? -complete=dir Files
+            \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
 Plug 'airblade/vim-rooter'
 
 " Git enhancements
 Plug 'tpope/vim-fugitive'
-Plug 'mhinz/vim-signify'
-Plug 'tpope/vim-rhubarb'
-Plug 'shumphrey/fugitive-gitlab.vim'
-Plug 'junegunn/gv.vim'
+nnoremap <silent><leader>gg :Gstatus<CR>
+nnoremap <silent><leader>gd :Gdiffsplit<CR>
+nnoremap <silent><leader>gc :Gcommit -q<CR>
+nnoremap <silent><leader>gp :Gpush<CR>
+nnoremap <silent><leader>gf :Gfetch<CR>
+nnoremap <silent><leader>gl :Gpull<CR>
+nnoremap <silent><leader>gb :Gblame<CR>
+vnoremap <silent><leader>gb :Gblame<CR>
+" via FZF
+nnoremap <silent><leader>gh :Commits<CR>
+nnoremap <silent><leader>gH :BCommits<CR>
+" via GV
+nnoremap <silent><leader>gv :GV --all<CR>
 
-" Semantic language support
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'shumphrey/fugitive-gitlab.vim'
+let g:fugitive_gitlab_domains = ['http://gitlab.alibaba-inc.com']
+
+Plug 'mhinz/vim-signify'
+let g:signify_sign_add               = '|'
+let g:signify_sign_delete            = '|'
+let g:signify_sign_delete_first_line = '|'
+let g:signify_sign_change            = '|'
+
+Plug 'tpope/vim-rhubarb'
+Plug 'junegunn/gv.vim'
 
 " Syntactic language support
 Plug 'plasticboy/vim-markdown'
 Plug 'sheerun/vim-polyglot'
+
+" Semantic language support
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<Tab>" :
+            \ coc#refresh()
+
+" Use <Tab> and <S-Tab> to navigate the completion list
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" use <C-Space>for trigger completion
+inoremap <expr> <C-Space> coc#refresh()
+
+" Use <cr> to confirm completion
+imap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<Plug>delimitMateCR"
+
+function! s:show_documentation()
+    if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+    else
+        call CocAction('doHover')
+    endif
+endfunction
+
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> g? <Plug>(coc-references)
+
+command! -nargs=0 Format :call CocAction('format')
 
 call plug#end()
 
@@ -79,6 +218,7 @@ set tabstop=4
 set shiftwidth=4
 set shiftround
 set hidden
+set cursorline
 set mouse=a
 set undofile
 set autowrite
@@ -93,12 +233,10 @@ set diffopt+=indent-heuristic
 set diffopt+=iwhite
 set diffopt+=vertical
 set shortmess+=c      " don't give ins-completion-menu messages
-set foldmethod=indent
-set foldlevelstart=99 " start file with all folds opened
-set cursorline
+set updatetime=100    " diagnostic messages and signify
 
 colorscheme gruvbox
-if exists('+termguicolors')
+if has('termguicolors') && $COLORTERM =~# 'truecolor\|24bit'
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
     set termguicolors
@@ -115,22 +253,18 @@ nnoremap <C-l> <C-W>l
 nnoremap Y y$
 nnoremap Q @q
 vnoremap Q :norm @q<CR>
+
 nnoremap <Space> <Nop>
 nnoremap <silent><leader><Space> zz:nohlsearch<CR>
 nnoremap <leader>w :w!<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
-nnoremap <silent><leader>q :Sayonara<CR>
-nnoremap <silent><leader>Q :Sayonara!<CR>
-nnoremap <leader>N :enew<CR>
+nnoremap <leader>N :vsp enew<CR>
 nnoremap <leader><Tab> <C-^>
 nnoremap <leader>o <Nop>
-nnoremap <silent><leader>op :tabe $MYVIMRC<CR>
-nnoremap <leader>oi :IndentLinesToggle<CR>
-nnoremap <leader>ou :UndotreeToggle<CR>
+nnoremap <silent><leader>op :tabe ~/dotfiles/.vimrc<CR>
 nnoremap <leader>oy :let @+=expand("%:p")<CR> :echo expand("%:p")<CR>
 nnoremap <leader>od :windo diffthis<CR>
 nnoremap <leader>oD :windo diffoff<CR>
-nnoremap <silent><leader>~ :Switch<CR>
 
 inoremap <C-a> <C-o>^
 inoremap <C-e> <C-o>$
@@ -176,34 +310,40 @@ nnoremap <silent> <leader>z :call <sid>zoom()<cr>
 
 " Autocommands {{{
 
-" Set vim to save the file on focus out
-autocmd! FocusLost * silent! :wa
+augroup vimrc
+    autocmd!
+    " Set vim to save the file on focus out
+    autocmd FocusLost * silent! :wa
 
-" Automatically source .vimrc on save
-autocmd! BufWritePost .vimrc nested source $MYVIMRC
+    " Automatically source .vimrc on save
+    autocmd BufWritePost .vimrc nested source $MYVIMRC
 
-" Remember last cursor position
-autocmd! BufReadPost *
-            \ if line("'\"") > 1 && line("'\"") <= line("$") |
-            \   exe "normal! g`\"" |
-            \ endif
+    " Remember last cursor position
+    autocmd BufReadPost *
+                \ if line("'\"") > 1 && line("'\"") <= line("$") |
+                \   exe "normal! g`\"" |
+                \ endif
 
-" open help vertically
-autocmd! FileType help wincmd L
+    " open help vertically
+    autocmd FileType help wincmd L
 
-" spell check for git commits
-autocmd! FileType gitcommit setlocal spell
+    " spell check for git commits
+    autocmd FileType gitcommit setlocal spell
 
-" Resize panes when window/terminal gets resize
-autocmd! VimResized * wincmd =
+    " Resize panes when window/terminal gets resize
+    autocmd VimResized * wincmd =
 
-" prevent unintended write
-autocmd BufReadPost fugitive:///*//0/* setlocal nomodifiable readonly
+    " refresh changed content of file
+    autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
+    autocmd FileChangedShellPost *
+                \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
-" refresh changed content of file
-autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
-autocmd FileChangedShellPost *
-            \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+    " termianl mode Esc map
+    autocmd TermOpen * tnoremap <buffer> <Esc> <C-\><C-n>
+
+    " File Type settings
+    autocmd BufNewFile,BufRead Podfile,podlocal,*.podspec,Fastfile setfiletype ruby
+augroup END
 
 " only show cursorline in active window
 augroup cusorlineToggle
@@ -216,199 +356,12 @@ augroup END
 augroup numbertoggle
     autocmd!
     autocmd BufEnter,FocusGained,InsertLeave *
-                \ if &buftype != 'terminal' && &filetype != 'nerdtree' && &filetype != 'help' |
+                \ if (&buftype != 'terminal') && 
+                \    (index(['nerdtree','help','undotree'], &filetype) == -1) |
                 \     set relativenumber |
                 \ endif
     autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
     autocmd TermOpen * setlocal nonumber norelativenumber
 augroup END
-
-" lazy load indentLine
-autocmd! User indentLine doautocmd indentLine Syntax
-
-"}}}
-
-" {{{ File Type settings
-
-autocmd BufNewFile,BufRead Podfile,podlocal,*.podspec,Fastfile setfiletype ruby
-
-" }}}
-
-" FZF {{{
-
-nnoremap <silent> <expr> <leader>f (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<CR>"
-nnoremap <silent><leader>F :GFiles?<CR>
-nnoremap <silent><leader>b :Buffers<CR>
-nnoremap <silent><leader>h :History<CR>
-nnoremap <silent><leader>L :BLines<CR>
-nnoremap <silent><leader>l :Lines<CR>
-nnoremap <silent><leader>' :Marks<CR>
-nnoremap <silent><leader>; :Commands<CR>
-nnoremap <silent><leader>: :History:<CR>
-nnoremap <silent><leader>S :Filetypes<CR>
-nnoremap <silent><leader>H :Helptags<CR>
-nnoremap <silent><leader>M :Maps<CR>
-nnoremap <silent><leader>/ :Rg<CR>
-nnoremap <silent><leader>? :History/<CR>
-
-autocmd! FileType fzf
-autocmd  FileType fzf set laststatus=0 noruler nonumber norelativenumber |
-            \ autocmd BufLeave <buffer> set laststatus=2 ruler
-autocmd TermOpen * tnoremap <buffer> <Esc> <C-\><C-n>
-autocmd FileType fzf tunmap <buffer> <Esc>
-
-command! -bang -nargs=? -complete=dir Files
-            \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
-let g:fzf_action = {
-        \ 'ctrl-t': 'tab split',
-        \ 'ctrl-s': 'split',
-        \ 'ctrl-v': 'vsplit',
-        \ }
-
-"}}}
-
-" NerdTree {{{
-
-function! s:nerdtreeToggle()
-    if &filetype == 'nerdtree'
-        :NERDTreeToggle
-    else
-        :NERDTreeFind
-    endif
-endfunction
-
-let NERDTreeMinimalUI = 1
-let NERDTreeShowHidden=1
-let NERDTreeQuitOnOpen=1
-let NERDTreeIgnore=['\.vim$', '\~$', '\.git$', '.DS_Store']
-nnoremap <silent><leader>n  :call <SID>nerdtreeToggle()<CR>
-
-" close vim if the only window left open is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-"}}}
-
-" Fugitive {{{
-
-nnoremap <silent><leader>gg :Gstatus<CR>
-nnoremap <silent><leader>gd :Gdiffsplit<CR>
-nnoremap <silent><leader>gc :Gcommit -q<CR>
-nnoremap <silent><leader>gp :Gpush<CR>
-nnoremap <silent><leader>gf :Gfetch<CR>
-nnoremap <silent><leader>gl :Gpull<CR>
-nnoremap <silent><leader>gb :Gblame<CR>
-vnoremap <silent><leader>gb :Gblame<CR>
-" via FZF
-nnoremap <silent><leader>gh :Commits<CR>
-nnoremap <silent><leader>gH :BCommits<CR>
-" via GV
-nnoremap <silent><leader>gv :GV<CR>
-
-let g:fugitive_gitlab_domains = ['http://gitlab.alibaba-inc.com']
-
-"}}}
-
-" lightline {{{
-
-let g:lightline = {
-            \ 'colorscheme': 'gruvbox',
-            \   'active': {
-            \     'left': [['mode', 'paste'], ['filename', 'readonly', 'modified']],
-            \     'right': [['lineinfo'], ['percent'], ['filetype']]
-            \   },
-            \ }
-
-"}}}
-
-" delimitMate {{{
-
-let g:delimitMate_expand_cr = 1
-let g:delimitMate_expand_space = 1
-
-"}}}
-
-" coc.vim {{{
-
-" You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=100
-
-" use <tab> for trigger completion and navigate to the next complete item
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-inoremap <silent><expr> <Tab>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<Tab>" :
-            \ coc#refresh()
-
-" Use <Tab> and <S-Tab> to navigate the completion list
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-" use <C-Space>for trigger completion
-inoremap <expr> <C-Space> coc#refresh()
-
-" Use <cr> to confirm completion
-imap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<Plug>delimitMateCR"
-
-" Close the preview window when completion is done.
-" autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
-
-function! s:show_documentation()
-    if (index(['vim','help'], &filetype) >= 0)
-        execute 'h '.expand('<cword>')
-    else
-        call CocAction('doHover')
-    endif
-endfunction
-
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> g? <Plug>(coc-references)
-
-command! -nargs=0 Format :call CocAction('format')
-
-"}}}
-
-" tabular {{{
-
-nnoremap <Leader>a: :Tabularize /:\zs<CR>
-vnoremap <Leader>a: :Tabularize /:\zs<CR>
-nnoremap <Leader>a, :Tabularize /,\zs<CR>
-vnoremap <Leader>a, :Tabularize /,\zs<CR>
-
-"}}}
-
-" quickrun {{{
-
-let g:quickrun_config = {'_': {}}
-let g:quickrun_config._.runner = 'neovim_job'
-
-"}}}
-
-" highlightedyank {{{
-
-let g:highlightedyank_highlight_duration = 100
-
-"}}}
-
-" autoformat {{{
-
-nnoremap <leader>= :Autoformat<CR>
-vnoremap <leader>= :Autoformat<CR>
-
-"}}}
-
-" signify {{{
-
-let g:signify_sign_add               = '|'
-let g:signify_sign_delete            = '|'
-let g:signify_sign_delete_first_line = '|'
-let g:signify_sign_change            = '|'
 
 "}}}
