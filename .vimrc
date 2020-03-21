@@ -16,8 +16,10 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeFind' }
 Plug 'thalesmello/tabfold'
 Plug 'thinca/vim-quickrun'
+Plug 'lambdalisue/vim-quickrun-neovim-job'
 Plug 'tpope/vim-sleuth'
 Plug 'chiel92/vim-autoformat'
+Plug 'tpope/vim-dispatch'
 
 " Edit enhancements
 Plug 'tpope/vim-repeat'
@@ -121,7 +123,8 @@ nnoremap <silent><leader>q :Sayonara<CR>
 nnoremap <silent><leader>Q :Sayonara!<CR>
 nnoremap <leader>N :enew<CR>
 nnoremap <leader><Tab> <C-^>
-nnoremap <leader>op :e ~/dotfiles/.vimrc<CR>
+nnoremap <leader>o <Nop>
+nnoremap <silent><leader>op :tabe $MYVIMRC<CR>
 nnoremap <leader>oi :IndentLinesToggle<CR>
 nnoremap <leader>ou :UndotreeToggle<CR>
 nnoremap <leader>oy :let @+=expand("%:p")<CR> :echo expand("%:p")<CR>
@@ -233,7 +236,7 @@ autocmd BufNewFile,BufRead Podfile,podlocal,*.podspec,Fastfile setfiletype ruby
 
 " FZF {{{
 
-nnoremap <silent><leader>f :Files<CR>
+nnoremap <silent> <expr> <leader>f (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<CR>"
 nnoremap <silent><leader>F :GFiles?<CR>
 nnoremap <silent><leader>b :Buffers<CR>
 nnoremap <silent><leader>h :History<CR>
@@ -342,7 +345,7 @@ inoremap <silent><expr> <Tab>
             \ coc#refresh()
 
 " Use <Tab> and <S-Tab> to navigate the completion list
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " use <C-Space>for trigger completion
 inoremap <expr> <C-Space> coc#refresh()
@@ -366,7 +369,7 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gD <Plug>(coc-references)
+nmap <silent> g? <Plug>(coc-references)
 
 command! -nargs=0 Format :call CocAction('format')
 
@@ -383,11 +386,8 @@ vnoremap <Leader>a, :Tabularize /,\zs<CR>
 
 " quickrun {{{
 
-let g:quickrun_config = {
-            \ '_': {
-            \          'runner': 'shell'
-            \      }
-            \ }
+let g:quickrun_config = {'_': {}}
+let g:quickrun_config._.runner = 'neovim_job'
 
 "}}}
 
