@@ -158,7 +158,6 @@ Plug 'tpope/vim-rhubarb'
 Plug 'junegunn/gv.vim'
 
 " Syntactic language support
-Plug 'plasticboy/vim-markdown'
 Plug 'sheerun/vim-polyglot'
 
 " Semantic language support
@@ -258,7 +257,7 @@ nnoremap <Space> <Nop>
 nnoremap <silent><leader><Space> zz:nohlsearch<CR>
 nnoremap <leader>w :w!<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
-nnoremap <leader>N :vsp enew<CR>
+nnoremap <silent><leader>N :vsp enew<CR>
 nnoremap <leader><Tab> <C-^>
 nnoremap <leader>o <Nop>
 nnoremap <silent><leader>op :tabe ~/dotfiles/.vimrc<CR>
@@ -287,13 +286,13 @@ cnoremap W!! w !sudo tee > /dev/null %
 
 " Type a replacement term and press . to repeat the replacement again. Useful
 " for replacing a few instances of the term (comparable to multiple cursors).
-nnoremap <silent><leader>s #*cgn
-xnoremap <silent><leader>s #*cgn
+nnoremap <silent><leader>s :let @/='\<'.expand('<cword>').'\>'<CR>cgn
+xnoremap <silent><leader>s "sy:let @/=@s<CR>cgn
 
 " Press * to search for the term under the cursor or a visual selection and
 " then press a key below to replace all instances of it in the current file.
-nnoremap <leader>R #*:%s///g<Left><Left>
-xnoremap <leader>R #*:s///g<Left><Left>
+nnoremap <leader>R :%s///g<Left><Left>
+xnoremap <leader>R :s///g<Left><Left>
 
 " Zoom
 function! s:zoom()
@@ -334,9 +333,8 @@ augroup vimrc
     autocmd VimResized * wincmd =
 
     " refresh changed content of file
-    autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
-    autocmd FileChangedShellPost *
-                \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+    autocmd CursorHold * if getcmdwintype() == '' | checktime | endif
+    autocmd FileChangedShellPost * echohl WarningMsg | echo "Warning: File changed on disk. Buffer reloaded." | echohl None
 
     " termianl mode Esc map
     autocmd TermOpen * tnoremap <buffer> <Esc> <C-\><C-n>
@@ -366,9 +364,7 @@ augroup END
 
 "}}}
 
-" ----------------------------------------------------------------------------
-" <Leader>?/! | Google it / Feeling lucky {{{
-" ----------------------------------------------------------------------------
+" <Leader>G/! | Google it / Feeling lucky {{{
 function! s:goog(pat, lucky)
   let q = '"'.substitute(a:pat, '["\n]', ' ', 'g').'"'
   let q = substitute(q, '[[:punct:] ]',
