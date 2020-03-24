@@ -78,8 +78,11 @@ Plug 'itchyny/lightline.vim'
 let g:lightline = {
             \ 'colorscheme': 'gruvbox',
             \   'active': {
-            \     'left': [['mode', 'paste'], ['filename', 'readonly', 'modified']],
+            \     'left': [['mode', 'paste'], ['gitbranch', 'filename', 'readonly', 'modified']],
             \     'right': [['lineinfo'], ['percent'], ['filetype']]
+            \   },
+            \   'component_function': {
+            \     'gitbranch': 'FugitiveHead'
             \   },
             \ }
 
