@@ -33,6 +33,11 @@ nnoremap <silent><leader>n  :call <SID>nerdtreeToggle()<CR>
 " close vim if the only window left open is a NERDTree
 autocmd! bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+" Disable netrw, but autoload it for `gx`.
+let g:loaded_netrwPlugin = 0
+nmap gx <Plug>NetrwBrowseX
+nnoremap <silent> <Plug>NetrwBrowseX :call netrw#BrowseX(expand((exists("g:netrw_gx")? g:netrw_gx : '<cfile>')),netrw#CheckIfRemote())<CR>
+
 Plug 'thalesmello/tabfold'
 Plug 'thinca/vim-quickrun'
 Plug 'lambdalisue/vim-quickrun-neovim-job'
@@ -110,6 +115,8 @@ nnoremap <silent><leader>H :Helptags<CR>
 nnoremap <silent><leader>M :Maps<CR>
 nnoremap <silent><leader>/ :Rg<CR>
 nnoremap <silent><leader>? :History/<CR>
+nnoremap <silent><leader>gh :Commits<CR>
+nnoremap <silent><leader>gH :BCommits<CR>
 
 autocmd! FileType fzf
 autocmd FileType fzf set laststatus=0 noruler |
@@ -130,17 +137,13 @@ nnoremap <silent><leader>gf :Gfetch<CR>
 nnoremap <silent><leader>gl :Gpull<CR>
 nnoremap <silent><leader>gb :Gblame<CR>
 vnoremap <silent><leader>gb :Gblame<CR>
-" via FZF
-nnoremap <silent><leader>gh :Commits<CR>
-nnoremap <silent><leader>gH :BCommits<CR>
-" via GV
-nnoremap <silent><leader>gv :GV --all<CR>
 
 Plug 'shumphrey/fugitive-gitlab.vim'
 let g:fugitive_gitlab_domains = ['http://gitlab.alibaba-inc.com']
 
 Plug 'tpope/vim-rhubarb'
-Plug 'junegunn/gv.vim'
+Plug 'junegunn/gv.vim', { 'on': 'GV' }
+nnoremap <silent><leader>gv :GV --all<CR>
 
 " Syntactic language support
 Plug 'sheerun/vim-polyglot'
