@@ -57,25 +57,15 @@ Plug 'raimondi/delimitmate'
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
 
-Plug 'godlygeek/tabular'
-nnoremap <Leader>a: :Tabularize /:\zs<CR>
-vnoremap <Leader>a: :Tabularize /:\zs<CR>
-nnoremap <Leader>a, :Tabularize /,\zs<CR>
-vnoremap <Leader>a, :Tabularize /,\zs<CR>
-
 Plug 'vim-scripts/ReplaceWithRegister'
 
 " GUI enhancements
 Plug 'gruvbox-community/gruvbox'
-
-Plug 'yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
-nnoremap <leader>oi :IndentLinesToggle<CR>
-
 Plug 'itchyny/lightline.vim'
 let g:lightline = {
             \ 'colorscheme': 'gruvbox',
             \   'active': {
-            \     'left': [['mode', 'paste'], ['gitbranch', 'filename', 'readonly', 'modified']],
+            \     'left': [['mode', 'paste'], ['gitbranch'], ['filename', 'readonly', 'modified']],
             \     'right': [['lineinfo'], ['percent'], ['filetype']]
             \   },
             \   'component_function': {
@@ -83,6 +73,8 @@ let g:lightline = {
             \   },
             \ }
 
+Plug 'yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
+nnoremap <leader>oi :IndentLinesToggle<CR>
 " lazy load indentLine
 autocmd! User indentLine doautocmd indentLine Syntax
 
@@ -120,14 +112,13 @@ nnoremap <silent><leader>/ :Rg<CR>
 nnoremap <silent><leader>? :History/<CR>
 
 autocmd! FileType fzf
-autocmd FileType fzf set laststatus=0 noruler nonumber norelativenumber |
+autocmd FileType fzf set laststatus=0 noruler |
             \ autocmd BufLeave <buffer> set laststatus=2 ruler
 autocmd FileType fzf tunmap <buffer> <Esc>
 
-command! -bang -nargs=? -complete=dir Files
-            \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
 Plug 'airblade/vim-rooter'
+let g:rooter_silent_chdir = 1
+let g:rooter_change_directory_for_non_project_files = 'current'
 
 " Git enhancements
 Plug 'tpope/vim-fugitive'
@@ -147,12 +138,6 @@ nnoremap <silent><leader>gv :GV --all<CR>
 
 Plug 'shumphrey/fugitive-gitlab.vim'
 let g:fugitive_gitlab_domains = ['http://gitlab.alibaba-inc.com']
-
-Plug 'mhinz/vim-signify'
-let g:signify_sign_add               = '|'
-let g:signify_sign_delete            = '|'
-let g:signify_sign_delete_first_line = '|'
-let g:signify_sign_change            = '|'
 
 Plug 'tpope/vim-rhubarb'
 Plug 'junegunn/gv.vim'
@@ -207,7 +192,6 @@ call plug#end()
 " Settings {{{
 
 set clipboard=unnamed
-set number
 set splitright
 set splitbelow
 set ignorecase
@@ -217,23 +201,17 @@ set tabstop=4
 set shiftwidth=4
 set shiftround
 set hidden
-set cursorline
 set mouse=a
 set undofile
 set autowrite
 set autowriteall
-set noshowmode
 set inccommand=nosplit
 set noswapfile
 set nobackup
 set nowritebackup
-set diffopt+=algorithm:patience
-set diffopt+=indent-heuristic
-set diffopt+=iwhite
-set diffopt+=vertical
 set shortmess+=c      " don't give ins-completion-menu messages
-set updatetime=100    " diagnostic messages and signify
 set lazyredraw
+set noshowmode
 
 colorscheme gruvbox
 if has('termguicolors') && $COLORTERM =~# 'truecolor\|24bit'
@@ -261,7 +239,7 @@ nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <silent><leader>N :vsp enew<CR>
 nnoremap <leader><Tab> <C-^>
 nnoremap <leader>o <Nop>
-nnoremap <silent><leader>op :tabe ~/dotfiles/.vimrc<CR>
+nnoremap <leader>op :e ~/dotfiles/.vimrc<CR>
 nnoremap <leader>oy :let @+=expand("%:p")<CR> :echo expand("%:p")<CR>
 nnoremap <leader>od :windo diffthis<CR>
 nnoremap <leader>oD :windo diffoff<CR>
@@ -344,34 +322,15 @@ augroup vimrc
     autocmd BufNewFile,BufRead Podfile,podlocal,*.podspec,Fastfile setfiletype ruby
 augroup END
 
-" only show cursorline in active window
-augroup cusorlineToggle
-    autocmd!
-    autocmd InsertLeave,WinEnter * set cursorline
-    autocmd InsertEnter,WinLeave * set nocursorline
-augroup END
-
-" toggle relativenumber when lost focus
-augroup numbertoggle
-    autocmd!
-    autocmd BufEnter,FocusGained,InsertLeave *
-                \ if (&buftype != 'terminal') && 
-                \    (index(['nerdtree','help','undotree'], &filetype) == -1) |
-                \     set relativenumber |
-                \ endif
-    autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
-    autocmd TermOpen * setlocal nonumber norelativenumber
-augroup END
-
 "}}}
 
 " <Leader>G/! | Google it / Feeling lucky {{{
 function! s:goog(pat, lucky)
-  let q = '"'.substitute(a:pat, '["\n]', ' ', 'g').'"'
-  let q = substitute(q, '[[:punct:] ]',
-       \ '\=printf("%%%02X", char2nr(submatch(0)))', 'g')
-  call system(printf('open "https://www.google.com/search?%sq=%s"',
-                   \ a:lucky ? 'btnI&' : '', q))
+    let q = '"'.substitute(a:pat, '["\n]', ' ', 'g').'"'
+    let q = substitute(q, '[[:punct:] ]',
+                \ '\=printf("%%%02X", char2nr(submatch(0)))', 'g')
+    call system(printf('open "https://www.google.com/search?%sq=%s"',
+                \ a:lucky ? 'btnI&' : '', q))
 endfunction
 
 nnoremap <leader>G :call <SID>goog(expand("<cWORD>"), 0)<cr>
