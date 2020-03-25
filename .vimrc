@@ -63,9 +63,6 @@ vnoremap <Leader>a: :Tabularize /:\zs<CR>
 nnoremap <Leader>a, :Tabularize /,\zs<CR>
 vnoremap <Leader>a, :Tabularize /,\zs<CR>
 
-Plug 'AndrewRadev/switch.vim'
-nnoremap <silent><leader>~ :Switch<CR>
-
 Plug 'vim-scripts/ReplaceWithRegister'
 
 " GUI enhancements
@@ -236,6 +233,7 @@ set diffopt+=iwhite
 set diffopt+=vertical
 set shortmess+=c      " don't give ins-completion-menu messages
 set updatetime=100    " diagnostic messages and signify
+set lazyredraw
 
 colorscheme gruvbox
 if has('termguicolors') && $COLORTERM =~# 'truecolor\|24bit'
