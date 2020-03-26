@@ -30,7 +30,6 @@ Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-dispatch'
 let g:dispatch_no_tmux_make = 1
 
-
 " Edit enhancements
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -119,6 +118,9 @@ nnoremap <silent><leader>gf :Gfetch<CR>
 nnoremap <silent><leader>gl :Gpull<CR>
 nnoremap <silent><leader>gb :Gblame<CR>
 vnoremap <silent><leader>gb :Gblame<CR>
+
+" prevent unintended write
+autocmd! BufReadPost fugitive:///*//0/* setlocal readonly
 
 Plug 'shumphrey/fugitive-gitlab.vim'
 let g:fugitive_gitlab_domains = ['http://gitlab.alibaba-inc.com']
