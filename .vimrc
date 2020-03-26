@@ -53,7 +53,10 @@ let g:lightline = {
             \     'right': [['lineinfo'], ['percent'], ['filetype']]
             \   },
             \   'component_function': {
-            \     'gitbranch': 'FugitiveHead'
+            \     'gitbranch': 'FugitiveHead',
+            \   },
+            \   'component': {
+            \     'lineinfo': '%3l:%-2v%<',
             \   },
             \ }
 
