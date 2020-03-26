@@ -15,29 +15,6 @@ nnoremap <silent><leader>Q :Sayonara!<CR>
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 nnoremap <leader>ou :UndotreeToggle<CR>
 
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeFind' }
-function! s:nerdtreeToggle()
-    if &filetype == 'nerdtree'
-        :NERDTreeToggle
-    else
-        :NERDTreeFind
-    endif
-endfunction
-
-let NERDTreeMinimalUI=1
-let NERDTreeShowHidden=1
-let NERDTreeQuitOnOpen=1
-let NERDTreeIgnore=['\.vim$', '\~$', '\.git$', '.DS_Store']
-nnoremap <silent><leader>n  :call <SID>nerdtreeToggle()<CR>
-
-" close vim if the only window left open is a NERDTree
-autocmd! bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" Disable netrw, but autoload it for `gx`.
-let g:loaded_netrwPlugin = 0
-nmap gx <Plug>NetrwBrowseX
-nnoremap <silent> <Plug>NetrwBrowseX :call netrw#BrowseX(expand((exists("g:netrw_gx")? g:netrw_gx : '<cfile>')),netrw#CheckIfRemote())<CR>
-
 Plug 'thalesmello/tabfold'
 Plug 'thinca/vim-quickrun'
 Plug 'lambdalisue/vim-quickrun-neovim-job'
@@ -49,8 +26,10 @@ Plug 'chiel92/vim-autoformat'
 nnoremap <leader>= :Autoformat<CR>
 vnoremap <leader>= :Autoformat<CR>
 
+Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-dispatch'
 let g:dispatch_no_tmux_make = 1
+
 
 " Edit enhancements
 Plug 'tpope/vim-repeat'
