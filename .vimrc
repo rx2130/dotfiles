@@ -53,11 +53,20 @@ let g:lightline = {
             \   },
             \   'component_function': {
             \     'gitbranch': 'FugitiveHead',
+            \     'filename': 'LightlineFilename',
             \   },
             \   'component': {
             \     'lineinfo': '%3l:%-2v%<',
             \   },
             \ }
+function! LightlineFilename()
+    let root = fnamemodify(get(b:, 'git_dir'), ':h')
+    let path = expand('%:p')
+    if path[:len(root)-1] ==# root
+        return path[len(root)+1:]
+    endif
+    return expand('%')
+endfunction
 
 Plug 'yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
 nnoremap <leader>oi :IndentLinesToggle<CR>
@@ -118,9 +127,11 @@ nnoremap <silent><leader>gf :Gfetch<CR>
 nnoremap <silent><leader>gl :Gpull<CR>
 nnoremap <silent><leader>gb :Gblame<CR>
 vnoremap <silent><leader>gb :Gblame<CR>
+nnoremap <silent><leader>gB :Gbrowse<CR>
+vnoremap <silent><leader>gB :Gbrowse<CR>
 
 " prevent unintended write
-autocmd! BufReadPost fugitive:///*//0/* setlocal readonly
+autocmd BufReadPost fugitive:///*//0/* setlocal nomodifiable readonly
 
 Plug 'shumphrey/fugitive-gitlab.vim'
 let g:fugitive_gitlab_domains = ['http://gitlab.alibaba-inc.com']
@@ -227,7 +238,7 @@ nnoremap <silent><leader>N :vsp enew<CR>
 nnoremap <leader><Tab> <C-^>
 nnoremap <leader>o <Nop>
 nnoremap <leader>op :e ~/dotfiles/.vimrc<CR>
-nnoremap <leader>oy :let @+=expand("%:p")<CR> :echo expand("%:p")<CR>
+nnoremap <leader>oy :let @+=expand("%:p:~")<CR> :echo expand("%:p:~")<CR>
 nnoremap <leader>od :windo diffthis<CR>
 nnoremap <leader>oD :windo diffoff<CR>
 
