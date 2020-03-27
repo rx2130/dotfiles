@@ -38,11 +38,10 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 Plug 'nelstrom/vim-visual-star-search'
+Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'raimondi/delimitmate'
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
-
-Plug 'vim-scripts/ReplaceWithRegister'
 
 " GUI enhancements
 Plug 'gruvbox-community/gruvbox'
@@ -76,10 +75,9 @@ nnoremap <leader>oi :IndentLinesToggle<CR>
 " lazy load indentLine
 autocmd! User indentLine doautocmd indentLine Syntax
 
+Plug 'haya14busa/is.vim'
 Plug 'machakann/vim-highlightedyank'
 let g:highlightedyank_highlight_duration = 100
-
-Plug 'haya14busa/is.vim'
 
 " Fuzzy finder
 if has("macunix")
@@ -143,7 +141,6 @@ Plug 'tpope/vim-rhubarb'
 Plug 'junegunn/gv.vim', { 'on': 'GV' }
 nnoremap <silent><leader>gv :GV --all<CR>
 
-
 " Syntactic language support
 Plug 'sheerun/vim-polyglot'
 
@@ -177,10 +174,16 @@ function! s:show_documentation()
         call CocAction('doHover')
     endif
 endfunction
-
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-nmap <silent> gd <Plug>(coc-definition)
+function! s:goto_definition()
+    if (index(['python','javascript'], &filetype) >= 0)
+        call CocAction('jumpDefinition')
+    else
+        normal! gd
+    endif
+endfunction
+nnoremap <silent> gd :call <SID>goto_definition()<CR>
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> g? <Plug>(coc-references)
