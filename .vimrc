@@ -27,6 +27,8 @@ nnoremap <leader>= :Autoformat<CR>
 vnoremap <leader>= :Autoformat<CR>
 
 Plug 'tpope/vim-vinegar'
+let g:netrw_liststyle = 3
+
 Plug 'tpope/vim-dispatch'
 let g:dispatch_no_tmux_make = 1
 
@@ -59,6 +61,7 @@ let g:lightline = {
             \     'lineinfo': '%3l:%-2v%<',
             \   },
             \ }
+
 function! LightlineFilename()
     let root = fnamemodify(get(b:, 'git_dir'), ':h')
     let path = expand('%:p')
@@ -91,7 +94,7 @@ let g:fzf_action = {
             \ 'ctrl-v': 'vsplit',
             \ }
 
-nnoremap <silent> <expr> <leader>f (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<CR>"
+nnoremap <silent><leader>f :Files<CR>
 nnoremap <silent><leader>F :GFiles?<CR>
 nnoremap <silent><leader>b :Buffers<CR>
 nnoremap <silent><leader>h :History<CR>
@@ -139,6 +142,7 @@ let g:fugitive_gitlab_domains = ['http://gitlab.alibaba-inc.com']
 Plug 'tpope/vim-rhubarb'
 Plug 'junegunn/gv.vim', { 'on': 'GV' }
 nnoremap <silent><leader>gv :GV --all<CR>
+
 
 " Syntactic language support
 Plug 'sheerun/vim-polyglot'
@@ -199,7 +203,7 @@ set tabstop=4
 set shiftwidth=4
 set shiftround
 set hidden
-set mouse=a
+set mouse=nvi
 set undofile
 set autowrite
 set autowriteall
@@ -234,7 +238,7 @@ nnoremap <Space> <Nop>
 nnoremap <silent><leader><Space> zz:nohlsearch<CR>
 nnoremap <leader>w :w!<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
-nnoremap <silent><leader>N :vsp enew<CR>
+nnoremap <silent><leader>N :vnew<CR>
 nnoremap <leader><Tab> <C-^>
 nnoremap <leader>o <Nop>
 nnoremap <leader>op :e ~/dotfiles/.vimrc<CR>

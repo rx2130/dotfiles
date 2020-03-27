@@ -10,6 +10,11 @@ colors:
     # soft contrast: background = '0x32302f'
     foreground: '0xebdbb2'
 
+  # Cursor colors
+  cursor:
+    text:   '0xf1c1c1'
+    cursor: '0xff2600'
+
   # Normal colors
   normal:
     black:   '0x282828'
@@ -55,7 +60,7 @@ key_bindings:
   - { key: LBracket, mods: Command,       chars: "\x00\x3b" }
   - { key: RBracket, mods: Command|Shift, chars: "\x00\x6e" }
   - { key: LBracket, mods: Command|Shift, chars: "\x00\x70" }
-  - { key: Return,   mods: Command|Shift, chars: "\x00\x7a" }
+  - { key: Return,   mods: Command,       chars: "\x00\x7a" }
   - { key: Key1,     mods: Command,       chars: "\x00\x31" }
   - { key: Key2,     mods: Command,       chars: "\x00\x32" }
   - { key: Key3,     mods: Command,       chars: "\x00\x33" }
