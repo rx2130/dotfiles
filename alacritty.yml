@@ -60,7 +60,7 @@ key_bindings:
   - { key: LBracket, mods: Command,       chars: "\x00\x3b" }
   - { key: RBracket, mods: Command|Shift, chars: "\x00\x6e" }
   - { key: LBracket, mods: Command|Shift, chars: "\x00\x70" }
-  - { key: Return,   mods: Command,       chars: "\x00\x7a" }
+  - { key: Return,   mods: Command|Shift, chars: "\x00\x7a" }
   - { key: Key1,     mods: Command,       chars: "\x00\x31" }
   - { key: Key2,     mods: Command,       chars: "\x00\x32" }
   - { key: Key3,     mods: Command,       chars: "\x00\x33" }
