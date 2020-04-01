@@ -17,12 +17,14 @@ nnoremap <leader>ou :UndotreeToggle<CR>
 
 Plug 'thalesmello/tabfold'
 Plug 'thinca/vim-quickrun'
+nnoremap <leader>R <Plug>(quickrun)<CR>
+
 Plug 'lambdalisue/vim-quickrun-neovim-job'
 let g:quickrun_config = {'_': {}}
 let g:quickrun_config._.runner = 'neovim_job'
 
 Plug 'tpope/vim-sleuth'
-Plug 'chiel92/vim-autoformat'
+Plug 'chiel92/vim-autoformat', { 'on': 'Autoformat' }
 nnoremap <leader>= :Autoformat<CR>
 vnoremap <leader>= :Autoformat<CR>
 
@@ -39,6 +41,10 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 Plug 'nelstrom/vim-visual-star-search'
 Plug 'vim-scripts/ReplaceWithRegister'
+nmap <Leader>r  <Plug>ReplaceWithRegisterOperator
+nmap <Leader>rr <Plug>ReplaceWithRegisterLine
+xmap <Leader>r  <Plug>ReplaceWithRegisterVisual
+
 Plug 'raimondi/delimitmate'
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
@@ -177,16 +183,16 @@ endfunction
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:goto_definition()
-    if (index(['python','javascript'], &filetype) >= 0)
+    if (index(['python','javascript','typescript'], &filetype) >= 0)
         call CocAction('jumpDefinition')
     else
         normal! gd
     endif
 endfunction
 nnoremap <silent> gd :call <SID>goto_definition()<CR>
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> g? <Plug>(coc-references)
+nmap <silent> 1gD <Plug>(coc-type-definition)
+nmap <silent> gD <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 command! -nargs=0 Format :call CocAction('format')
 
@@ -236,6 +242,8 @@ nnoremap <C-l> <C-W>l
 nnoremap Y y$
 nnoremap Q @q
 vnoremap Q :norm @q<CR>
+nnoremap <silent><CR> :e %:p:s,.h$,.X123X,:s,.m$,.h,:s,.X123X$,.m,<CR>
+nnoremap <BS> <C-^>
 
 nnoremap <Space> <Nop>
 nnoremap <silent><leader><Space> zz:nohlsearch<CR>
@@ -272,11 +280,6 @@ cnoremap W!! w !sudo tee > /dev/null %
 " for replacing a few instances of the term (comparable to multiple cursors).
 nnoremap <silent><leader>s :let @/='\<'.expand('<cword>').'\>'<CR>cgn
 xnoremap <silent><leader>s "sy:let @/=@s<CR>cgn
-
-" Press * to search for the term under the cursor or a visual selection and
-" then press a key below to replace all instances of it in the current file.
-nnoremap <leader>R :%s///g<Left><Left>
-xnoremap <leader>R :s///g<Left><Left>
 
 " Zoom
 function! s:zoom()
