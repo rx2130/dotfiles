@@ -16,8 +16,8 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 nnoremap <leader>ou :UndotreeToggle<CR>
 
 Plug 'thalesmello/tabfold'
-Plug 'thinca/vim-quickrun'
-nnoremap <leader>R <Plug>(quickrun)<CR>
+Plug 'thinca/vim-quickrun', { 'on': 'QuickRun' }
+nnoremap <CR> :QuickRun<CR>
 
 Plug 'lambdalisue/vim-quickrun-neovim-job'
 let g:quickrun_config = {'_': {}}
@@ -246,7 +246,6 @@ nnoremap Q @q
 vnoremap Q :norm @q<CR>
 nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
 nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
-nnoremap <silent><CR> :e %:p:s,.h$,.X123X,:s,.m$,.h,:s,.X123X$,.m,<CR>
 nnoremap <BS> <C-^>
 
 nnoremap <Space> <Nop>
@@ -332,6 +331,7 @@ augroup vimrc
 
     " File Type settings
     autocmd BufNewFile,BufRead Podfile,podlocal,*.podspec,Fastfile setfiletype ruby
+    autocmd FileType objc nnoremap <silent><CR> :e %:p:s,.h$,.X123X,:s,.m$,.h,:s,.X123X$,.m,<CR>
 augroup END
 
 "}}}
