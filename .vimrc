@@ -223,6 +223,8 @@ set nowritebackup
 set shortmess+=c      " don't give ins-completion-menu messages
 set lazyredraw
 set noshowmode
+set scrolloff=1
+set sidescrolloff=5
 
 colorscheme gruvbox
 if has('termguicolors') && $COLORTERM =~# 'truecolor\|24bit'
@@ -242,6 +244,8 @@ nnoremap <C-l> <C-W>l
 nnoremap Y y$
 nnoremap Q @q
 vnoremap Q :norm @q<CR>
+nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
+nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
 nnoremap <silent><CR> :e %:p:s,.h$,.X123X,:s,.m$,.h,:s,.X123X$,.m,<CR>
 nnoremap <BS> <C-^>
 
@@ -252,7 +256,7 @@ nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <silent><leader>N :vnew<CR>
 nnoremap <leader><Tab> <C-^>
 nnoremap <leader>o <Nop>
-nnoremap <leader>op :e ~/dotfiles/.vimrc<CR>
+nnoremap <silent><leader>op :e ~/dotfiles/.vimrc<CR>
 nnoremap <leader>oy :let @+=expand("%:p:~")<CR> :echo expand("%:p:~")<CR>
 nnoremap <leader>od :windo diffthis<CR>
 nnoremap <leader>oD :windo diffoff<CR>
