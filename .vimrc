@@ -176,7 +176,7 @@ endfunction
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:goto_definition()
-    if (index(['python','javascript','typescript'], &filetype) >= 0)
+    if (index(['python','javascript','typescript','c','cpp'], &filetype) >= 0)
         call CocAction('jumpDefinition')
     else
         normal! gd
@@ -324,7 +324,8 @@ augroup vimrc
 
     " File Type settings
     autocmd BufNewFile,BufRead Podfile,podlocal,*.podspec,Fastfile setfiletype ruby
-    autocmd FileType objc nnoremap <silent><CR> :e %:p:s,.h$,.X123X,:s,.m$,.h,:s,.X123X$,.m,<CR>
+    autocmd FileType objc nnoremap <buffer> <silent><CR> :e %:p:s,.h$,.X123X,:s,.m$,.h,:s,.X123X$,.m,<CR>
+    autocmd FileType c,cpp nnoremap <buffer> <silent><CR> :e %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
 augroup END
 
 "}}}

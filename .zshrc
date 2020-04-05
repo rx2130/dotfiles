@@ -13,6 +13,7 @@ export EDITOR='nvim'
 export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git/' --glob '!node_modules'"
 
 if [ $(uname) = "Darwin" ]; then
+    export PATH="/usr/local/opt/llvm/bin:$PATH"
     if [ $(hostname) = "xuerAli-MBP.local" ]; then
         export JAVA_HOME="$(/usr/libexec/java_home)"
     fi
