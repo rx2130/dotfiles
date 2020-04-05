@@ -16,13 +16,6 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 nnoremap <leader>ou :UndotreeToggle<CR>
 
 Plug 'thalesmello/tabfold'
-Plug 'thinca/vim-quickrun', { 'on': 'QuickRun' }
-nnoremap <CR> :QuickRun<CR>
-
-Plug 'lambdalisue/vim-quickrun-neovim-job'
-let g:quickrun_config = {'_': {}}
-let g:quickrun_config._.runner = 'neovim_job'
-
 Plug 'tpope/vim-sleuth'
 Plug 'chiel92/vim-autoformat', { 'on': 'Autoformat' }
 nnoremap <leader>= :Autoformat<CR>
