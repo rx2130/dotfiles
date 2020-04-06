@@ -201,18 +201,14 @@ set splitbelow
 set ignorecase
 set smartcase
 set expandtab
-set tabstop=4
+set softtabstop=4
 set shiftwidth=4
 set shiftround
 set hidden
 set mouse=nvi
 set undofile
-set autowrite
-set autowriteall
 set inccommand=nosplit
 set noswapfile
-set nobackup
-set nowritebackup
 set shortmess+=c      " don't give ins-completion-menu messages
 set lazyredraw
 set noshowmode
@@ -294,6 +290,7 @@ nnoremap <silent> <leader>z :call <sid>zoom()<cr>
 
 augroup vimrc
     autocmd!
+
     " Set vim to save the file on focus out
     autocmd FocusLost * silent! :wa
 
@@ -306,12 +303,6 @@ augroup vimrc
                 \   exe "normal! g`\"" |
                 \ endif
 
-    " open help vertically
-    autocmd FileType help wincmd L
-
-    " spell check for git commits
-    autocmd FileType gitcommit setlocal spell
-
     " Resize panes when window/terminal gets resize
     autocmd VimResized * wincmd =
 
@@ -323,9 +314,13 @@ augroup vimrc
     autocmd TermOpen * tnoremap <buffer> <Esc> <C-\><C-n>
 
     " File Type settings
-    autocmd BufNewFile,BufRead Podfile,podlocal,*.podspec,Fastfile setfiletype ruby
+    autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o " disable automatic comment insertion
+    autocmd FileType help wincmd L " open help vertically
+    autocmd FileType gitcommit setlocal spell " spell check for git commits
     autocmd FileType objc nnoremap <buffer> <silent><CR> :e %:p:s,.h$,.X123X,:s,.m$,.h,:s,.X123X$,.m,<CR>
     autocmd FileType c,cpp nnoremap <buffer> <silent><CR> :e %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
+    autocmd BufNewFile,BufRead Podfile,podlocal,*.podspec,Fastfile setfiletype ruby
+
 augroup END
 
 "}}}
