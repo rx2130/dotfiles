@@ -85,6 +85,7 @@ else
     Plug '/usr/share/doc/fzf/examples'
 endif
 Plug 'junegunn/fzf.vim'
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 let g:fzf_action = {
             \ 'ctrl-t': 'tab split',
             \ 'ctrl-s': 'split',
@@ -108,10 +109,7 @@ nnoremap <silent><leader>? :History/<CR>
 nnoremap <silent><leader>gh :Commits<CR>
 nnoremap <silent><leader>gH :BCommits<CR>
 
-autocmd! FileType fzf
-autocmd FileType fzf set laststatus=0 noruler |
-            \ autocmd BufLeave <buffer> set laststatus=2 ruler
-autocmd FileType fzf tunmap <buffer> <Esc>
+autocmd! FileType fzf tunmap <buffer> <Esc>
 
 Plug 'airblade/vim-rooter'
 let g:rooter_silent_chdir = 1
