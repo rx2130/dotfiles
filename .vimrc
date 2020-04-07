@@ -315,9 +315,11 @@ augroup vimrc
     " termianl mode Esc map
     autocmd TermOpen * tnoremap <buffer> <Esc> <C-\><C-n>
 
+    " open help vertically
+    autocmd BufEnter * if &filetype ==# 'help' | wincmd L | endif
+
     " File Type settings
     autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o " disable automatic comment insertion
-    autocmd FileType help wincmd L " open help vertically
     autocmd FileType gitcommit setlocal spell " spell check for git commits
     autocmd FileType objc nnoremap <buffer> <silent><CR> :e %:p:s,.h$,.X123X,:s,.m$,.h,:s,.X123X$,.m,<CR>
     autocmd FileType c,cpp nnoremap <buffer> <silent><CR> :e %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
