@@ -13,7 +13,7 @@ nnoremap <silent>q<leader> :Sayonara<CR>
 nnoremap <silent><leader>Q :Sayonara!<CR>
 
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
-nnoremap <leader>ou :UndotreeToggle<CR>
+nnoremap <leader>u :UndotreeToggle<CR>
 
 Plug 'thalesmello/tabfold'
 Plug 'tpope/vim-sleuth'
@@ -75,10 +75,9 @@ function! LightlineFilename()
     return expand('%')
 endfunction
 
-Plug 'yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
-nnoremap <leader>oi :IndentLinesToggle<CR>
-" lazy load indentLine
-autocmd! User indentLine doautocmd indentLine Syntax
+" hide when lost focus
+autocmd! FocusGained * call setwinvar(winnr(), '&statusline', lightline#statusline(0))
+autocmd! FocusLost * call setwinvar(winnr(), '&statusline', lightline#statusline(1))
 
 Plug 'machakann/vim-highlightedyank'
 let g:highlightedyank_highlight_duration = 100
@@ -97,22 +96,22 @@ let g:fzf_action = {
             \ 'ctrl-v': 'vsplit',
             \ }
 
-nnoremap <silent><leader>f :Files<CR>
-nnoremap <silent><leader>F :GFiles?<CR>
-nnoremap <silent><leader>b :Buffers<CR>
-nnoremap <silent><leader>h :History<CR>
-nnoremap <silent><leader>L :BLines<CR>
-nnoremap <silent><leader>l :Lines<CR>
-nnoremap <silent><leader>' :Marks<CR>
-nnoremap <silent><leader>; :Commands<CR>
-nnoremap <silent><leader>: :History:<CR>
-nnoremap <silent><leader>S :Filetypes<CR>
-nnoremap <silent><leader>H :Helptags<CR>
-nnoremap <silent><leader>M :Maps<CR>
-nnoremap <silent><leader>/ :Rg<CR>
-nnoremap <silent><leader>? :History/<CR>
-nnoremap <silent><leader>gh :Commits<CR>
-nnoremap <silent><leader>gH :BCommits<CR>
+nnoremap <leader>f :Files<CR>
+nnoremap <leader>F :GFiles?<CR>
+nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>h :History<CR>
+nnoremap <leader>L :BLines<CR>
+nnoremap <leader>l :Lines<CR>
+nnoremap <leader>' :Marks<CR>
+nnoremap <leader>; :Commands<CR>
+nnoremap <leader>: :History:<CR>
+nnoremap <leader>S :Filetypes<CR>
+nnoremap <leader>H :Helptags<CR>
+nnoremap <leader>M :Maps<CR>
+nnoremap <leader>/ :Rg<CR>
+nnoremap <leader>? :History/<CR>
+nnoremap <leader>gh :Commits<CR>
+nnoremap <leader>gH :BCommits<CR>
 
 autocmd! FileType fzf tunmap <buffer> <Esc>
 
@@ -122,19 +121,18 @@ let g:rooter_change_directory_for_non_project_files = 'current'
 
 " Git enhancements
 Plug 'tpope/vim-fugitive'
-nnoremap <silent><leader>gg :Gstatus<CR>
-nnoremap <silent><leader>gd :Gdiffsplit<CR>
-nnoremap <silent><leader>gc :Gcommit -q<CR>
-nnoremap <silent><leader>gp :Gpush<CR>
-nnoremap <silent><leader>gf :Gfetch<CR>
-nnoremap <silent><leader>gl :Gpull<CR>
-nnoremap <silent><leader>gb :Gblame<CR>
-vnoremap <silent><leader>gb :Gblame<CR>
-nnoremap <silent><leader>gB :Gbrowse<CR>
-vnoremap <silent><leader>gB :Gbrowse<CR>
+nnoremap <leader>gg :Gstatus<CR>
+nnoremap <leader>gd :Gdiffsplit<CR>
+nnoremap <leader>gp :Gpush<CR>
+nnoremap <leader>gf :Gfetch<CR>
+nnoremap <leader>gl :Gpull<CR>
+nnoremap <leader>gb :Gblame<CR>
+vnoremap <leader>gb :Gblame<CR>
+nnoremap <leader>gB :Gbrowse<CR>
+vnoremap <leader>gB :Gbrowse<CR>
 
 " prevent unintended write
-autocmd BufReadPost fugitive:///*//0/* setlocal nomodifiable readonly
+autocmd! BufReadPost fugitive:///*//0/* setlocal nomodifiable readonly
 
 Plug 'shumphrey/fugitive-gitlab.vim'
 let g:fugitive_gitlab_domains = ['http://gitlab.alibaba-inc.com']
@@ -237,21 +235,18 @@ nnoremap Y y$
 nnoremap Q @q
 vnoremap Q :norm @q<CR>
 vnoremap . :norm .<CR>
+nnoremap <BS> <C-^>
+
 nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
 nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
-nnoremap <BS> <C-^>
+vnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
+vnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
 
 nnoremap <Space> <Nop>
 nnoremap <silent><leader><Space> zz:nohlsearch<CR>
 nnoremap <leader>w :w!<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
-nnoremap <silent><leader>N :vnew<CR>
 nnoremap <leader><Tab> <C-^>
-nnoremap <leader>o <Nop>
-nnoremap <silent><leader>op :e ~/dotfiles/.vimrc<CR>
-nnoremap <leader>oy :let @+=expand("%:p:~")<CR> :echo expand("%:p:~")<CR>
-nnoremap <leader>od :windo diffthis<CR>
-nnoremap <leader>oD :windo diffoff<CR>
 
 inoremap <C-a> <C-o>^
 inoremap <C-e> <C-o>$
