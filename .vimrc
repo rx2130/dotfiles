@@ -32,7 +32,6 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
-Plug 'nelstrom/vim-visual-star-search'
 Plug 'vim-scripts/ReplaceWithRegister'
 nmap <Leader>r  <Plug>ReplaceWithRegisterOperator
 nmap <Leader>rr <Plug>ReplaceWithRegisterLine
@@ -41,6 +40,13 @@ xmap <Leader>r  <Plug>ReplaceWithRegisterVisual
 Plug 'raimondi/delimitmate'
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
+
+Plug 'haya14busa/is.vim'
+Plug 'haya14busa/vim-asterisk'
+map *  <Plug>(asterisk-z*)<Plug>(is-nohl-1)
+map g* <Plug>(asterisk-gz*)<Plug>(is-nohl-1)
+map #  <Plug>(asterisk-z#)<Plug>(is-nohl-1)
+map g# <Plug>(asterisk-gz#)<Plug>(is-nohl-1)
 
 " GUI enhancements
 Plug 'gruvbox-community/gruvbox'
@@ -74,7 +80,6 @@ nnoremap <leader>oi :IndentLinesToggle<CR>
 " lazy load indentLine
 autocmd! User indentLine doautocmd indentLine Syntax
 
-Plug 'haya14busa/is.vim'
 Plug 'machakann/vim-highlightedyank'
 let g:highlightedyank_highlight_duration = 100
 
@@ -231,6 +236,7 @@ nnoremap <C-l> <C-W>l
 nnoremap Y y$
 nnoremap Q @q
 vnoremap Q :norm @q<CR>
+vnoremap . :norm .<CR>
 nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
 nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
 nnoremap <BS> <C-^>
@@ -266,10 +272,8 @@ cnoremap <C-d> <Del>
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cnoremap W!! w !sudo tee > /dev/null %
 
-" Type a replacement term and press . to repeat the replacement again. Useful
-" for replacing a few instances of the term (comparable to multiple cursors).
-nnoremap <silent><leader>s :let @/='\<'.expand('<cword>').'\>'<CR>cgn
-xnoremap <silent><leader>s "sy:let @/=@s<CR>cgn
+nmap <silent><leader>s *cgn
+xmap <silent><leader>s *cgn
 
 " Zoom
 function! s:zoom()
