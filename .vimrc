@@ -43,10 +43,14 @@ let g:delimitMate_expand_space = 1
 
 Plug 'haya14busa/is.vim'
 Plug 'haya14busa/vim-asterisk'
-map *  <Plug>(asterisk-z*)<Plug>(is-nohl-1)
-map g* <Plug>(asterisk-gz*)<Plug>(is-nohl-1)
-map #  <Plug>(asterisk-z#)<Plug>(is-nohl-1)
-map g# <Plug>(asterisk-gz#)<Plug>(is-nohl-1)
+map *   <Plug>(asterisk-*)<Plug>(is-nohl-1)
+map #   <Plug>(asterisk-#)<Plug>(is-nohl-1)
+map g*  <Plug>(asterisk-g*)<Plug>(is-nohl-1)
+map g#  <Plug>(asterisk-g#)<Plug>(is-nohl-1)
+map z*  <Plug>(asterisk-z*)<Plug>(is-nohl-1)
+map gz* <Plug>(asterisk-gz*)<Plug>(is-nohl-1)
+map z#  <Plug>(asterisk-z#)<Plug>(is-nohl-1)
+map gz# <Plug>(asterisk-gz#)<Plug>(is-nohl-1)
 
 " GUI enhancements
 Plug 'gruvbox-community/gruvbox'
@@ -267,8 +271,8 @@ cnoremap <C-d> <Del>
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cnoremap W!! w !sudo tee > /dev/null %
 
-nmap <silent><leader>s *cgn
-xmap <silent><leader>s *cgn
+nmap <silent><leader>s z*cgn
+xmap <silent><leader>s z*cgn
 
 " Zoom
 function! s:zoom()
