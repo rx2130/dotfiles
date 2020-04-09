@@ -295,8 +295,8 @@ augroup vimrc
     " Set vim to save the file on focus out
     autocmd FocusLost * silent! :wa
 
-    " Automatically source .vimrc on save
-    autocmd BufWritePost .vimrc nested source $MYVIMRC
+    " Automatically source vimrc on save
+    autocmd BufWritePost vimrc,$MYVIMRC nested source $MYVIMRC
 
     " Remember last cursor position
     autocmd BufReadPost *
