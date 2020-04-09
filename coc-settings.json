@@ -1,5 +1,7 @@
 {
-    "xml.format.splitAttributes": true,
     "python.jediEnabled": false,
-    "coc.preferences.useQuickfixForLocations": true
+    "python.formatting.provider": "black",
+    "xml.format.splitAttributes": true,
+    "coc.preferences.useQuickfixForLocations": true,
+    "git.enableGutters": false
 }

@@ -17,10 +17,7 @@ nnoremap <leader>u :UndotreeToggle<CR>
 
 Plug 'thalesmello/tabfold'
 Plug 'tpope/vim-sleuth'
-Plug 'chiel92/vim-autoformat', { 'on': 'Autoformat' }
-nnoremap <leader>= :Autoformat<CR>
-vnoremap <leader>= :Autoformat<CR>
-
+Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-vinegar'
 let g:netrw_liststyle = 3
 
@@ -78,10 +75,6 @@ function! LightlineFilename()
     endif
     return expand('%')
 endfunction
-
-" hide when lost focus
-autocmd! FocusGained * call setwinvar(winnr(), '&statusline', lightline#statusline(0))
-autocmd! FocusLost * call setwinvar(winnr(), '&statusline', lightline#statusline(1))
 
 Plug 'machakann/vim-highlightedyank'
 let g:highlightedyank_highlight_duration = 100
@@ -180,6 +173,8 @@ function! s:show_documentation()
 endfunction
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
+let g:coc_global_extensions = ['coc-git', 'coc-clangd', 'coc-yaml', 'coc-python', 'coc-json', 'coc-tsserver']
+
 function! s:goto_definition()
     if (index(['python','javascript','typescript','c','cpp'], &filetype) >= 0)
         call CocAction('jumpDefinition')
@@ -191,8 +186,16 @@ nnoremap <silent> gd :call <SID>goto_definition()<CR>
 nmap <silent> 1gD <Plug>(coc-type-definition)
 nmap <silent> gD <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <leader>rn <Plug>(coc-rename)
 
+" Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
+xmap <leader>= <Plug>(coc-format-selected)
+nnoremap <leader>= :Format<CR>
+
+" navigate chunks of current buffer
+nmap [c <Plug>(coc-git-prevchunk)
+nmap ]c <Plug>(coc-git-nextchunk)
 
 call plug#end()
 
@@ -268,9 +271,6 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap <C-d> <Del>
 
-" Allow saving of files as sudo when I forgot to start vim using sudo.
-cnoremap W!! w !sudo tee > /dev/null %
-
 nmap <silent><leader>s z*cgn
 xmap <silent><leader>s z*cgn
 
@@ -322,7 +322,7 @@ augroup vimrc
     autocmd FileType gitcommit setlocal spell " spell check for git commits
     autocmd FileType objc nnoremap <buffer> <silent><CR> :e %:p:s,.h$,.X123X,:s,.m$,.h,:s,.X123X$,.m,<CR>
     autocmd FileType c,cpp nnoremap <buffer> <silent><CR> :e %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
-    autocmd BufNewFile,BufRead Podfile,podlocal,*.podspec,Fastfile setfiletype ruby
+    autocmd BufNewFile,BufRead podlocal,*.podspec,Fastfile setfiletype ruby
 
 augroup END
 
