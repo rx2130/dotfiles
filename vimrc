@@ -138,9 +138,6 @@ Plug 'tpope/vim-rhubarb'
 Plug 'junegunn/gv.vim', { 'on': 'GV' }
 nnoremap <silent><leader>gv :GV --all<CR>
 
-" Syntactic language support
-Plug 'sheerun/vim-polyglot'
-
 " Semantic language support
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
