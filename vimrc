@@ -16,7 +16,7 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 nnoremap <leader>u :UndotreeToggle<CR>
 
 Plug 'thalesmello/tabfold'
-Plug 'tpope/vim-sleuth'
+" Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-vinegar'
 let g:netrw_liststyle = 3
@@ -71,9 +71,6 @@ function! LightlineFilename()
     endif
     return expand('%')
 endfunction
-
-Plug 'machakann/vim-highlightedyank'
-let g:highlightedyank_highlight_duration = 100
 
 " Fuzzy finder
 Plug 'junegunn/fzf'
@@ -167,7 +164,7 @@ endfunction
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 let g:coc_global_extensions = ['coc-git', 'coc-clangd', 'coc-yaml', 'coc-python',
-            \ 'coc-json', 'coc-tsserver', 'coc-pairs']
+            \ 'coc-json', 'coc-tsserver', 'coc-pairs', 'coc-yank']
 
 function! s:goto_definition()
     if (index(['python','javascript','typescript','c','cpp'], &filetype) >= 0)

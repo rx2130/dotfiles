@@ -3,5 +3,7 @@
     "python.formatting.provider": "black",
     "xml.format.splitAttributes": true,
     "coc.preferences.useQuickfixForLocations": true,
-    "git.enableGutters": false
+    "git.enableGutters": false,
+    "yank.highlight.duration": 100,
+    "yank.enableCompletion": false
 }
