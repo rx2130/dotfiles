@@ -80,13 +80,10 @@ Plug 'machakann/vim-highlightedyank'
 let g:highlightedyank_highlight_duration = 100
 
 " Fuzzy finder
-if has("macunix")
-    Plug '/usr/local/opt/fzf'
-else
-    Plug '/usr/share/doc/fzf/examples'
-endif
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+let g:fzf_history_dir = '~/.local/share/fzf-history'
 let g:fzf_action = {
             \ 'ctrl-t': 'tab split',
             \ 'ctrl-s': 'split',
@@ -109,6 +106,8 @@ nnoremap <leader>/ :Rg<CR>
 nnoremap <leader>? :History/<CR>
 nnoremap <leader>gh :Commits<CR>
 nnoremap <leader>gH :BCommits<CR>
+nnoremap <leader>, :FZF ~/dotfiles<CR>v
+nnoremap <expr> <CR> ':Files<CR>'.expand('%:t:r')
 
 autocmd! FileType fzf tunmap <buffer> <Esc>
 
@@ -239,7 +238,6 @@ nnoremap Y y$
 nnoremap Q @q
 vnoremap Q :norm @q<CR>
 vnoremap . :norm .<CR>
-nnoremap <BS> <C-^>
 
 nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
 nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
@@ -317,10 +315,7 @@ augroup vimrc
     " File Type settings
     autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o " disable automatic comment insertion
     autocmd FileType gitcommit setlocal spell " spell check for git commits
-    autocmd FileType objc nnoremap <buffer> <silent><CR> :e %:p:s,.h$,.X123X,:s,.m$,.h,:s,.X123X$,.m,<CR>
-    autocmd FileType c,cpp nnoremap <buffer> <silent><CR> :e %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
     autocmd BufNewFile,BufRead podlocal,*.podspec,Fastfile setfiletype ruby
-
 augroup END
 
 "}}}
