@@ -34,10 +34,6 @@ nmap <Leader>r  <Plug>ReplaceWithRegisterOperator
 nmap <Leader>rr <Plug>ReplaceWithRegisterLine
 xmap <Leader>r  <Plug>ReplaceWithRegisterVisual
 
-Plug 'raimondi/delimitmate'
-let g:delimitMate_expand_cr = 1
-let g:delimitMate_expand_space = 1
-
 Plug 'haya14busa/is.vim'
 Plug 'haya14busa/vim-asterisk'
 map *   <Plug>(asterisk-*)<Plug>(is-nohl-1)
@@ -157,8 +153,9 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-h>"
 " use <C-Space>for trigger completion
 inoremap <expr> <C-Space> coc#refresh()
 
-" Use <cr> to confirm completion
-imap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<Plug>delimitMateCR"
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 function! s:show_documentation()
     if (index(['vim','help'], &filetype) >= 0)
@@ -169,7 +166,8 @@ function! s:show_documentation()
 endfunction
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-let g:coc_global_extensions = ['coc-git', 'coc-clangd', 'coc-yaml', 'coc-python', 'coc-json', 'coc-tsserver']
+let g:coc_global_extensions = ['coc-git', 'coc-clangd', 'coc-yaml', 'coc-python',
+            \ 'coc-json', 'coc-tsserver', 'coc-pairs']
 
 function! s:goto_definition()
     if (index(['python','javascript','typescript','c','cpp'], &filetype) >= 0)
@@ -304,7 +302,7 @@ augroup vimrc
 
     " refresh changed content of file
     autocmd CursorHold * if getcmdwintype() == '' | checktime | endif
-    autocmd FileChangedShellPost * echohl WarningMsg | echo "Warning: File changed on disk. Buffer reloaded." | echohl None
+    autocmd FileChangedShellPost * echohl WarningMsg | echom "Warning: File changed on disk. Buffer reloaded." | echohl None
 
     " termianl mode Esc map
     autocmd TermOpen * tnoremap <buffer> <Esc> <C-\><C-n>
