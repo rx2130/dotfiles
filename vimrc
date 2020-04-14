@@ -9,7 +9,6 @@ call plug#begin('~/.vim/plugged')
 " Vim enhancements
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 nnoremap <silent><leader>q :Sayonara<CR>
-nnoremap <silent>q<leader> :Sayonara<CR>
 nnoremap <silent><leader>Q :Sayonara!<CR>
 
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
@@ -307,8 +306,14 @@ augroup vimrc
     " termianl mode Esc map
     autocmd TermOpen * tnoremap <buffer> <Esc> <C-\><C-n>
 
-    " open help vertically
-    autocmd BufEnter * if &filetype ==# 'help' | wincmd L | endif
+    " open help in new tab and q to quit
+    function! s:helptab()
+        if &buftype == 'help'
+            wincmd T
+            nnoremap <buffer> q :q<cr>
+        endif
+    endfunction
+    autocmd BufEnter *.txt call s:helptab()
 
     " File Type settings
     autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o " disable automatic comment insertion
