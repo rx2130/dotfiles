@@ -100,7 +100,7 @@ nnoremap <leader>? :History/<CR>
 nnoremap <leader>gh :Commits<CR>
 nnoremap <leader>gH :BCommits<CR>
 nnoremap <leader>, :FZF ~/dotfiles<CR>v
-nnoremap <expr> <CR> ':Files<CR>'.expand('%:t:r')
+nnoremap <expr> <C-p> ':Files<CR>'.expand('%:t:r')
 
 autocmd! FileType fzf tunmap <buffer> <Esc>
 
@@ -260,6 +260,9 @@ cnoremap <C-b> <Left>
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap <C-d> <Del>
+
+xnoremap <expr> I (mode()=~#'[vV]'?'<C-v>^o^I':'I')
+xnoremap <expr> A (mode()=~#'[vV]'?'<C-v>0o$A':'A')
 
 nmap <silent><leader>s z*cgn
 xmap <silent><leader>s z*cgn
