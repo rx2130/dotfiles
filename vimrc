@@ -28,21 +28,11 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
+Plug 'nelstrom/vim-visual-star-search'
 Plug 'vim-scripts/ReplaceWithRegister'
 nmap <Leader>r  <Plug>ReplaceWithRegisterOperator
 nmap <Leader>rr <Plug>ReplaceWithRegisterLine
 xmap <Leader>r  <Plug>ReplaceWithRegisterVisual
-
-Plug 'haya14busa/is.vim'
-Plug 'haya14busa/vim-asterisk'
-map *   <Plug>(asterisk-*)<Plug>(is-nohl-1)
-map #   <Plug>(asterisk-#)<Plug>(is-nohl-1)
-map g*  <Plug>(asterisk-g*)<Plug>(is-nohl-1)
-map g#  <Plug>(asterisk-g#)<Plug>(is-nohl-1)
-map z*  <Plug>(asterisk-z*)<Plug>(is-nohl-1)
-map gz* <Plug>(asterisk-gz*)<Plug>(is-nohl-1)
-map z#  <Plug>(asterisk-z#)<Plug>(is-nohl-1)
-map gz# <Plug>(asterisk-gz#)<Plug>(is-nohl-1)
 
 " GUI enhancements
 Plug 'gruvbox-community/gruvbox'
@@ -263,8 +253,8 @@ cnoremap <C-d> <Del>
 xnoremap <expr> I (mode()=~#'[vV]'?'<C-v>^o^I':'I')
 xnoremap <expr> A (mode()=~#'[vV]'?'<C-v>0o$A':'A')
 
-nmap <silent><leader>s z*cgn
-xmap <silent><leader>s z*cgn
+nmap <silent><leader>s *Ncgn
+xmap <silent><leader>s *Ncgn
 
 " Zoom
 function! s:zoom()
