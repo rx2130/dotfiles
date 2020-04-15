@@ -76,8 +76,8 @@ nnoremap <leader>f :Files<CR>
 nnoremap <leader>F :GFiles?<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>h :History<CR>
-nnoremap <leader>L :BLines<CR>
-nnoremap <leader>l :Lines<CR>
+nnoremap <leader>l :BLines<CR>
+nnoremap <leader>L :Lines<CR>
 nnoremap <leader>' :Marks<CR>
 nnoremap <leader>; :Commands<CR>
 nnoremap <leader>: :History:<CR>
@@ -99,7 +99,7 @@ let g:rooter_change_directory_for_non_project_files = 'current'
 
 " Git enhancements
 Plug 'tpope/vim-fugitive'
-nnoremap <leader>gg :Gstatus<CR>
+nnoremap <leader>gg :Gstatus!<CR>
 nnoremap <leader>gd :Gdiffsplit<CR>
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gf :Gfetch<CR>
@@ -117,7 +117,7 @@ let g:fugitive_gitlab_domains = ['http://gitlab.alibaba-inc.com']
 
 Plug 'tpope/vim-rhubarb'
 Plug 'junegunn/gv.vim', { 'on': 'GV' }
-nnoremap <silent><leader>gv :GV --all<CR>
+nnoremap <leader>gv :GV --all<CR>
 
 " Semantic language support
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -222,6 +222,7 @@ nnoremap Y y$
 nnoremap Q @q
 vnoremap Q :norm @q<CR>
 vnoremap . :norm .<CR>
+nnoremap <silent><esc> :nohlsearch<cr>
 
 nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
 nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
@@ -230,9 +231,11 @@ vnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
 
 nnoremap <Space> <Nop>
 nnoremap <silent><leader><Space> zz:nohlsearch<CR>
+vnoremap <silent><leader><Space> <esc>zz:nohlsearch<CR>
 nnoremap <leader>w :w!<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader><Tab> <C-^>
+nnoremap <leader>c :cclose<bar>lclose<cr>
 
 inoremap <C-a> <C-o>^
 inoremap <C-e> <C-o>$
