@@ -15,7 +15,6 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 nnoremap <leader>u :UndotreeToggle<CR>
 
 Plug 'thalesmello/tabfold'
-" Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-vinegar'
 let g:netrw_liststyle = 3
@@ -155,14 +154,7 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 let g:coc_global_extensions = ['coc-git', 'coc-clangd', 'coc-yaml', 'coc-python',
             \ 'coc-json', 'coc-tsserver', 'coc-pairs', 'coc-yank']
 
-function! s:goto_definition()
-    if (index(['python','javascript','typescript','c','cpp'], &filetype) >= 0)
-        call CocAction('jumpDefinition')
-    else
-        normal! gd
-    endif
-endfunction
-nnoremap <silent> gd :call <SID>goto_definition()<CR>
+nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> 1gD <Plug>(coc-type-definition)
 nmap <silent> gD <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
@@ -196,7 +188,6 @@ set hidden
 set mouse=nvi
 set undofile
 set inccommand=nosplit
-set noswapfile
 set shortmess+=c      " don't give ins-completion-menu messages
 set lazyredraw
 set noshowmode
@@ -236,6 +227,7 @@ nnoremap <leader>w :w!<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader><Tab> <C-^>
 nnoremap <leader>c :cclose<bar>lclose<cr>
+nnoremap <leader>t :vsplit \| terminal<cr>
 
 inoremap <C-a> <C-o>^
 inoremap <C-e> <C-o>$
@@ -256,19 +248,8 @@ cnoremap <C-d> <Del>
 xnoremap <expr> I (mode()=~#'[vV]'?'<C-v>^o^I':'I')
 xnoremap <expr> A (mode()=~#'[vV]'?'<C-v>0o$A':'A')
 
-nmap <silent><leader>s *Ncgn
-xmap <silent><leader>s *Ncgn
-
-" Zoom
-function! s:zoom()
-    if winnr('$') > 1
-        tab split
-    elseif len(filter(map(range(tabpagenr('$')), 'tabpagebuflist(v:val + 1)'),
-                \ 'index(v:val, '.bufnr('').') >= 0')) > 1
-        tabclose
-    endif
-endfunction
-nnoremap <silent> <leader>z :call <sid>zoom()<cr>
+nmap <silent><leader>s *''cgn
+xmap <silent><leader>s *''cgn
 
 "}}}
 
@@ -314,9 +295,34 @@ augroup vimrc
     autocmd BufNewFile,BufRead podlocal,*.podspec,Fastfile setfiletype ruby
 augroup END
 
+" only show cursor line in active window
+augroup cusorlineToggle
+    autocmd!
+    autocmd WinEnter * set cursorline
+    autocmd WinLeave * set nocursorline
+augroup END
+
 "}}}
 
-" <Leader>G/! | Google it / Feeling lucky {{{
+" handy tools {{{
+
+" ============================================================================
+" <Leader>z zoom
+" ============================================================================
+function! s:zoom()
+    if winnr('$') > 1
+        tab split
+    elseif len(filter(map(range(tabpagenr('$')), 'tabpagebuflist(v:val + 1)'),
+                \ 'index(v:val, '.bufnr('').') >= 0')) > 1
+        tabclose
+    endif
+endfunction
+
+nnoremap <silent> <leader>z :call <sid>zoom()<cr>
+
+" ============================================================================
+" <Leader>G/! | Google it / Feeling lucky
+" ============================================================================
 function! s:goog(pat, lucky)
     let q = '"'.substitute(a:pat, '["\n]', ' ', 'g').'"'
     let q = substitute(q, '[[:punct:] ]',
@@ -329,4 +335,5 @@ nnoremap <leader>G :call <SID>goog(expand("<cWORD>"), 0)<cr>
 nnoremap <leader>! :call <SID>goog(expand("<cWORD>"), 1)<cr>
 xnoremap <leader>G "gy:call <SID>goog(@g, 0)<cr>gv
 xnoremap <leader>! "gy:call <SID>goog(@g, 1)<cr>gv
+
 "}}}
