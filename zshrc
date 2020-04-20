@@ -62,10 +62,10 @@ if [ $(hostname) = "xuerAli-MBP.local" ]; then
 fi
 # }}}
 
-# Spaceship ZSH as a prompt {{{
-autoload -U promptinit; promptinit
-prompt spaceship
+# powerlevel10k prompt {{{
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 # }}}
 
 # vim: set fdm=marker fmr={{{,}}} fdl=0 :
-
