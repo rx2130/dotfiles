@@ -165,9 +165,12 @@ command! -nargs=0 Format :call CocAction('format')
 xmap <leader>= <Plug>(coc-format-selected)
 nnoremap <leader>= :Format<CR>
 
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)" navigate chunks of current buffer
+
 " navigate chunks of current buffer
-nmap [c <Plug>(coc-git-prevchunk)
-nmap ]c <Plug>(coc-git-nextchunk)
+nmap <silent> <expr> [c &diff ? '[c' : '<Plug>(coc-git-prevchunk)'
+nmap <silent> <expr> ]c &diff ? ']c' : '<Plug>(coc-git-nextchunk)'
 
 call plug#end()
 
@@ -193,6 +196,7 @@ set lazyredraw
 set noshowmode
 set scrolloff=1
 set sidescrolloff=5
+set cursorline
 
 colorscheme gruvbox
 if has('termguicolors') && $COLORTERM =~# 'truecolor\|24bit'
