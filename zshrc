@@ -19,10 +19,6 @@ if [ $(uname) = "Darwin" ]; then
     export PATH="/usr/local/opt/python/libexec/bin:$PATH"
     # c/c++
     export PATH="/usr/local/opt/llvm/bin:$PATH"
-    if [ $(hostname) = "xuerAli-MBP.local" ]; then
-        # coc-xml
-        export JAVA_HOME="$(/usr/libexec/java_home)"
-    fi
 else
     export PATH=~/.local/bin:$PATH
 fi
@@ -42,9 +38,6 @@ alias tm='tmux attach || tmux new'
 
 if [ $(uname) = "Darwin" ]; then
     alias tower="gittower ."
-    if [ $(hostname) = "xuerAli-MBP.local" ]; then
-        alias fbp="gaa && gcmsg 'Update' && git push --set-upstream origin master && freeblock version_up && freeblock publish"
-    fi
 fi
 # }}}
 
@@ -55,10 +48,6 @@ if [ $(uname) = "Darwin" ]; then
 else
     source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
-
-if [ $(hostname) = "xuerAli-MBP.local" ]; then
-    [ -f ~/.tbenv/bundler-exec.sh ] && source ~/.tbenv/bundler-exec.sh
 fi
 # }}}
 

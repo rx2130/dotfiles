@@ -232,6 +232,7 @@ nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader><Tab> <C-^>
 nnoremap <leader>c :cclose<bar>lclose<cr>
 nnoremap <leader>t :vsplit \| terminal<cr>
+nnoremap <leader>T :split \| terminal<cr>
 
 inoremap <C-a> <C-o>^
 inoremap <C-e> <C-o>$
@@ -296,7 +297,6 @@ augroup vimrc
     " File Type settings
     autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o " disable automatic comment insertion
     autocmd FileType gitcommit setlocal spell " spell check for git commits
-    autocmd BufNewFile,BufRead podlocal,*.podspec,Fastfile setfiletype ruby
 augroup END
 
 " only show cursor line in active window
