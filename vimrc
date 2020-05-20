@@ -87,7 +87,7 @@ nnoremap <leader>/ :Rg<CR>
 nnoremap <leader>? :History/<CR>
 nnoremap <leader>gh :Commits<CR>
 nnoremap <leader>gH :BCommits<CR>
-nnoremap <leader>, :FZF ~/dotfiles<CR>v
+nnoremap <leader>, :Files ~/dotfiles<CR>v
 nnoremap <expr> <C-p> ':Files<CR>'.expand('%:t:r')
 
 autocmd! FileType fzf tunmap <buffer> <Esc>
