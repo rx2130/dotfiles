@@ -111,9 +111,6 @@ vnoremap <leader>gB :Gbrowse<CR>
 " prevent unintended write
 autocmd! BufReadPost fugitive:///*//0/* setlocal nomodifiable readonly
 
-Plug 'shumphrey/fugitive-gitlab.vim'
-let g:fugitive_gitlab_domains = ['http://gitlab.alibaba-inc.com']
-
 Plug 'tpope/vim-rhubarb'
 Plug 'junegunn/gv.vim', { 'on': 'GV' }
 nnoremap <leader>gv :GV --all<CR>

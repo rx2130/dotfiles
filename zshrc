@@ -8,21 +8,33 @@ plugins=(git z colored-man-pages history docker fzf)
 source $ZSH/oh-my-zsh.sh
 # }}}
 
+
 # export {{{
 export EDITOR='nvim'
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+if [ $(uname) = "Darwin" ]; then
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+    export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
+else
+    export FZF_DEFAULT_COMMAND='fdfind --type f --hidden --follow --exclude .git'
+    export FZF_ALT_C_COMMAND="fdfind --type d --hidden --follow --exclude .git"
+fi
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
 
 if [ $(uname) = "Darwin" ]; then
     # python
     export PATH="/usr/local/opt/python/libexec/bin:$PATH"
     # c/c++
     export PATH="/usr/local/opt/llvm/bin:$PATH"
+
+    if [ $(hostname) = "3c22fb384f5f.ant.amazon.com" ]; then
+        # Builder toolbox
+        export PATH=$HOME/.toolbox/bin:$PATH
+    fi
 else
     export PATH=~/.local/bin:$PATH
 fi
 # }}}
+
 
 # alias {{{
 alias v="nvim"
@@ -33,13 +45,9 @@ if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
     fi
 fi
 alias www="python3 -m http.server"
-alias ss="https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890"
 alias tm='tmux attach || tmux new'
-
-if [ $(uname) = "Darwin" ]; then
-    alias tower="gittower ."
-fi
 # }}}
+
 
 # source addition scripts {{{
 if [ $(uname) = "Darwin" ]; then
@@ -50,6 +58,7 @@ else
     source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 # }}}
+
 
 # powerlevel10k prompt {{{
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.

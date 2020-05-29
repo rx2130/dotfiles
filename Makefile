@@ -1,15 +1,15 @@
 all: sync
 
 sync:
-	mkdir -p ~/.config/alacritty
-	mkdir -p ~/.config/nvim
-
 	ln -snf $(PWD)/vimrc ~/.config/nvim/init.vim
 	ln -snf $(PWD)/coc-settings.json ~/.config/nvim/coc-settings.json
-	ln -snf $(PWD)/alacritty.yml ~/.config/alacritty/alacritty.yml
 	ln -snf $(PWD)/zshrc ~/.zshrc
 	ln -snf $(PWD)/tmux.conf ~/.tmux.conf
-	ln -snf $(PWD)/p10k.zsh ~/.p10k.zsh
+
+	# ln -snf $(PWD)/alacritty.yml ~/.config/alacritty/alacritty.yml
+	# ln -snf $(PWD)/p10k.zsh ~/.p10k.zsh
+	# ln -snf $(PWD)/init.lua ~/.hammerspoon/init.lua
+	# ln -snf $(PWD)/karabiner.json ~/.config/karabiner/karabiner.json
 
 clean:
 	rm -f ~/.config/nvim/init.vim

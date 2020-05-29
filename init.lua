@@ -69,9 +69,9 @@ function open(name)
   end
 end
 
--- hs.hotkey.bind({"cmd", "ctrl"}, "m", open("Messages"))
+hs.hotkey.bind({"cmd", "ctrl"}, "w", open("Messages"))
 hs.hotkey.bind({"cmd", "ctrl"}, "p", open("Preview"))
-hs.hotkey.bind({"cmd", "ctrl"}, "w", open("Telegram"))
+-- hs.hotkey.bind({"cmd", "ctrl"}, "w", open("Telegram"))
 hs.hotkey.bind({"cmd", "ctrl"}, "s", open("Safari"))
 -- hs.hotkey.bind({"cmd", "ctrl"}, "a", open("Visual Studio Code"))
 hs.hotkey.bind({"cmd", "ctrl"}, "i", open("Alacritty"))
