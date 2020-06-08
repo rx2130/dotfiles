@@ -116,6 +116,9 @@ Plug 'junegunn/gv.vim', { 'on': 'GV' }
 nnoremap <leader>gv :GV --all<CR>
 
 " Semantic language support
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+nmap <leader>p <Plug>MarkdownPreviewToggle
+
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " use <tab> for trigger completion and navigate to the next complete item
