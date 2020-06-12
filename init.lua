@@ -76,13 +76,12 @@ hs.hotkey.bind({"cmd", "ctrl"}, "s", open("Safari"))
 hs.hotkey.bind({"cmd", "ctrl"}, "i", open("Alacritty"))
 hs.hotkey.bind({"cmd", "ctrl"}, "e", open("Amazon Chime"))
 hs.hotkey.bind({"cmd", "ctrl"}, "r", open("Finder"))
--- hs.hotkey.bind({"cmd", "ctrl"}, "[", open("Tower"))
--- hs.hotkey.bind({"cmd", "ctrl"}, "]", open("Simulator"))
+hs.hotkey.bind({"cmd", "ctrl"}, "[", open("Calendar"))
+hs.hotkey.bind({"cmd", "ctrl"}, "]", open("Notes"))
 -- hs.hotkey.bind({"cmd", "ctrl"}, "u", open("Mindnode"))
--- hs.hotkey.bind({"cmd", "ctrl"}, "x", open("Xcode"))
+hs.hotkey.bind({"cmd", "ctrl"}, "x", open("IntelliJ IDEA"))
 hs.hotkey.bind({"cmd", "ctrl"}, "y", open("Google Chrome"))
 hs.hotkey.bind({"cmd", "ctrl"}, "m", open("Mail"))
-hs.hotkey.bind({"cmd", "ctrl"}, "[", open("Calendar"))
 
 
 -- Defeating paste blocking

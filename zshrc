@@ -22,13 +22,20 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 if [ $(uname) = "Darwin" ]; then
     # python
-    export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+    # export PATH="/usr/local/opt/python/libexec/bin:$PATH"
     # c/c++
     export PATH="/usr/local/opt/llvm/bin:$PATH"
+    # go
+    export PATH=$PATH:$(go env GOPATH)/bin
 
     if [ $(hostname) = "3c22fb384f5f.ant.amazon.com" ]; then
         # Builder toolbox
         export PATH=$HOME/.toolbox/bin:$PATH
+        # JDK
+        export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-8.jdk/Contents/Home
+        # RDE
+        fpath=(~/.zsh/completion $fpath)
+        autoload -Uz compinit && compinit -i
     fi
 else
     export PATH=~/.local/bin:$PATH
@@ -43,6 +50,9 @@ if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
         export EDITOR='nvr'
         alias v=nvr
     fi
+fi
+if [ $(hostname) = "3c22fb384f5f.ant.amazon.com" ]; then
+    alias bb="brazil-build"
 fi
 alias www="python3 -m http.server"
 alias tm='tmux attach || tmux new'
@@ -66,4 +76,4 @@ source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 # }}}
 
-# vim: set fdm=marker fmr={{{,}}} fdl=0 :
+# vim: set fdm=marker fmr={{{,}}} fdl=99 :

@@ -14,6 +14,7 @@ nnoremap <silent><leader>Q :Sayonara!<CR>
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 nnoremap <leader>u :UndotreeToggle<CR>
 
+Plug 'justinmk/vim-gtfo'
 Plug 'thalesmello/tabfold'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-vinegar'
@@ -35,6 +36,8 @@ xmap <Leader>r  <Plug>ReplaceWithRegisterVisual
 
 " GUI enhancements
 Plug 'gruvbox-community/gruvbox'
+let g:gruvbox_invert_selection='0'
+
 Plug 'itchyny/lightline.vim'
 let g:lightline = {
             \ 'colorscheme': 'gruvbox',
@@ -98,7 +101,7 @@ let g:rooter_change_directory_for_non_project_files = 'current'
 
 " Git enhancements
 Plug 'tpope/vim-fugitive'
-nnoremap <leader>gg :Gstatus!<CR>
+nnoremap <leader>gg :Gstatus<CR>
 nnoremap <leader>gd :Gdiffsplit<CR>
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gf :Gfetch<CR>
@@ -151,8 +154,7 @@ function! s:show_documentation()
 endfunction
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-let g:coc_global_extensions = ['coc-git', 'coc-clangd', 'coc-yaml', 'coc-python',
-            \ 'coc-json', 'coc-tsserver', 'coc-pairs', 'coc-yank']
+let g:coc_global_extensions = ['coc-git', 'coc-yaml', 'coc-python', 'coc-json', 'coc-tsserver', 'coc-pairs', 'coc-yank']
 
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> 1gD <Plug>(coc-type-definition)
@@ -166,7 +168,7 @@ xmap <leader>= <Plug>(coc-format-selected)
 nnoremap <leader>= :Format<CR>
 
 " Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)" navigate chunks of current buffer
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
 " navigate chunks of current buffer
 nmap <silent> <expr> [c &diff ? '[c' : '<Plug>(coc-git-prevchunk)'
@@ -197,6 +199,7 @@ set noshowmode
 set scrolloff=1
 set sidescrolloff=5
 set cursorline
+set nowrap
 
 colorscheme gruvbox
 if has('termguicolors') && $COLORTERM =~# 'truecolor\|24bit'
@@ -227,7 +230,7 @@ vnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
 nnoremap <Space> <Nop>
 nnoremap <silent><leader><Space> zz:nohlsearch<CR>
 vnoremap <silent><leader><Space> <esc>zz:nohlsearch<CR>
-nnoremap <leader>w :w!<CR>
+nnoremap <leader>w :update<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader><Tab> <C-^>
 nnoremap <leader>c :cclose<bar>lclose<cr>
@@ -285,14 +288,8 @@ augroup vimrc
     " termianl mode Esc map
     autocmd TermOpen * tnoremap <buffer> <Esc> <C-\><C-n>
 
-    " open help in new tab and q to quit
-    function! s:helptab()
-        if &buftype == 'help'
-            wincmd T
-            nnoremap <buffer> q :q<cr>
-        endif
-    endfunction
-    autocmd BufEnter *.txt call s:helptab()
+    " open help vertically
+    autocmd BufEnter * if &filetype ==# 'help' | wincmd L | endif
 
     " File Type settings
     autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o " disable automatic comment insertion
