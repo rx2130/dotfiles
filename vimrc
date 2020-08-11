@@ -154,7 +154,7 @@ function! s:show_documentation()
 endfunction
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-let g:coc_global_extensions = ['coc-git', 'coc-yaml', 'coc-python', 'coc-json', 'coc-tsserver', 'coc-pairs', 'coc-yank']
+let g:coc_global_extensions = ['coc-git', 'coc-yaml', 'coc-python', 'coc-json', 'coc-tsserver', 'coc-pairs']
 
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> 1gD <Plug>(coc-type-definition)
@@ -200,6 +200,7 @@ set scrolloff=1
 set sidescrolloff=5
 set cursorline
 set nowrap
+set signcolumn=number
 
 colorscheme gruvbox
 if has('termguicolors') && $COLORTERM =~# 'truecolor\|24bit'
@@ -290,6 +291,9 @@ augroup vimrc
 
     " open help vertically
     autocmd BufEnter * if &filetype ==# 'help' | wincmd L | endif
+
+    " highlight yank
+    autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=100}
 
     " File Type settings
     autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o " disable automatic comment insertion
