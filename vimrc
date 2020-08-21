@@ -18,6 +18,8 @@ Plug 'justinmk/vim-gtfo'
 Plug 'thalesmello/tabfold'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-vinegar'
+nmap <Leader>- <Plug>VinegarUp
+nnoremap - -
 let g:netrw_liststyle = 3
 
 Plug 'tpope/vim-dispatch'
@@ -33,6 +35,10 @@ Plug 'vim-scripts/ReplaceWithRegister'
 nmap <Leader>r  <Plug>ReplaceWithRegisterOperator
 nmap <Leader>rr <Plug>ReplaceWithRegisterLine
 xmap <Leader>r  <Plug>ReplaceWithRegisterVisual
+
+Plug 'raimondi/delimitmate'
+let g:delimitMate_expand_cr = 1
+let g:delimitMate_expand_space = 1
 
 " GUI enhancements
 Plug 'gruvbox-community/gruvbox'
@@ -66,7 +72,6 @@ endfunction
 " Fuzzy finder
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 let g:fzf_action = {
             \ 'ctrl-t': 'tab split',
@@ -115,64 +120,20 @@ vnoremap <leader>gB :Gbrowse<CR>
 autocmd! BufReadPost fugitive:///*//0/* setlocal nomodifiable readonly
 
 Plug 'tpope/vim-rhubarb'
+Plug '~/.vim/plugged/vim-gitfarm'
 Plug 'junegunn/gv.vim', { 'on': 'GV' }
 nnoremap <leader>gv :GV --all<CR>
 
 " Semantic language support
+Plug 'ssh://git.amazon.com:2222/pkg/VimIon.git'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 nmap <leader>p <Plug>MarkdownPreviewToggle
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" use <tab> for trigger completion and navigate to the next complete item
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-inoremap <silent><expr> <Tab>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<Tab>" :
-            \ coc#refresh()
-
-" Use <Tab> and <S-Tab> to navigate the completion list
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-" use <C-Space>for trigger completion
-inoremap <expr> <C-Space> coc#refresh()
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-function! s:show_documentation()
-    if (index(['vim','help'], &filetype) >= 0)
-        execute 'h '.expand('<cword>')
-    else
-        call CocAction('doHover')
-    endif
-endfunction
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-let g:coc_global_extensions = ['coc-git', 'coc-yaml', 'coc-python', 'coc-json', 'coc-tsserver', 'coc-pairs']
-
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> 1gD <Plug>(coc-type-definition)
-nmap <silent> gD <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <leader>rn <Plug>(coc-rename)
-
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
-xmap <leader>= <Plug>(coc-format-selected)
-nnoremap <leader>= :Format<CR>
-
-" Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call CocAction('fold', <f-args>)
-
-" navigate chunks of current buffer
-nmap <silent> <expr> [c &diff ? '[c' : '<Plug>(coc-git-prevchunk)'
-nmap <silent> <expr> ]c &diff ? ']c' : '<Plug>(coc-git-nextchunk)'
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'neovim/nvim-lsp'
+Plug 'nvim-lua/diagnostic-nvim'
+Plug 'nvim-lua/completion-nvim'
+Plug 'steelsojka/completion-buffers'
 
 call plug#end()
 
@@ -193,7 +154,6 @@ set hidden
 set mouse=nvi
 set undofile
 set inccommand=nosplit
-set shortmess+=c      " don't give ins-completion-menu messages
 set lazyredraw
 set noshowmode
 set scrolloff=1
@@ -237,6 +197,8 @@ nnoremap <leader><Tab> <C-^>
 nnoremap <leader>c :cclose<bar>lclose<cr>
 nnoremap <leader>t :vsplit \| terminal<cr>
 nnoremap <leader>T :split \| terminal<cr>
+nnoremap <leader>y :let @*=expand('%:t:r')<CR>
+nnoremap <leader>Y :let @*=expand('%:p')<CR>
 
 inoremap <C-a> <C-o>^
 inoremap <C-e> <C-o>$
@@ -259,6 +221,11 @@ xnoremap <expr> A (mode()=~#'[vV]'?'<C-v>0o$A':'A')
 
 nmap <silent><leader>s *''cgn
 xmap <silent><leader>s *''cgn
+
+" Press * to search for the term under the cursor or a visual selection and
+" then press a key below to replace all instances of it in the current file.
+nnoremap <leader>R :%s///g<Left><Left>
+xnoremap <leader>R :s///g<Left><Left>
 
 "}}}
 
@@ -283,7 +250,6 @@ augroup vimrc
     autocmd VimResized * wincmd =
 
     " refresh changed content of file
-    autocmd CursorHold * if getcmdwintype() == '' | checktime | endif
     autocmd FileChangedShellPost * echohl WarningMsg | echom "Warning: File changed on disk. Buffer reloaded." | echohl None
 
     " termianl mode Esc map
@@ -298,6 +264,7 @@ augroup vimrc
     " File Type settings
     autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o " disable automatic comment insertion
     autocmd FileType gitcommit setlocal spell " spell check for git commits
+    autocmd BufNewFile,BufRead *.ftl setfiletype ftl
 augroup END
 
 " only show cursor line in active window
@@ -341,4 +308,81 @@ nnoremap <leader>! :call <SID>goog(expand("<cWORD>"), 1)<cr>
 xnoremap <leader>G "gy:call <SID>goog(@g, 0)<cr>gv
 xnoremap <leader>! "gy:call <SID>goog(@g, 1)<cr>gv
 
+" ----------------------------------------------------------------------------
+" ?ae | entire object
+" ----------------------------------------------------------------------------
+xnoremap <silent> ae gg0oG$
+onoremap <silent> ae :<C-U>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>
 "}}}
+
+" Treesitter {{{
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+    highlight = {
+      enable = true,
+    }
+}
+EOF
+"}}}
+
+" LSP {{{
+lua << EOF
+require'nvim_lsp'.jsonls.setup{}
+require'nvim_lsp'.html.setup{}
+require'nvim_lsp'.cssls.setup{}
+require'nvim_lsp'.pyls.setup{}
+require'nvim_lsp'.gopls.setup{}
+require'nvim_lsp'.tsserver.setup{}
+require'nvim_lsp'.yamlls.setup{}
+EOF
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+" nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent> <leader>= <cmd>lua vim.lsp.buf.formatting()<CR>
+"}}}
+
+" completion {{{
+autocmd BufEnter * lua require'completion'.on_attach()
+
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing message extra message when using completion
+set shortmess+=c
+
+let g:completion_chain_complete_list = [
+    \{'complete_items': ['lsp', 'buffer']},
+    \{'mode': '<c-p>'},
+    \{'mode': '<c-n>'}
+\]
+let g:completion_matching_strategy_list = ['exact', 'fuzzy']
+let g:completion_matching_ignore_case = 1
+
+" Use <cr> to confirm completion
+let g:completion_confirm_key = ""
+imap <expr> <cr>  pumvisible() ? complete_info()["selected"] != "-1" ?
+                 \ "\<Plug>(completion_confirm_completion)"  : "\<c-n>\<CR>" :  "\<CR>"
+
+" map <c-space> to manually trigger completion
+imap <silent> <c-space> <Plug>(completion_trigger)
+"}}}
+
+" completion {{{
+autocmd BufEnter * lua require'diagnostic'.on_attach()
+let g:diagnostic_enable_virtual_text = 1
+nnoremap ]g :NextDiagnosticCycle<CR>
+nnoremap [g :PrevDiagnosticCycle<CR>
+"}}}
+
+" nnoremap <leader>R :.w !bash<CR>
+" autocmd FileType python map <buffer> <leader>R :w<CR>:exec '!python3' shellescape(@%, 1)<CR>

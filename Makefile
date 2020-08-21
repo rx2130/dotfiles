@@ -2,7 +2,6 @@ all: default
 
 default:
 	ln -snf $(PWD)/vimrc ~/.config/nvim/init.vim
-	ln -snf $(PWD)/coc-settings.json ~/.config/nvim/coc-settings.json
 	ln -snf $(PWD)/zshrc ~/.zshrc
 	ln -snf $(PWD)/tmux.conf ~/.tmux.conf
 
@@ -18,7 +17,6 @@ vim:
 
 clean:
 	rm -f ~/.config/nvim/init.vim
-	rm -f ~/.config/nvim/coc-settings.json
 	rm -f ~/.config/alacritty/alacritty.yml
 	rm -f ~/.zshrc
 	rm -f ~/.tmux.conf

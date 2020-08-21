@@ -38,9 +38,11 @@ colors:
     white:   '0xebdbb2'
 
 
+shell:
+  program: /usr/local/bin/tmux
+
+
 key_bindings:
-  # - { key: W,     mods: Command,  action: None   }
-  # - { key: N,     mods: Command,  command: { program: "open", args: ["-nb", "io.alacritty"] } }
   - { key: Key6,  mods: Control,  chars: "\x1e"  }
   - { key: F,     mods: Alt,      chars: "\x1bf" }
   - { key: B,     mods: Alt,      chars: "\x1bb" }

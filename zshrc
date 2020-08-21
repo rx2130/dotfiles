@@ -22,23 +22,29 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 if [ $(uname) = "Darwin" ]; then
     # python
-    # export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+    export PATH="/usr/local/opt/python/libexec/bin:$PATH"
     # c/c++
-    export PATH="/usr/local/opt/llvm/bin:$PATH"
+    # export PATH="/usr/local/opt/llvm/bin:$PATH"
     # go
-    export PATH=$PATH:$(go env GOPATH)/bin
-
-    if [ $(hostname) = "3c22fb384f5f.ant.amazon.com" ]; then
-        # Builder toolbox
-        export PATH=$HOME/.toolbox/bin:$PATH
-        # JDK
-        export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-8.jdk/Contents/Home
-        # RDE
-        fpath=(~/.zsh/completion $fpath)
-        autoload -Uz compinit && compinit -i
-    fi
+    # export PATH=$PATH:$(go env GOPATH)/bin
 else
     export PATH=~/.local/bin:$PATH
+fi
+
+if [ $(hostname) = "3c22fbbbbf8e.ant.amazon.com" ]; then
+    # Builder toolbox
+    export PATH=$HOME/.toolbox/bin:$PATH
+    # JDK
+    export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-8.jdk/Contents/Home
+    # RDE
+    fpath=(~/.zsh/completion $fpath)
+    autoload -Uz compinit && compinit -i
+    # generate-brazil-jdt-project
+    export PATH=$HOME/workplace/generate-brazil-jdt-project/src/NinjaUtilsClojure/build/bin:$PATH
+    # CMPortalTools
+    export PATH="/Users/xuerx/workplace/CMPortalTools/src/CMPortalTools/bin:$PATH"
+    # curl-openssl alfred
+    export PATH="/usr/local/opt/curl-openssl/bin:$PATH"
 fi
 # }}}
 
@@ -51,7 +57,7 @@ if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
         alias v=nvr
     fi
 fi
-if [ $(hostname) = "3c22fb384f5f.ant.amazon.com" ]; then
+if [ $(hostname) = "3c22fbbbbf8e.ant.amazon.com" ]; then
     alias bb="brazil-build"
 fi
 alias www="python3 -m http.server"
@@ -61,8 +67,8 @@ alias tm='tmux attach || tmux new'
 
 # source addition scripts {{{
 if [ $(uname) = "Darwin" ]; then
-    source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-    source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    # source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+    # source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 else
     source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
