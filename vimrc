@@ -265,6 +265,7 @@ augroup vimrc
     autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o " disable automatic comment insertion
     autocmd FileType gitcommit setlocal spell " spell check for git commits
     autocmd BufNewFile,BufRead *.ftl setfiletype ftl
+    autocmd FileType ftl setlocal commentstring=<#--\ %s\ -->
 augroup END
 
 " only show cursor line in active window
@@ -334,6 +335,13 @@ require'nvim_lsp'.pyls.setup{}
 require'nvim_lsp'.gopls.setup{}
 require'nvim_lsp'.tsserver.setup{}
 require'nvim_lsp'.yamlls.setup{}
+require'nvim_lsp'.jdtls.setup{
+    settings = {
+        init_options = {
+            jvm_args = {"-javaagent:/Users/xuerx/Developer/lombok.jar -Xbootclasspath/a:/Users/xuerx/Developer/lombok.jar"}
+        }
+    }
+}
 EOF
 nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
@@ -371,7 +379,7 @@ let g:completion_matching_ignore_case = 1
 " Use <cr> to confirm completion
 let g:completion_confirm_key = ""
 imap <expr> <cr>  pumvisible() ? complete_info()["selected"] != "-1" ?
-                 \ "\<Plug>(completion_confirm_completion)"  : "\<c-n>\<CR>" :  "\<CR>"
+                 \ "\<Plug>(completion_confirm_completion)"  : "\<c-n>\<CR>" :  "\<Plug>delimitMateCR"
 
 " map <c-space> to manually trigger completion
 imap <silent> <c-space> <Plug>(completion_trigger)
