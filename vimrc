@@ -161,6 +161,10 @@ set sidescrolloff=5
 set cursorline
 set nowrap
 set signcolumn=number
+" https://vimways.org/2018/the-power-of-diff/
+set diffopt+=algorithm:patience
+set diffopt+=indent-heuristic
+set diffopt+=iwhite
 
 colorscheme gruvbox
 if has('termguicolors') && $COLORTERM =~# 'truecolor\|24bit'
