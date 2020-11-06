@@ -120,9 +120,12 @@ vnoremap <leader>gB :Gbrowse<CR>
 autocmd! BufReadPost fugitive:///*//0/* setlocal nomodifiable readonly
 
 Plug 'tpope/vim-rhubarb'
-Plug '~/.vim/plugged/vim-gitfarm'
+Plug 'ssh://git.amazon.com:2222/pkg/Vim-code-browse'
 Plug 'junegunn/gv.vim', { 'on': 'GV' }
 nnoremap <leader>gv :GV --all<CR>
+
+Plug 'stsewd/fzf-checkout.vim'
+nnoremap <leader>gc :GBranches <CR>
 
 " Semantic language support
 Plug 'ssh://git.amazon.com:2222/pkg/VimIon.git'
@@ -389,7 +392,7 @@ imap <expr> <cr>  pumvisible() ? complete_info()["selected"] != "-1" ?
 imap <silent> <c-space> <Plug>(completion_trigger)
 "}}}
 
-" completion {{{
+" diagnostic {{{
 autocmd BufEnter * lua require'diagnostic'.on_attach()
 let g:diagnostic_enable_virtual_text = 1
 nnoremap ]g :NextDiagnosticCycle<CR>
