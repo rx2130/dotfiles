@@ -135,7 +135,6 @@ nmap <leader>p <Plug>MarkdownPreviewToggle
 
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'neovim/nvim-lsp'
-Plug 'nvim-lua/diagnostic-nvim'
 Plug 'nvim-lua/completion-nvim'
 Plug 'steelsojka/completion-buffers'
 
@@ -400,8 +399,22 @@ imap <silent> <c-space> <Plug>(completion_trigger)
 "}}}
 
 " diagnostic {{{
-autocmd BufEnter * lua require'diagnostic'.on_attach()
-let g:diagnostic_enable_virtual_text = 1
-nnoremap ]g :NextDiagnosticCycle<CR>
-nnoremap [g :PrevDiagnosticCycle<CR>
+lua << EOF
+do
+  local method = "textDocument/publishDiagnostics"
+  local default_callback = vim.lsp.callbacks[method]
+  vim.lsp.callbacks[method] = function(err, method, result, client_id)
+    default_callback(err, method, result, client_id)
+    if result and result.diagnostics then
+      for _, v in ipairs(result.diagnostics) do
+        v.bufnr = client_id
+        v.lnum = v.range.start.line + 1
+        v.col = v.range.start.character + 1
+        v.text = v.message
+      end
+      vim.lsp.util.set_qflist(result.diagnostics)
+    end
+  end
+end
+EOF
 "}}}
