@@ -123,6 +123,7 @@ Plug 'tpope/vim-rhubarb'
 Plug 'ssh://git.amazon.com:2222/pkg/Vim-code-browse'
 Plug 'junegunn/gv.vim', { 'on': 'GV' }
 nnoremap <leader>gv :GV --all<CR>
+nnoremap <leader>gV :GV<CR>
 
 Plug 'stsewd/fzf-checkout.vim'
 nnoremap <leader>gc :GBranches <CR>
@@ -168,6 +169,7 @@ set signcolumn=number
 set diffopt+=algorithm:patience
 set diffopt+=indent-heuristic
 set diffopt+=iwhite
+set nofixendofline
 
 colorscheme gruvbox
 if has('termguicolors') && $COLORTERM =~# 'truecolor\|24bit'
@@ -206,6 +208,8 @@ nnoremap <leader>t :vsplit \| terminal<cr>
 nnoremap <leader>T :split \| terminal<cr>
 nnoremap <leader>y :let @*=expand('%:t:r')<CR>
 nnoremap <leader>Y :let @*=expand('%:p')<CR>
+nnoremap <leader>gf :diffget //2<CR>
+nnoremap <leader>gj :diffget //3<CR>
 
 inoremap <C-a> <C-o>^
 inoremap <C-e> <C-o>$
@@ -273,6 +277,9 @@ augroup vimrc
     autocmd FileType gitcommit setlocal spell " spell check for git commits
     autocmd BufNewFile,BufRead *.ftl setfiletype ftl
     autocmd FileType ftl setlocal commentstring=<#--\ %s\ -->
+
+    " nnoremap <leader>R :.w !bash<CR>
+    autocmd FileType python map <buffer> <leader><CR> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
 augroup END
 
 " only show cursor line in active window
@@ -398,6 +405,3 @@ let g:diagnostic_enable_virtual_text = 1
 nnoremap ]g :NextDiagnosticCycle<CR>
 nnoremap [g :PrevDiagnosticCycle<CR>
 "}}}
-
-" nnoremap <leader>R :.w !bash<CR>
-" autocmd FileType python map <buffer> <leader>R :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
