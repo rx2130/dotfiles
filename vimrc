@@ -346,14 +346,28 @@ EOF
 
 " LSP {{{
 lua << EOF
-require'lspconfig'.jsonls.setup{}
-require'lspconfig'.html.setup{}
-require'lspconfig'.cssls.setup{}
-require'lspconfig'.pyls.setup{}
-require'lspconfig'.gopls.setup{}
-require'lspconfig'.tsserver.setup{}
-require'lspconfig'.yamlls.setup{}
+local custom_lsp_attach = function(client)
+    vim.api.nvim_buf_set_keymap(0, 'n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<CR>', {noremap = true, silent = true})
+    vim.api.nvim_buf_set_keymap(0, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap = true, silent = true})
+    vim.api.nvim_buf_set_keymap(0, 'n', 'gD', '<cmd>lua vim.lsp.buf.implementation()<CR>', {noremap = true, silent = true})
+    -- vim.api.nvim_buf_set_keymap(0, 'n', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', {noremap = true, silent = true})
+    vim.api.nvim_buf_set_keymap(0, 'n', '1gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', {noremap = true, silent = true})
+    vim.api.nvim_buf_set_keymap(0, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', {noremap = true, silent = true})
+    vim.api.nvim_buf_set_keymap(0, 'n', 'g0', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', {noremap = true, silent = true})
+    vim.api.nvim_buf_set_keymap(0, 'n', 'gW', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', {noremap = true, silent = true})
+    vim.api.nvim_buf_set_keymap(0, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', {noremap = true, silent = true})
+    vim.api.nvim_buf_set_keymap(0, 'n', '<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>', {noremap = true, silent = true})
+end
+
+require'lspconfig'.jsonls.setup{ on_attach = custom_lsp_attach }
+require'lspconfig'.html.setup{ on_attach = custom_lsp_attach }
+require'lspconfig'.cssls.setup{ on_attach = custom_lsp_attach }
+require'lspconfig'.pyls.setup{ on_attach = custom_lsp_attach }
+require'lspconfig'.gopls.setup{ on_attach = custom_lsp_attach }
+require'lspconfig'.tsserver.setup{ on_attach = custom_lsp_attach }
+require'lspconfig'.yamlls.setup{ on_attach = custom_lsp_attach }
 require'lspconfig'.jdtls.setup{
+    on_attach = on_attach,
     settings = {
         init_options = {
             jvm_args = {"-javaagent:/Users/xuerx/Developer/lombok.jar -Xbootclasspath/a:/Users/xuerx/Developer/lombok.jar"}
@@ -361,16 +375,6 @@ require'lspconfig'.jdtls.setup{
     }
 }
 EOF
-nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-" nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> <leader>= <cmd>lua vim.lsp.buf.formatting()<CR>
 "}}}
 
 " completion {{{
