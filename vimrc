@@ -132,6 +132,8 @@ nnoremap <leader>gc :GBranches <CR>
 Plug 'ssh://git.amazon.com:2222/pkg/VimIon.git'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 nmap <leader>p <Plug>MarkdownPreviewToggle
+let g:mkdp_auto_close = 1
+let g:markdown_folding=1
 
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'neovim/nvim-lsp'
@@ -156,7 +158,8 @@ set shiftround
 set hidden
 set mouse=nvi
 set undofile
-set inccommand=nosplit
+" set inccommand=nosplit
+set noswapfile
 set lazyredraw
 set noshowmode
 set scrolloff=1
@@ -168,7 +171,6 @@ set signcolumn=number
 set diffopt+=algorithm:patience
 set diffopt+=indent-heuristic
 set diffopt+=iwhite
-set nofixendofline
 
 colorscheme gruvbox
 if has('termguicolors') && $COLORTERM =~# 'truecolor\|24bit'
@@ -337,18 +339,21 @@ require'nvim-treesitter.configs'.setup {
     }
 }
 EOF
+" set foldmethod=expr
+" set foldexpr=nvim_treesitter#foldexpr()
+" set foldlevelstart=20
 "}}}
 
 " LSP {{{
 lua << EOF
-require'nvim_lsp'.jsonls.setup{}
-require'nvim_lsp'.html.setup{}
-require'nvim_lsp'.cssls.setup{}
-require'nvim_lsp'.pyls.setup{}
-require'nvim_lsp'.gopls.setup{}
-require'nvim_lsp'.tsserver.setup{}
-require'nvim_lsp'.yamlls.setup{}
-require'nvim_lsp'.jdtls.setup{
+require'lspconfig'.jsonls.setup{}
+require'lspconfig'.html.setup{}
+require'lspconfig'.cssls.setup{}
+require'lspconfig'.pyls.setup{}
+require'lspconfig'.gopls.setup{}
+require'lspconfig'.tsserver.setup{}
+require'lspconfig'.yamlls.setup{}
+require'lspconfig'.jdtls.setup{
     settings = {
         init_options = {
             jvm_args = {"-javaagent:/Users/xuerx/Developer/lombok.jar -Xbootclasspath/a:/Users/xuerx/Developer/lombok.jar"}
@@ -399,22 +404,22 @@ imap <silent> <c-space> <Plug>(completion_trigger)
 "}}}
 
 " diagnostic {{{
-lua << EOF
-do
-  local method = "textDocument/publishDiagnostics"
-  local default_callback = vim.lsp.callbacks[method]
-  vim.lsp.callbacks[method] = function(err, method, result, client_id)
-    default_callback(err, method, result, client_id)
-    if result and result.diagnostics then
-      for _, v in ipairs(result.diagnostics) do
-        v.bufnr = client_id
-        v.lnum = v.range.start.line + 1
-        v.col = v.range.start.character + 1
-        v.text = v.message
-      end
-      vim.lsp.util.set_qflist(result.diagnostics)
-    end
-  end
-end
-EOF
+" lua << EOF
+" do
+"   local method = "textDocument/publishDiagnostics"
+"   local default_callback = vim.lsp.callbacks[method]
+"   vim.lsp.callbacks[method] = function(err, method, result, client_id)
+"     default_callback(err, method, result, client_id)
+"     if result and result.diagnostics then
+"       for _, v in ipairs(result.diagnostics) do
+"         v.bufnr = client_id
+"         v.lnum = v.range.start.line + 1
+"         v.col = v.range.start.character + 1
+"         v.text = v.message
+"       end
+"       vim.lsp.util.set_qflist(result.diagnostics)
+"     end
+"   end
+" end
+" EOF
 "}}}
