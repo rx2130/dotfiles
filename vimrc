@@ -401,6 +401,17 @@ imap <expr> <cr>  pumvisible() ? complete_info()["selected"] != "-1" ?
 
 " map <c-space> to manually trigger completion
 imap <silent> <c-space> <Plug>(completion_trigger)
+
+" Trigger completion with <Tab>
+inoremap <silent><expr> <TAB>
+  \ pumvisible() ? "\<C-n>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ completion#trigger_completion()
+
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
 "}}}
 
 " diagnostic {{{
