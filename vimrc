@@ -149,12 +149,11 @@ call plug#end()
 set clipboard=unnamed
 set splitright
 set splitbelow
-set ignorecase
-set smartcase
-set expandtab
-set softtabstop=4
-set shiftwidth=4
-set shiftround
+set ignorecase " Search case insensitive...
+set smartcase " ... but not it begins with upper case 
+set expandtab " tab byte (\x09) will be replaced with a number of space bytes (\x20)
+set tabstop=4 " how long each <tab> will be
+set shiftwidth=4 " indentation via =, > and <
 set hidden
 set mouse=nvi
 set undofile
@@ -167,6 +166,7 @@ set sidescrolloff=5
 set cursorline
 set nowrap
 set signcolumn=number
+
 " https://vimways.org/2018/the-power-of-diff/
 set diffopt+=algorithm:patience
 set diffopt+=indent-heuristic
@@ -294,9 +294,9 @@ augroup END
 
 " handy tools {{{
 
-" ============================================================================
+" ----------------------------------------------------------------------------
 " <Leader>z zoom
-" ============================================================================
+" ----------------------------------------------------------------------------
 function! s:zoom()
     if winnr('$') > 1
         tab split
@@ -308,9 +308,9 @@ endfunction
 
 nnoremap <silent> <leader>z :call <sid>zoom()<cr>
 
-" ============================================================================
+" ----------------------------------------------------------------------------
 " <Leader>G/! | Google it / Feeling lucky
-" ============================================================================
+" ----------------------------------------------------------------------------
 function! s:goog(pat, lucky)
     let q = '"'.substitute(a:pat, '["\n]', ' ', 'g').'"'
     let q = substitute(q, '[[:punct:] ]',
