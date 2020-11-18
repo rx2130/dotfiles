@@ -17,10 +17,12 @@ nnoremap <leader>u :UndotreeToggle<CR>
 Plug 'justinmk/vim-gtfo'
 Plug 'thalesmello/tabfold'
 Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-vinegar'
-nmap <Leader>- <Plug>VinegarUp
-nnoremap - -
-let g:netrw_liststyle = 3
+Plug 'justinmk/vim-dirvish'
+" https://github.com/justinmk/config/blob/master/.config/nvim/init.vim#L54-L57
+" Disable netrw, but autoload it for `gx`.
+let g:loaded_netrwPlugin = 0
+nmap gx <Plug>NetrwBrowseX
+nnoremap <silent> <Plug>NetrwBrowseX :call netrw#BrowseX(expand((exists("g:netrw_gx")? g:netrw_gx : '<cfile>')),netrw#CheckIfRemote())<CR>
 
 Plug 'tpope/vim-dispatch'
 let g:dispatch_no_tmux_make = 1
