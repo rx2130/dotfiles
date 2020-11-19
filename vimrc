@@ -209,8 +209,8 @@ nnoremap <leader><Tab> <C-^>
 nnoremap <leader>c :cclose<bar>lclose<cr>
 nnoremap <leader>t :vsplit \| terminal<cr>
 nnoremap <leader>T :split \| terminal<cr>
-nnoremap <leader>y :let @*=expand('%:t:r')<CR>
-nnoremap <leader>Y :let @*=expand('%:p')<CR>
+nnoremap <leader>y :let @*=expand('%:t:r')<CR> :echo expand('%:t:r')<CR>
+nnoremap <leader>Y :let @*=expand('%:p')<CR> :echo expand('%:p')<CR>
 nnoremap <leader>gf :diffget //2<CR>
 nnoremap <leader>gj :diffget //3<CR>
 
@@ -229,6 +229,7 @@ cnoremap <C-b> <Left>
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap <C-d> <Del>
+cnoremap <C-k> <C-\>e(strpart(getcmdline(), 0, getcmdpos() - 1))<CR>
 
 xnoremap <expr> I (mode()=~#'[vV]'?'<C-v>^o^I':'I')
 xnoremap <expr> A (mode()=~#'[vV]'?'<C-v>0o$A':'A')
@@ -369,7 +370,7 @@ require'lspconfig'.gopls.setup{ on_attach = custom_lsp_attach }
 require'lspconfig'.tsserver.setup{ on_attach = custom_lsp_attach }
 require'lspconfig'.yamlls.setup{ on_attach = custom_lsp_attach }
 require'lspconfig'.jdtls.setup{
-    on_attach = on_attach,
+    on_attach = custom_lsp_attach,
     settings = {
         init_options = {
             jvm_args = {"-javaagent:/Users/xuerx/Developer/lombok.jar -Xbootclasspath/a:/Users/xuerx/Developer/lombok.jar"}
