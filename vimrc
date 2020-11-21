@@ -18,11 +18,10 @@ Plug 'justinmk/vim-gtfo'
 Plug 'thalesmello/tabfold'
 Plug 'tpope/vim-eunuch'
 Plug 'justinmk/vim-dirvish'
-" https://github.com/justinmk/config/blob/master/.config/nvim/init.vim#L54-L57
-" Disable netrw, but autoload it for `gx`.
-let g:loaded_netrwPlugin = 0
-nmap gx <Plug>NetrwBrowseX
-nnoremap <silent> <Plug>NetrwBrowseX :call netrw#BrowseX(expand((exists("g:netrw_gx")? g:netrw_gx : '<cfile>')),netrw#CheckIfRemote())<CR>
+Plug 'tyru/open-browser.vim'
+let g:loaded_netrwPlugin = 1
+nmap gx <Plug>(openbrowser-smart-search)
+vmap gx <Plug>(openbrowser-smart-search)
 
 Plug 'tpope/vim-dispatch'
 let g:dispatch_no_tmux_make = 1
@@ -310,22 +309,6 @@ function! s:zoom()
 endfunction
 
 nnoremap <silent> <leader>z :call <sid>zoom()<cr>
-
-" ----------------------------------------------------------------------------
-" <Leader>G/! | Google it / Feeling lucky
-" ----------------------------------------------------------------------------
-function! s:goog(pat, lucky)
-    let q = '"'.substitute(a:pat, '["\n]', ' ', 'g').'"'
-    let q = substitute(q, '[[:punct:] ]',
-                \ '\=printf("%%%02X", char2nr(submatch(0)))', 'g')
-    call system(printf('open "https://www.google.com/search?%sq=%s"',
-                \ a:lucky ? 'btnI&' : '', q))
-endfunction
-
-nnoremap <leader>G :call <SID>goog(expand("<cWORD>"), 0)<cr>
-nnoremap <leader>! :call <SID>goog(expand("<cWORD>"), 1)<cr>
-xnoremap <leader>G "gy:call <SID>goog(@g, 0)<cr>gv
-xnoremap <leader>! "gy:call <SID>goog(@g, 1)<cr>gv
 
 " ----------------------------------------------------------------------------
 " ?ae | entire object
