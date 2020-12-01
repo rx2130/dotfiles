@@ -136,6 +136,8 @@ nmap <leader>p <Plug>MarkdownPreviewToggle
 let g:mkdp_auto_close = 1
 let g:markdown_folding=1
 
+Plug 'mfussenegger/nvim-jdtls'
+
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'neovim/nvim-lsp'
 Plug 'nvim-lua/completion-nvim'
@@ -172,6 +174,8 @@ set signcolumn=number
 set diffopt+=algorithm:patience
 set diffopt+=indent-heuristic
 set diffopt+=iwhite
+
+let g:vimsyn_embed = 'l' " get Lua syntax highlighting inside .vim files
 
 colorscheme gruvbox
 if has('termguicolors') && $COLORTERM =~# 'truecolor\|24bit'
@@ -332,7 +336,7 @@ EOF
 
 " LSP {{{
 lua << EOF
-local custom_lsp_attach = function(client)
+custom_lsp_attach = function(client)
     vim.api.nvim_buf_set_keymap(0, 'n', '<c-]>', '<cmd>lua vim.lsp.buf.declaration()<CR>', {noremap = true, silent = true})
     vim.api.nvim_buf_set_keymap(0, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap = true, silent = true})
     vim.api.nvim_buf_set_keymap(0, 'n', 'gD', '<cmd>lua vim.lsp.buf.implementation()<CR>', {noremap = true, silent = true})
@@ -365,15 +369,18 @@ require'lspconfig'.texlab.setup{
         }
     }
 }
-require'lspconfig'.jdtls.setup{
-    on_attach = custom_lsp_attach,
-    settings = {
-        init_options = {
-            jvm_args = {"-javaagent:/Users/xuerx/Developer/lombok.jar -Xbootclasspath/a:/Users/xuerx/Developer/lombok.jar"}
-        }
-    }
-}
+-- require'lspconfig'.jdtls.setup{
+--     on_attach = custom_lsp_attach,
+--     settings = {
+--         init_options = {
+--             jvm_args = {"-javaagent:/Users/xuerx/Developer/lombok.jar -Xbootclasspath/a:/Users/xuerx/Developer/lombok.jar"}
+--         }
+--     }
+-- }
 EOF
+
+autocmd Filetype java lua require'jdtls'.start_or_attach({ on_attach = custom_lsp_attach, cmd = {'java-lsp.sh'} })
+
 "}}}
 
 " completion {{{
