@@ -55,19 +55,16 @@ let g:lightline = {
             \   'component_function': {
             \     'gitbranch': 'FugitiveHead',
             \     'filename': 'LightlineFilename',
-            \   },
-            \   'component': {
-            \     'lineinfo': '%3l:%-2v%<',
-            \   },
+            \   }
             \ }
 
 function! LightlineFilename()
     let root = fnamemodify(get(b:, 'git_dir'), ':h')
     let path = expand('%:p')
     if path[:len(root)-1] ==# root
-        return path[len(root)+1:]
+        return path[len(root)+1:][40-winwidth(0):]
     endif
-    return expand('%')
+    return expand('%')[40-winwidth(0):]
 endfunction
 
 " Fuzzy finder
