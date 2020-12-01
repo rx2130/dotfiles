@@ -103,7 +103,7 @@ autocmd! FileType fzf tunmap <buffer> <Esc>
 
 Plug 'airblade/vim-rooter'
 let g:rooter_silent_chdir = 1
-let g:rooter_change_directory_for_non_project_files = 'current'
+" let g:rooter_change_directory_for_non_project_files = 'current'
 
 " Git enhancements
 Plug 'tpope/vim-fugitive'
@@ -151,7 +151,7 @@ set clipboard=unnamed
 set splitright
 set splitbelow
 set ignorecase " Search case insensitive...
-set smartcase " ... but not it begins with upper case 
+set smartcase " ... but not it begins with upper case
 set expandtab " tab byte (\x09) will be replaced with a number of space bytes (\x20)
 set tabstop=4 " how long each <tab> will be
 set shiftwidth=4 " indentation via =, > and <
@@ -282,7 +282,7 @@ augroup vimrc
     autocmd FileType ftl setlocal commentstring=<#--\ %s\ -->
 
     " nnoremap <leader>R :.w !bash<CR>
-    autocmd FileType python map <buffer> <leader><CR> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+    autocmd FileType python nnoremap <buffer> <leader><CR> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
 augroup END
 
 " only show cursor line in active window
@@ -333,7 +333,7 @@ EOF
 " LSP {{{
 lua << EOF
 local custom_lsp_attach = function(client)
-    vim.api.nvim_buf_set_keymap(0, 'n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<CR>', {noremap = true, silent = true})
+    vim.api.nvim_buf_set_keymap(0, 'n', '<c-]>', '<cmd>lua vim.lsp.buf.declaration()<CR>', {noremap = true, silent = true})
     vim.api.nvim_buf_set_keymap(0, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap = true, silent = true})
     vim.api.nvim_buf_set_keymap(0, 'n', 'gD', '<cmd>lua vim.lsp.buf.implementation()<CR>', {noremap = true, silent = true})
     -- vim.api.nvim_buf_set_keymap(0, 'n', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', {noremap = true, silent = true})
@@ -352,6 +352,19 @@ require'lspconfig'.pyls.setup{ on_attach = custom_lsp_attach }
 require'lspconfig'.gopls.setup{ on_attach = custom_lsp_attach }
 require'lspconfig'.tsserver.setup{ on_attach = custom_lsp_attach }
 require'lspconfig'.yamlls.setup{ on_attach = custom_lsp_attach }
+require'lspconfig'.texlab.setup{
+    on_attach = custom_lsp_attach,
+    settings = {
+        latex = {
+            build = {
+                onSave = true
+            },
+            lint = {
+                onChange = true
+            }
+        }
+    }
+}
 require'lspconfig'.jdtls.setup{
     on_attach = custom_lsp_attach,
     settings = {
@@ -405,22 +418,18 @@ endfunction
 "}}}
 
 " diagnostic {{{
-" lua << EOF
-" do
-"   local method = "textDocument/publishDiagnostics"
-"   local default_callback = vim.lsp.callbacks[method]
-"   vim.lsp.callbacks[method] = function(err, method, result, client_id)
-"     default_callback(err, method, result, client_id)
-"     if result and result.diagnostics then
-"       for _, v in ipairs(result.diagnostics) do
-"         v.bufnr = client_id
-"         v.lnum = v.range.start.line + 1
-"         v.col = v.range.start.character + 1
-"         v.text = v.message
-"       end
-"       vim.lsp.util.set_qflist(result.diagnostics)
-"     end
-"   end
-" end
-" EOF
+nnoremap <leader>C <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
+nnoremap ]g <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+nnoremap [g <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+
+lua << EOF
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+        underline = true,
+        virtual_text = true,
+        signs = false,
+        update_in_insert = false,
+    }
+)
+EOF
 "}}}
