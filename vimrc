@@ -166,6 +166,7 @@ set sidescrolloff=5
 set cursorline
 set nowrap
 set signcolumn=number
+set autowrite
 
 " https://vimways.org/2018/the-power-of-diff/
 set diffopt+=algorithm:patience
@@ -281,6 +282,7 @@ augroup vimrc
     autocmd FileType gitcommit setlocal spell " spell check for git commits
     autocmd BufNewFile,BufRead *.ftl setfiletype ftl
     autocmd FileType ftl setlocal commentstring=<#--\ %s\ -->
+    autocmd FileType ion setlocal commentstring=//\ %s
 
     " nnoremap <leader>R :.w !bash<CR>
     autocmd FileType python nnoremap <buffer> <leader><CR> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
@@ -430,7 +432,7 @@ lua << EOF
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
         underline = true,
-        virtual_text = true,
+        virtual_text = false,
         signs = false,
         update_in_insert = false,
     }
