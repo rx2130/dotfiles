@@ -89,8 +89,9 @@ nnoremap <leader>: :History:<CR>
 nnoremap <leader>S :Filetypes<CR>
 nnoremap <leader>H :Helptags<CR>
 nnoremap <leader>M :Maps<CR>
-nnoremap <leader>/ :Rg<CR>
-nnoremap <leader>? :History/<CR>
+nnoremap <leader>/ :Rg <CR>
+xnoremap <leader>/ y:Rg <C-R>"<CR>
+nnoremap <leader>? :Rg <C-R><C-W><CR>
 nnoremap <leader>gh :Commits<CR>
 nnoremap <leader>gH :BCommits<CR>
 nnoremap <leader>, :Files ~/dotfiles<CR>v
