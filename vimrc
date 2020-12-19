@@ -115,9 +115,6 @@ vnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gB :Gbrowse<CR>
 vnoremap <leader>gB :Gbrowse<CR>
 
-" prevent unintended write
-autocmd! BufReadPost fugitive:///*//0/* setlocal nomodifiable readonly
-
 Plug 'tpope/vim-rhubarb'
 Plug 'ssh://git.amazon.com:2222/pkg/Vim-code-browse'
 Plug 'junegunn/gv.vim', { 'on': 'GV' }
