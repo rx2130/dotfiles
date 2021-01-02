@@ -73,6 +73,7 @@ key_bindings:
   - { key: H,     mods: Alt,      chars: "\x1bh" }
   - { key: D,     mods: Alt,      chars: "\x1bd" }
   - { key: C,     mods: Alt,      chars: "\x1bc" }
+  - { key: A,     mods: Alt,      chars: "\x1ba" }
   - { key: Space, mods: Control,  chars: "\x00"  }
   # mimic iterm2 keybindings
   - { key: D,        mods: Command,       chars: "\x00\x76" }
