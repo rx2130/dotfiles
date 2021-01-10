@@ -136,6 +136,7 @@ Plug 'mfussenegger/nvim-jdtls'
 
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'neovim/nvim-lsp'
+Plug 'ojroques/nvim-lspfuzzy'
 Plug 'nvim-lua/completion-nvim'
 Plug 'steelsojka/completion-buffers'
 
@@ -376,6 +377,8 @@ require'lspconfig'.texlab.setup{
 --         }
 --     }
 -- }
+
+require('lspfuzzy').setup {}
 EOF
 
 autocmd Filetype java lua require'jdtls'.start_or_attach({ on_attach = custom_lsp_attach, cmd = {'java-lsp.sh'} })
