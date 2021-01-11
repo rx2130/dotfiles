@@ -92,6 +92,7 @@ nnoremap <leader>M :Maps<CR>
 nnoremap <leader>/ :Rg <CR>
 xnoremap <leader>/ y:Rg <C-R>"<CR>
 nnoremap <leader>? :Rg <C-R><C-W><CR>
+xnoremap <leader>? y:Rg <C-R>"<CR>
 nnoremap <leader>gh :Commits<CR>
 nnoremap <leader>gH :BCommits<CR>
 nnoremap <leader>, :Files ~/dotfiles<CR>v
@@ -284,6 +285,7 @@ augroup vimrc
 
     " nnoremap <leader>R :.w !bash<CR>
     autocmd FileType python nnoremap <buffer> <leader><CR> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+    autocmd FileType go nnoremap <buffer> <leader><CR> :w<CR>:exec '!go run' shellescape(@%, 1)<CR>
 augroup END
 
 " only show cursor line in active window
