@@ -1,5 +1,5 @@
 font:
-  size: 13.0
+  size: 14.0
 
   normal:
     family: SF Mono
@@ -74,6 +74,10 @@ key_bindings:
   - { key: D,     mods: Alt,      chars: "\x1bd" }
   - { key: C,     mods: Alt,      chars: "\x1bc" }
   - { key: A,     mods: Alt,      chars: "\x1ba" }
+  - { key: Left,  mods: Alt,      chars: "\x1bb" }
+  - { key: Right, mods: Alt,      chars: "\x1bf" }
+  # - { key: Back,  mods: Alt,      chars: "\x1bh" }
+  - { key: Delete,mods: Alt,      chars: "\x1bd" }
   - { key: Space, mods: Control,  chars: "\x00"  }
   # mimic iterm2 keybindings
   - { key: D,        mods: Command,       chars: "\x00\x76" }
