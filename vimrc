@@ -137,8 +137,7 @@ Plug 'mfussenegger/nvim-jdtls'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'neovim/nvim-lsp'
 Plug 'ojroques/nvim-lspfuzzy'
-Plug 'nvim-lua/completion-nvim'
-Plug 'steelsojka/completion-buffers'
+Plug 'hrsh7th/nvim-compe'
 
 call plug#end()
 
@@ -386,44 +385,34 @@ autocmd Filetype java lua require'jdtls'.start_or_attach({ on_attach = custom_ls
 "}}}
 
 " completion {{{
-autocmd BufEnter * lua require'completion'.on_attach()
+lua <<EOF
+require'compe'.setup {
+  enabled = true;
+  preselect = 'always';
+  source = {
+    path = true;
+    buffer = true;
+    nvim_lsp = true;
+    nvim_lua = true;
+  };
+}
+EOF
 
-" Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+set completeopt=menu,menuone,noselect
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <CR>      compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })
 
-" Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
-
-" Avoid showing message extra message when using completion
-set shortmess+=c
-
-let g:completion_chain_complete_list = [
-    \{'complete_items': ['lsp', 'buffer']},
-    \{'mode': '<c-p>'},
-    \{'mode': '<c-n>'}
-\]
-let g:completion_matching_strategy_list = ['exact', 'fuzzy']
-let g:completion_matching_ignore_case = 1
-
-" Use <cr> to confirm completion
-let g:completion_confirm_key = ""
-imap <expr> <cr>  pumvisible() ? complete_info()["selected"] != "-1" ?
-                 \ "\<Plug>(completion_confirm_completion)"  : "\<c-n>\<CR>" :  "\<Plug>delimitMateCR"
-
-" map <c-space> to manually trigger completion
-imap <silent> <c-space> <Plug>(completion_trigger)
-
-" Trigger completion with <Tab>
 inoremap <silent><expr> <TAB>
   \ pumvisible() ? "\<C-n>" :
   \ <SID>check_back_space() ? "\<TAB>" :
-  \ completion#trigger_completion()
+  \ compe#complete()
 
 function! s:check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
+
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 "}}}
 
 " diagnostic {{{
