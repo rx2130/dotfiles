@@ -335,53 +335,44 @@ EOF
 
 " LSP {{{
 lua << EOF
-custom_lsp_attach = function(client)
-    vim.api.nvim_buf_set_keymap(0, 'n', '<c-]>', '<cmd>lua vim.lsp.buf.declaration()<CR>', {noremap = true, silent = true})
-    vim.api.nvim_buf_set_keymap(0, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap = true, silent = true})
-    vim.api.nvim_buf_set_keymap(0, 'n', 'gD', '<cmd>lua vim.lsp.buf.implementation()<CR>', {noremap = true, silent = true})
-    -- vim.api.nvim_buf_set_keymap(0, 'n', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', {noremap = true, silent = true})
-    vim.api.nvim_buf_set_keymap(0, 'n', '1gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', {noremap = true, silent = true})
-    vim.api.nvim_buf_set_keymap(0, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', {noremap = true, silent = true})
-    vim.api.nvim_buf_set_keymap(0, 'n', 'g0', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', {noremap = true, silent = true})
-    vim.api.nvim_buf_set_keymap(0, 'n', 'gW', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', {noremap = true, silent = true})
-    vim.api.nvim_buf_set_keymap(0, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', {noremap = true, silent = true})
-    vim.api.nvim_buf_set_keymap(0, 'n', '<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>', {noremap = true, silent = true})
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+        underline = true,
+        virtual_text = false,
+        signs = false,
+        update_in_insert = false,
+    }
+)
+
+on_attach = function(client)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(0, ...) end
+  local opts = { noremap=true, silent=true }
+  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', '<c-]>', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  -- buf_set_keymap('n', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', 'g0', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
+  buf_set_keymap('n', 'gW', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
+  buf_set_keymap('n', '<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  buf_set_keymap('n', 'gR', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<leader>C', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', ']g', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '[g', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
 end
 
-require'lspconfig'.jsonls.setup{ on_attach = custom_lsp_attach }
-require'lspconfig'.html.setup{ on_attach = custom_lsp_attach }
-require'lspconfig'.cssls.setup{ on_attach = custom_lsp_attach }
-require'lspconfig'.pyls.setup{ on_attach = custom_lsp_attach }
-require'lspconfig'.gopls.setup{ on_attach = custom_lsp_attach }
-require'lspconfig'.tsserver.setup{ on_attach = custom_lsp_attach }
-require'lspconfig'.yamlls.setup{ on_attach = custom_lsp_attach }
-require'lspconfig'.texlab.setup{
-    on_attach = custom_lsp_attach,
-    settings = {
-        latex = {
-            build = {
-                onSave = true
-            },
-            lint = {
-                onChange = true
-            }
-        }
-    }
-}
--- require'lspconfig'.jdtls.setup{
---     on_attach = custom_lsp_attach,
---     settings = {
---         init_options = {
---             jvm_args = {"-javaagent:/Users/xuerx/Developer/lombok.jar -Xbootclasspath/a:/Users/xuerx/Developer/lombok.jar"}
---         }
---     }
--- }
+local nvim_lsp = require('lspconfig')
+local servers = { "jsonls", "html", "cssls", "pyls", "gopls", "tsserver", "yamlls", "texlab" }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup { on_attach = on_attach }
+end
 
 require('lspfuzzy').setup {}
 EOF
 
-autocmd Filetype java lua require'jdtls'.start_or_attach({ on_attach = custom_lsp_attach, cmd = {'java-lsp.sh'} })
-
+autocmd Filetype java lua require'jdtls'.start_or_attach({ on_attach = on_attach, cmd = {'java-lsp.sh'} })
 "}}}
 
 " completion {{{
@@ -413,21 +404,4 @@ function! s:check_back_space() abort
 endfunction
 
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-"}}}
-
-" diagnostic {{{
-nnoremap <leader>C <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
-nnoremap ]g <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
-nnoremap [g <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-
-lua << EOF
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics, {
-        underline = true,
-        virtual_text = false,
-        signs = false,
-        update_in_insert = false,
-    }
-)
-EOF
 "}}}
