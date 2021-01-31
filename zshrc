@@ -26,7 +26,7 @@ if [ $(uname) = "Darwin" ]; then
     # c/c++
     # export PATH="/usr/local/opt/llvm/bin:$PATH"
     # go
-    # export PATH=$PATH:$(go env GOPATH)/bin
+    export PATH=$PATH:$(go env GOPATH)/bin
 else
     export PATH=~/.local/bin:$PATH
 fi
@@ -35,7 +35,8 @@ if [ $(hostname) = "3c22fbbbbf8e.ant.amazon.com" ]; then
     # Builder toolbox
     export PATH=$HOME/.toolbox/bin:$PATH
     # JDK
-    export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-8.jdk/Contents/Home
+    # export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-8.jdk/Contents/Home
+    # export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/
     # RDE
     fpath=(~/.zsh/completion $fpath)
     autoload -Uz compinit && compinit -i
