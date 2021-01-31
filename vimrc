@@ -67,6 +67,33 @@ function! LightlineFilename()
     return expand('%')[40-winwidth(0):]
 endfunction
 
+Plug 'junegunn/goyo.vim'
+nnoremap <Leader>G :Goyo<CR>
+Plug 'junegunn/limelight.vim'
+
+function! s:goyo_enter()
+  if executable('tmux') && strlen($TMUX)
+    silent !tmux set status off
+    silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  endif
+  set noshowcmd
+  set scrolloff=999
+  " Limelight
+endfunction
+
+function! s:goyo_leave()
+  if executable('tmux') && strlen($TMUX)
+    silent !tmux set status on
+    silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  endif
+  set showcmd
+  set scrolloff=5
+  " Limelight!
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
 " Fuzzy finder
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
@@ -127,11 +154,15 @@ nnoremap <leader>gc :GBranches <CR>
 
 " Semantic language support
 Plug 'ssh://git.amazon.com:2222/pkg/VimIon.git'
+Plug 'plasticboy/vim-markdown'
+let g:vim_markdown_folding_disabled = 1
+
+Plug 'mzlogin/vim-markdown-toc'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 nmap <leader>p <Plug>MarkdownPreviewToggle
-let g:mkdp_auto_close = 1
-let g:markdown_folding=1
+let g:mkdp_auto_close = 0
 
+Plug 'fatih/vim-go'
 Plug 'mfussenegger/nvim-jdtls'
 
 Plug 'nvim-treesitter/nvim-treesitter'
@@ -211,8 +242,8 @@ nnoremap <leader>t :vsplit \| terminal<cr>
 nnoremap <leader>T :split \| terminal<cr>
 nnoremap <leader>y :let @*=expand('%:t:r')<CR> :echo expand('%:t:r')<CR>
 nnoremap <leader>Y :let @*=expand('%:p')<CR> :echo expand('%:p')<CR>
-nnoremap <leader>gf :diffget //2<CR>
-nnoremap <leader>gj :diffget //3<CR>
+" nnoremap <leader>gf :diffget //2<CR>
+" nnoremap <leader>gj :diffget //3<CR>
 
 inoremap <C-a> <C-o>^
 inoremap <C-e> <C-o>$
@@ -285,7 +316,8 @@ augroup vimrc
 
     " nnoremap <leader>R :.w !bash<CR>
     autocmd FileType python nnoremap <buffer> <leader><CR> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
-    autocmd FileType go nnoremap <buffer> <leader><CR> :w<CR>:exec '!go run' shellescape(@%, 1)<CR>
+    autocmd FileType go     nnoremap <buffer> <leader><CR> :w<CR>:exec '!go run' shellescape(@%, 1)<CR>
+    autocmd FileType java   nnoremap <buffer> <leader><CR> :w<CR>:!javac %:t<CR> :!java %:t:r<CR>
 augroup END
 
 " only show cursor line in active window
