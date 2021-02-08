@@ -40,8 +40,6 @@ if [ $(hostname) = "3c22fbbbbf8e.ant.amazon.com" ]; then
     # RDE
     fpath=(~/.zsh/completion $fpath)
     autoload -Uz compinit && compinit -i
-    # generate-brazil-jdt-project
-    export PATH=$HOME/workplace/generate-brazil-jdt-project/src/NinjaUtilsClojure/build/bin:$PATH
     # CMPortalTools
     export PATH="/Users/xuerx/workplace/CMPortalTools/src/CMPortalTools/bin:$PATH"
     # curl-openssl alfred
@@ -60,6 +58,7 @@ if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
 fi
 if [ $(hostname) = "3c22fbbbbf8e.ant.amazon.com" ]; then
     alias bb="brazil-build"
+    alias b="brazil"
 fi
 alias www="python3 -m http.server"
 alias tm='tmux attach || tmux new'
