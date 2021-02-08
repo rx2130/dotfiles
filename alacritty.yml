@@ -79,6 +79,7 @@ key_bindings:
   # - { key: Back,  mods: Alt,      chars: "\x1bh" }
   - { key: Delete,mods: Alt,      chars: "\x1bd" }
   - { key: Space, mods: Control,  chars: "\x00"  }
+  - { key: Tab,   mods: Control,  chars: "\x00\x09" }
   # mimic iterm2 keybindings
   - { key: D,        mods: Command,       chars: "\x00\x76" }
   - { key: D,        mods: Command|Shift, chars: "\x00\x73" }
