@@ -236,7 +236,7 @@ vnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
 nnoremap <Space> <Nop>
 nnoremap <silent><leader><Space> zz:nohlsearch<CR>
 vnoremap <silent><leader><Space> <esc>zz:nohlsearch<CR>
-nnoremap <leader>w :update<CR>
+nnoremap <leader>w :w<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader><Tab> <C-^>
 nnoremap <leader>c :cclose<bar>lclose<cr>
@@ -446,6 +446,14 @@ require('lspfuzzy').setup {}
 EOF
 
 autocmd Filetype java lua require'jdtls'.start_or_attach({ on_attach = on_attach, cmd = {'java-lsp.sh'} })
+
+function! s:OpenDiagnostics()
+    lua vim.lsp.diagnostic.set_loclist({ open_loclist = false })
+    lwindow
+endfunction
+
+" display errors and warnings on save
+autocmd! BufWritePost * call <SID>OpenDiagnostics()
 "}}}
 
 " completion {{{
