@@ -313,6 +313,8 @@ augroup vimrc
     autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o " disable automatic comment insertion
     autocmd FileType gitcommit setlocal spell " spell check for git commits
     autocmd BufNewFile,BufRead *.ftl setfiletype ftl
+    autocmd BufNewFile,BufRead .gitignore setfiletype gitconfig 
+    autocmd Filetype gitconfig setlocal commentstring=#\ %s
     autocmd FileType ftl setlocal commentstring=<#--\ %s\ -->
     autocmd FileType ion setlocal commentstring=//\ %s
 
