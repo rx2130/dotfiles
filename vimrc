@@ -150,14 +150,14 @@ nnoremap <leader>gv :GV --all<CR>
 nnoremap <leader>gV :GV<CR>
 
 Plug 'stsewd/fzf-checkout.vim'
-nnoremap <leader>gc :GBranches <CR>
+nnoremap <leader>gc :GBranches<CR>
 
 " Semantic language support
 Plug 'ssh://git.amazon.com:2222/pkg/VimIon.git'
-Plug 'plasticboy/vim-markdown'
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 let g:vim_markdown_folding_disabled = 1
 
-Plug 'mzlogin/vim-markdown-toc'
+Plug 'mzlogin/vim-markdown-toc', { 'for': 'markdown' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 nmap <leader>p <Plug>MarkdownPreviewToggle
 let g:mkdp_auto_close = 0
@@ -359,8 +359,8 @@ onoremap <silent> ae :<C-U>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>
 " Treesitter {{{
 lua << EOF
 require'nvim-treesitter.configs'.setup {
-    highlight = {
-      enable = true,
+  highlight = {
+    enable = true,
   },
   textobjects = {
     select = {
@@ -403,9 +403,9 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 EOF
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-set foldlevelstart=20
+" set foldmethod=expr
+" set foldexpr=nvim_treesitter#foldexpr()
+" set foldlevelstart=99
 "}}}
 
 " LSP {{{
@@ -429,8 +429,8 @@ on_attach = function(client)
   -- buf_set_keymap('n', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', 'g0', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
-  buf_set_keymap('n', 'gW', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
+  buf_set_keymap('n', 'gs', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
+  buf_set_keymap('n', 'gS', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
   buf_set_keymap('n', '<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   buf_set_keymap('n', 'gR', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<leader>C', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
@@ -447,7 +447,7 @@ end
 require('lspfuzzy').setup {}
 EOF
 
-autocmd Filetype java lua require'jdtls'.start_or_attach({ on_attach = on_attach, cmd = {'java-lsp.sh'} })
+autocmd! FileType java lua require'jdtls'.start_or_attach({ on_attach = on_attach, cmd = {'java-lsp.sh'} })
 
 function! s:OpenDiagnostics()
     lua vim.lsp.diagnostic.set_loclist({ open_loclist = false })
