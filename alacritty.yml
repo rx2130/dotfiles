@@ -18,8 +18,9 @@ font:
     style: Bold Italic
 
 window:
-  decorations: buttonless
-
+  dynamic_padding: true
+  decorations: none
+  startup_mode: Maximized
 
 # Colors (Gruvbox dark)
 colors:
@@ -60,7 +61,12 @@ colors:
 
 shell:
   program: /usr/local/bin/tmux
-
+  args:
+    - new-session
+    - -A
+    - -D
+    - -s
+    - main
 
 mouse:
   hide_when_typing: true
