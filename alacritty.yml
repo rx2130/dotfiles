@@ -67,7 +67,6 @@ mouse:
 
 
 key_bindings:
-  - { key: Key6,  mods: Control,  chars: "\x1e"  }
   - { key: F,     mods: Alt,      chars: "\x1bf" }
   - { key: B,     mods: Alt,      chars: "\x1bb" }
   - { key: H,     mods: Alt,      chars: "\x1bh" }
@@ -76,8 +75,8 @@ key_bindings:
   - { key: A,     mods: Alt,      chars: "\x1ba" }
   - { key: Left,  mods: Alt,      chars: "\x1bb" }
   - { key: Right, mods: Alt,      chars: "\x1bf" }
-  # - { key: Back,  mods: Alt,      chars: "\x1bh" }
   - { key: Delete,mods: Alt,      chars: "\x1bd" }
+  - { key: Key6,  mods: Control,  chars: "\x1e"  }
   - { key: Space, mods: Control,  chars: "\x00"  }
   - { key: Tab,   mods: Control,  chars: "\x00\x09" }
   # mimic iterm2 keybindings
