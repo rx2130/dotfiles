@@ -327,6 +327,7 @@ augroup vimrc
     autocmd FileType python nnoremap <buffer> <leader><CR> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
     autocmd FileType go     nnoremap <buffer> <leader><CR> :w<CR>:exec '!go run' shellescape(@%, 1)<CR>
     autocmd FileType java   nnoremap <buffer> <leader><CR> :w<CR>:!javac %:t<CR> :!java %:t:r<CR>
+    autocmd FileType fugitive nmap <buffer> <TAB> =
 augroup END
 
 " only show cursor line in active window
