@@ -53,7 +53,7 @@ let g:lightline = {
             \     'right': [['lineinfo'], ['percent'], ['filetype']]
             \   },
             \   'component_function': {
-            \     'gitbranch': 'FugitiveHead',
+            \     'gitbranch': 'LightlineGitHead',
             \     'filename': 'LightlineFilename',
             \   }
             \ }
@@ -65,6 +65,11 @@ function! LightlineFilename()
         return path[len(root)+1:][40-winwidth(0):]
     endif
     return expand('%')[40-winwidth(0):]
+endfunction
+
+function! LightlineGitHead()
+    let status = FugitiveStatusline()
+    return status[5:len(status)-3]
 endfunction
 
 Plug 'junegunn/goyo.vim'
