@@ -419,7 +419,7 @@ lua << EOF
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
         underline = true,
-        virtual_text = false,
+        virtual_text = true,
         signs = false,
         update_in_insert = false,
     }
@@ -456,7 +456,7 @@ EOF
 autocmd! FileType java lua require'jdtls'.start_or_attach({ on_attach = on_attach, cmd = {'java-lsp.sh'} })
 
 function! s:OpenDiagnostics()
-    lua vim.lsp.diagnostic.set_loclist({ open_loclist = false })
+    lua vim.lsp.diagnostic.set_loclist { open_loclist = false, severity = "Error" }
     lwindow
 endfunction
 
@@ -478,7 +478,7 @@ require'compe'.setup {
 }
 EOF
 
-set completeopt=menu,menuone,noselect
+set completeopt=menuone,noselect
 inoremap <silent><expr> <C-Space> compe#complete()
 inoremap <silent><expr> <CR>      compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })
 
