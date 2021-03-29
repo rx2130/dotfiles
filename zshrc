@@ -11,13 +11,8 @@ source $ZSH/oh-my-zsh.sh
 
 # export {{{
 export EDITOR='nvim'
-if [ $(uname) = "Darwin" ]; then
-    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-    export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
-else
-    export FZF_DEFAULT_COMMAND='fdfind --type f --hidden --follow --exclude .git'
-    export FZF_ALT_C_COMMAND="fdfind --type d --hidden --follow --exclude .git"
-fi
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 if [ $(uname) = "Darwin" ]; then
@@ -31,7 +26,7 @@ else
     export PATH=~/.local/bin:$PATH
 fi
 
-if [ $(hostname) = "3c22fbbbbf8e.ant.amazon.com" ]; then
+if [[ $(hostname) == *"amazon.com" ]]; then
     # Builder toolbox
     export PATH=$HOME/.toolbox/bin:$PATH
     # JDK
@@ -56,29 +51,34 @@ if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
         alias v=nvr
     fi
 fi
-if [ $(hostname) = "3c22fbbbbf8e.ant.amazon.com" ]; then
-    alias bb="brazil-build"
-    alias b="brazil"
-fi
 alias www="python3 -m http.server"
 alias tm='tmux attach || tmux new'
-# }}}
 
-
-# source addition scripts {{{
-if [ $(uname) = "Darwin" ]; then
-    # source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-    # source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-else
-    source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-    source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [[ $(hostname) == *"amazon.com" ]]; then
+    alias bb="brazil-build"
+    alias b="brazil"
+    alias bba='brazil-build apollo-pkg'
+    alias bre='brazil-runtime-exec'
+    alias brc='brazil-recursive-cmd'
+    alias bws='brazil ws'
+    alias bwsuse='bws use --gitMode -p'
+    alias bwscreate='bws create -n'
+    alias brc=brazil-recursive-cmd
+    alias bbr='brc brazil-build'
+    alias bball='brc --allPackages'
+    alias bbb='brc --allPackages brazil-build'
+    alias bbra='bbr apollo-pkg'
 fi
 # }}}
 
 
 # powerlevel10k prompt {{{
+if [ $(uname) = "Darwin" ]; then
+    source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
+else
+    source /home/linuxbrew/.linuxbrew/opt/powerlevel10k/powerlevel10k.zsh-theme
+fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 # }}}
 
