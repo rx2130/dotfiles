@@ -448,10 +448,15 @@ on_attach = function(client)
 end
 
 local nvim_lsp = require('lspconfig')
-local servers = { "jsonls", "html", "cssls", "pyls", "gopls", "tsserver", "yamlls", "texlab" }
+local servers = { "jsonls", "html", "cssls", "pyls", "gopls", "tsserver", "yamlls", "texlab", "sumneko_lua" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { on_attach = on_attach }
 end
+
+nvim_lsp.sumneko_lua.setup {
+    on_attach = on_attach,
+    cmd = {'lua-lsp.sh'}
+}
 
 require('lspfuzzy').setup {}
 EOF
