@@ -419,6 +419,12 @@ EOF
 
 " LSP {{{
 lua << EOF
+local virtual_text_show = true
+function virtual_text_toggle()
+    virtual_text_show = not virtual_text_show
+    vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, 1), 0, 1, {virtual_text = virtual_text_show, underline = virtual_text_show, signs = false})
+end
+
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
         underline = true,
@@ -445,6 +451,7 @@ on_attach = function(client)
   buf_set_keymap('n', '<leader>C', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', ']g', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '[g', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', 'yot', '<cmd>lua virtual_text_toggle()<CR>', opts)
 end
 
 local nvim_lsp = require('lspconfig')
