@@ -130,8 +130,6 @@ nnoremap <leader>gH :BCommits<CR>
 nnoremap <leader>, :Files ~/dotfiles<CR>v
 nnoremap <expr> <C-p> ':Files<CR>'.expand('%:t:r')
 
-autocmd! FileType fzf tunmap <buffer> <Esc>
-
 Plug 'airblade/vim-rooter'
 let g:rooter_silent_chdir = 1
 " let g:rooter_change_directory_for_non_project_files = 'current'
@@ -307,6 +305,7 @@ augroup vimrc
 
     " termianl mode Esc map
     autocmd TermOpen * tnoremap <buffer> <Esc> <C-\><C-n>
+    autocmd FileType fzf tunmap <buffer> <Esc>
 
     " open help vertically
     autocmd BufEnter * if &filetype ==# 'help' | wincmd L | endif
@@ -316,18 +315,22 @@ augroup vimrc
 
     " File Type settings
     autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o " disable automatic comment insertion
+
     autocmd FileType gitcommit setlocal spell " spell check for git commits
     autocmd BufNewFile,BufRead *.ftl setfiletype ftl
-    autocmd BufNewFile,BufRead .gitignore setfiletype gitconfig 
+    autocmd BufNewFile,BufRead .gitignore setfiletype gitconfig
+
+    autocmd FileType git setlocal fdm=syntax
     autocmd Filetype gitconfig setlocal commentstring=#\ %s
     autocmd FileType ftl setlocal commentstring=<#--\ %s\ -->
     autocmd FileType ion setlocal commentstring=//\ %s
+
+    autocmd FileType fugitive nmap <buffer> <TAB> =
 
     " nnoremap <leader>R :.w !bash<CR>
     autocmd FileType python nnoremap <buffer> <leader><CR> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
     autocmd FileType go     nnoremap <buffer> <leader><CR> :w<CR>:exec '!go run' shellescape(@%, 1)<CR>
     autocmd FileType java   nnoremap <buffer> <leader><CR> :w<CR>:!javac %:t<CR> :!java %:t:r<CR>
-    autocmd FileType fugitive nmap <buffer> <TAB> =
 augroup END
 
 " only show cursor line in active window
