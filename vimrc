@@ -192,7 +192,7 @@ set shiftwidth=4 " indentation via =, > and <
 set hidden
 set mouse=nvi
 set undofile
-" set inccommand=nosplit
+set inccommand=nosplit
 set noswapfile
 set lazyredraw
 set noshowmode
