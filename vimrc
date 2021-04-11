@@ -15,7 +15,6 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 nnoremap <leader>u :UndotreeToggle<CR>
 
 Plug 'justinmk/vim-gtfo'
-Plug 'thalesmello/tabfold'
 Plug 'tpope/vim-eunuch'
 Plug 'justinmk/vim-dirvish'
 Plug 'tyru/open-browser.vim'
@@ -249,6 +248,8 @@ nnoremap <leader>y :let @*=expand('%:t:r')<CR> :echo expand('%:t:r')<CR>
 nnoremap <leader>Y :let @*=expand('%:p')<CR> :echo expand('%:p')<CR>
 " nnoremap <leader>gf :diffget //2<CR>
 " nnoremap <leader>gj :diffget //3<CR>
+nnoremap <Tab> za
+nnoremap <C-n>i <C-i>
 
 inoremap <C-a> <C-o>^
 inoremap <C-e> <C-o>$

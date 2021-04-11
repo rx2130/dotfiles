@@ -85,6 +85,7 @@ key_bindings:
   - { key: Right, mods: Alt,      chars: "\x1bf" }
   - { key: Delete,mods: Alt,      chars: "\x1bd" }
   - { key: Key6,  mods: Control,  chars: "\x1e"  }
+  - { key: I,     mods: Control,  chars: "\x0e\x69" }
   - { key: Space, mods: Control,  chars: "\x00"  }
   - { key: Tab,   mods: Control,  chars: "\x00\x09" }
   # mimic iterm2 keybindings
