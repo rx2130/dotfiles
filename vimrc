@@ -321,7 +321,7 @@ augroup vimrc
     autocmd BufNewFile,BufRead *.ftl setfiletype ftl
     autocmd BufNewFile,BufRead .gitignore setfiletype gitconfig
 
-    autocmd FileType git setlocal fdm=syntax
+    autocmd FileType git setlocal foldmethod=syntax foldlevel=0
     autocmd Filetype gitconfig setlocal commentstring=#\ %s
     autocmd FileType ftl setlocal commentstring=<#--\ %s\ -->
     autocmd FileType ion setlocal commentstring=//\ %s
@@ -413,9 +413,9 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 EOF
-" set foldmethod=expr
-" set foldexpr=nvim_treesitter#foldexpr()
-" set foldlevelstart=99
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set foldlevelstart=99
 "}}}
 
 " LSP {{{
