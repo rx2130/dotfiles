@@ -135,15 +135,15 @@ let g:rooter_silent_chdir = 1
 
 " Git enhancements
 Plug 'tpope/vim-fugitive'
-nnoremap <leader>gg :Gstatus<CR>
+nnoremap <leader>gg :Git<CR>
 nnoremap <leader>gd :Gdiffsplit<CR>
-nnoremap <leader>gp :Gpush<CR>
-nnoremap <leader>gf :Gfetch<CR>
-nnoremap <leader>gl :Gpull<CR>
-nnoremap <leader>gb :Gblame<CR>
-vnoremap <leader>gb :Gblame<CR>
-nnoremap <leader>gB :Gbrowse<CR>
-vnoremap <leader>gB :Gbrowse<CR>
+nnoremap <leader>gp :Git push<CR>
+nnoremap <leader>gf :Git fetch<CR>
+nnoremap <leader>gl :Git pull<CR>
+nnoremap <leader>gb :Git blame<CR>
+vnoremap <leader>gb :Git blame<CR>
+nnoremap <leader>gB :GBrowse<CR>
+vnoremap <leader>gB :GBrowse<CR>
 
 Plug 'tpope/vim-rhubarb'
 Plug 'ssh://git.amazon.com:2222/pkg/Vim-code-browse'
