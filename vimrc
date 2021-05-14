@@ -45,33 +45,6 @@ let g:delimitMate_excluded_ft = "TelescopePrompt"
 Plug 'gruvbox-community/gruvbox'
 let g:gruvbox_invert_selection='0'
 
-Plug 'itchyny/lightline.vim'
-let g:lightline = {
-            \ 'colorscheme': 'gruvbox',
-            \   'active': {
-            \     'left': [['mode', 'paste'], ['gitbranch'], ['filename', 'readonly', 'modified']],
-            \     'right': [['lineinfo'], ['percent'], ['filetype']]
-            \   },
-            \   'component_function': {
-            \     'gitbranch': 'LightlineGitHead',
-            \     'filename': 'LightlineFilename',
-            \   }
-            \ }
-
-function! LightlineFilename()
-    let root = fnamemodify(get(b:, 'git_dir'), ':h')
-    let path = expand('%:p')
-    if path[:len(root)-1] ==# root
-        return path[len(root)+1:][40-winwidth(0):]
-    endif
-    return expand('%')[40-winwidth(0):]
-endfunction
-
-function! LightlineGitHead()
-    let status = FugitiveStatusline()
-    return status[5:len(status)-3]
-endfunction
-
 " Fuzzy finder
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
@@ -159,13 +132,13 @@ set undofile
 set inccommand=nosplit
 set noswapfile
 set lazyredraw
-set noshowmode
 set scrolloff=1
 set sidescrolloff=5
 set cursorline
 set nowrap
 set signcolumn=number
 set autowrite
+set statusline=%<%f\ %m%r%=%-14.(%l,%v%)\ %Y
 
 " https://vimways.org/2018/the-power-of-diff/
 set diffopt+=algorithm:patience
