@@ -104,10 +104,8 @@ let g:mkdp_auto_close = 0
 
 Plug 'fatih/vim-go'
 Plug 'mfussenegger/nvim-jdtls'
-
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-
 Plug 'neovim/nvim-lsp'
 Plug 'hrsh7th/nvim-compe'
 
@@ -126,7 +124,7 @@ set expandtab " tab byte (\x09) will be replaced with a number of space bytes (\
 set tabstop=4 " how long each <tab> will be
 set shiftwidth=4 " indentation via =, > and <
 set hidden
-set mouse=nvi
+set mouse=a
 set undofile
 set inccommand=nosplit
 set noswapfile
@@ -136,12 +134,18 @@ set sidescrolloff=5
 set cursorline
 set nowrap
 set signcolumn=number
-set autowrite
 set statusline=%<%f\ %m%r%=%-14.(%l,%v%)\ %Y
 set diffopt=internal,filler,closeoff,hiddenoff,algorithm:histogram,indent-heuristic
 set termguicolors
+set smartindent " smart autoindenting when starting a new line
+set shortmess+=I
+set ttimeoutlen=0 " lower the delay of escaping out of other modes
 set makeprg=brazil-build
 
+if executable("rg")
+    set grepprg=rg\ --vimgrep\ --no-heading
+    set grepformat=%f:%l:%c:%m,%f:%l:%m
+endif
 
 colorscheme gruvbox8
 let g:vimsyn_embed = 'l' " get Lua syntax highlighting inside .vim files
@@ -159,11 +163,6 @@ vnoremap Q :norm @q<CR>
 vnoremap . :norm .<CR>
 nnoremap <silent><esc> :nohlsearch<cr>
 
-nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
-nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
-vnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
-vnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
-
 nnoremap <Space> <Nop>
 nnoremap <silent><leader><Space> zz:nohlsearch<CR>
 vnoremap <silent><leader><Space> <esc>zz:nohlsearch<CR>
@@ -175,8 +174,7 @@ nnoremap <leader>t :vsplit \| terminal<cr>
 nnoremap <leader>T :split \| terminal<cr>
 nnoremap <leader>y :let @*=expand('%:t:r')<CR> :echo expand('%:t:r')<CR>
 nnoremap <leader>Y :let @*=expand('%:p')<CR> :echo expand('%:p')<CR>
-" nnoremap <leader>gf :diffget //2<CR>
-" nnoremap <leader>gj :diffget //3<CR>
+nnoremap <leader>, :e ~/dotfiles/vimrc<cr>
 nnoremap <Tab> za
 nnoremap <C-n>i <C-i>
 
@@ -230,36 +228,41 @@ augroup vimrc
     " Resize panes when window/terminal gets resize
     autocmd VimResized * wincmd =
 
-    " refresh changed content of file
-    autocmd FileChangedShellPost * echohl WarningMsg | echom "Warning: File changed on disk. Buffer reloaded." | echohl None
-
     " termianl mode Esc map
     autocmd TermOpen * tnoremap <buffer> <Esc> <C-\><C-n>
 
     " open help vertically
     autocmd BufEnter * if &filetype ==# 'help' | wincmd L | endif
+    autocmd BufEnter * if &filetype ==# 'man' | wincmd L | endif
 
     " highlight yank
     autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=100}
 
     " File Type settings
     autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o " disable automatic comment insertion
-
     autocmd FileType gitcommit setlocal spell " spell check for git commits
+    autocmd FileType git setlocal foldmethod=syntax foldlevel=0
+
+    " File Type mappings
+    autocmd FileType fugitive nmap <buffer> <TAB> =
+
+    " setfiletype
     autocmd BufNewFile,BufRead *.ftl setfiletype ftl
+    autocmd BufNewFile,BufRead *.mustache setfiletype html
     autocmd BufNewFile,BufRead .gitignore setfiletype gitconfig
 
-    autocmd FileType git setlocal foldmethod=syntax foldlevel=0
-    autocmd Filetype gitconfig setlocal commentstring=#\ %s
+    " commentstring
+    autocmd FileType gitconfig setlocal commentstring=#\ %s
     autocmd FileType ftl setlocal commentstring=<#--\ %s\ -->
     autocmd FileType ion setlocal commentstring=//\ %s
 
-    autocmd FileType fugitive nmap <buffer> <TAB> =
-
-    " nnoremap <leader>R :.w !bash<CR>
-    autocmd FileType python nnoremap <buffer> <leader><CR> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
-    autocmd FileType go     nnoremap <buffer> <leader><CR> :w<CR>:exec '!go run' shellescape(@%, 1)<CR>
-    autocmd FileType java   nnoremap <buffer> <leader><CR> :w<CR>:!javac %:t<CR> :!java %:t:r<CR>
+    " run file
+    autocmd FileType sh     nnoremap <buffer> <leader><CR> :w !sh<CR>
+    autocmd FileType sh     vnoremap <buffer> <leader><CR> :w !sh<CR>
+    autocmd FileType python nnoremap <buffer> <leader><CR> :exec '!python3' shellescape(@%, 1)<CR>
+    autocmd FileType go     nnoremap <buffer> <leader><CR> :exec '!go run' shellescape(@%, 1)<CR>
+    autocmd FileType java   nnoremap <buffer> <leader><CR> :!javac %:t<CR> :!java %:t:r<CR>
+    autocmd FileType lua    nnoremap <buffer> <leader><CR> :luafile %<CR>
 
     " makeprg
     autocmd FileType java setlocal makeprg=brazil-build\ -emacs
