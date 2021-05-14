@@ -483,7 +483,6 @@ autocmd! BufWritePost * call <SID>OpenDiagnostics()
 " completion {{{
 lua <<EOF
 require'compe'.setup {
-  enabled = true;
   preselect = 'always';
   source = {
     path = true;
@@ -497,16 +496,4 @@ EOF
 set completeopt=menuone,noselect
 inoremap <silent><expr> <C-Space> compe#complete()
 inoremap <silent><expr> <CR>      compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })
-
-inoremap <silent><expr> <TAB>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ compe#complete()
-
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 "}}}
