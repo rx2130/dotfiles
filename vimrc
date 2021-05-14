@@ -108,6 +108,17 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'neovim/nvim-lsp'
 Plug 'hrsh7th/nvim-compe'
+Plug 'mfussenegger/nvim-dap'
+Plug 'mfussenegger/nvim-dap-python'
+nnoremap <silent> <leader>dc :lua require'dap'.continue()<CR>
+nnoremap <silent> <leader>ds :lua require'dap'.step_over()<CR>
+nnoremap <silent> <leader>di :lua require'dap'.step_into()<CR>
+nnoremap <silent> <leader>do :lua require'dap'.step_out()<CR>
+nnoremap <silent> <leader>db :lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <silent> <leader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+nnoremap <silent> <leader>dp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
+nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
 
 call plug#end()
 
@@ -381,20 +392,23 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     }
 )
 
-on_attach = function(client)
+local on_attach = function(client)
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(0, ...) end
   local opts = { noremap=true, silent=true }
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', '<c-]>', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  -- buf_set_keymap('n', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('i', '<c-l>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   buf_set_keymap('n', 'gs', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
   buf_set_keymap('n', 'gS', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
+  buf_set_keymap('n', 'cr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-  buf_set_keymap('n', 'gR', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('v', '<leader>=', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
+  buf_set_keymap('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', '<leader>C', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', ']g', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '[g', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
@@ -402,20 +416,119 @@ on_attach = function(client)
 end
 
 local nvim_lsp = require('lspconfig')
-local servers = { "jsonls", "html", "cssls", "pyls", "gopls", "tsserver", "yamlls", "texlab", "sumneko_lua" }
+local servers = { "jsonls", "html", "cssls", "pyls", "gopls", "tsserver", "yamlls", "texlab" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { on_attach = on_attach }
 end
 
 nvim_lsp.sumneko_lua.setup {
-    on_attach = on_attach,
-    cmd = {'lua-lsp.sh'}
+  cmd = {'lua-lsp.sh'};
+  on_attach = on_attach,
+  settings = {
+      Lua = {
+          runtime = {
+              version = 'LuaJIT',
+              path = vim.split(package.path, ';'),
+          },
+          diagnostics = {
+              globals = {'vim'},
+          },
+          workspace = {
+              library = {
+                  [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                  [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+              },
+          },
+      },
+  },
 }
 
-require('lspfuzzy').setup {}
+local jdtls_on_attach = function(client)
+    on_attach(client)
+    require('jdtls').setup_dap()
+    require('jdtls.setup').add_commands()
+    vim.api.nvim_buf_set_keymap(0, 'n', '<leader>a', "<cmd>lua require'jdtls'.code_action()<CR>", { noremap=true, silent=true })
+end
+
+jdtls_setup = function()
+    local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
+    if bufname:find("fugitive://") then return end
+    if bufname:find("[java] ") then return end
+
+    local root_markers = {'packageInfo'}
+    local root_dir = require('jdtls.setup').find_root(root_markers)
+    local home = os.getenv('HOME')
+    local eclipse_workspace = home .. "/.local/share/eclipse/" .. vim.fn.fnamemodify(root_dir, ':p:h:t')
+
+    local ws_folders_lsp = {}
+    local ws_folders_jdtls = {}
+    if root_dir then
+        local file = io.open(root_dir .. "/.bemol/ws_root_folders", "r");
+        if file then
+            for line in file:lines() do
+                table.insert(ws_folders_lsp, line);
+                table.insert(ws_folders_jdtls, string.format("file://%s", line))
+            end
+            file:close()
+        end
+    end
+
+    local jar_patterns = {
+        '/Developer/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar',
+        '/Developer/vscode-java-decompiler/server/*.jar',
+        '/Developer/vscode-java-test/java-extension/com.microsoft.java.test.plugin/target/*.jar',
+        '/Developer/vscode-java-test/java-extension/com.microsoft.java.test.runner/target/*.jar',
+        '/Developer/vscode-java-test/java-extension/com.microsoft.java.test.runner/lib/*.jar',
+    }
+    local bundles = {}
+    for _, jar_pattern in ipairs(jar_patterns) do
+        for _, bundle in ipairs(vim.split(vim.fn.glob(home .. jar_pattern), '\n')) do
+            if bundle ~= "" then
+                table.insert(bundles, bundle)
+            end
+        end
+    end
+
+    local config = {
+        on_attach = jdtls_on_attach,
+        cmd = {'java-lsp.sh', eclipse_workspace},
+        root_dir = root_dir,
+        init_options = {
+            bundles = bundles,
+            workspaceFolders = ws_folders_jdtls,
+        },
+        settings = {
+            java = {
+                signatureHelp = { enabled = true };
+                contentProvider = { preferred = 'fernflower' };
+            }
+        },
+    }
+
+    require('dap').configurations.java = {
+      {
+        type = 'java';
+        request = 'attach';
+        name = "Debug (Attach) - Remote";
+        hostName = "127.0.0.1";
+        port = 5005;
+        projectName = "CBDSHeliosService";
+      },
+    }
+
+    require('jdtls').start_or_attach(config)
+
+    for _,line in ipairs(ws_folders_lsp) do
+        vim.lsp.buf.add_workspace_folder(line)
+    end
+end
 EOF
 
-autocmd! FileType java lua require'jdtls'.start_or_attach({ on_attach = on_attach, cmd = {'java-lsp.sh'} })
+augroup lsp
+    autocmd!
+    autocmd FileType java luado jdtls_setup()
+    autocmd FileType python lua require('dap-python').setup('/home/linuxbrew/.linuxbrew/bin/python3')
+augroup end
 
 function! s:OpenDiagnostics()
     lua vim.lsp.diagnostic.set_loclist { open_loclist = false, severity = "Error" }
