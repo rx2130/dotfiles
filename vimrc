@@ -140,6 +140,7 @@ set autowrite
 set statusline=%<%f\ %m%r%=%-14.(%l,%v%)\ %Y
 set diffopt=internal,filler,closeoff,hiddenoff,algorithm:histogram,indent-heuristic
 set termguicolors
+set makeprg=brazil-build
 
 
 colorscheme gruvbox8
@@ -259,6 +260,21 @@ augroup vimrc
     autocmd FileType python nnoremap <buffer> <leader><CR> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
     autocmd FileType go     nnoremap <buffer> <leader><CR> :w<CR>:exec '!go run' shellescape(@%, 1)<CR>
     autocmd FileType java   nnoremap <buffer> <leader><CR> :w<CR>:!javac %:t<CR> :!java %:t:r<CR>
+
+    " makeprg
+    autocmd FileType java setlocal makeprg=brazil-build\ -emacs
+    autocmd FileType java setlocal errorformat=%f:%l:\ %trror:\ %m,
+                    \%-GReplacing%.%#,
+                    \%-GBUILD\ FAILED%.%#,
+                    \%-GTotal\ time:%.%#,
+                    \%-GRunning%.%#,
+                    \%-GRemoving%.%#,
+                    \%-GUsing%.%#,
+                    \%-GTrying%.%#,
+                    \%-GDefining%.%#,
+                    \%-GANT_%.%#,
+                    \%-G%.%#HappierTrails%.%#,
+                    \%-G%[\ 0-9]%.%#\ errors
 augroup END
 
 " only show cursor line in active window
