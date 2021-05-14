@@ -39,6 +39,7 @@ xmap <Leader>r  <Plug>ReplaceWithRegisterVisual
 Plug 'raimondi/delimitmate'
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
+let g:delimitMate_excluded_ft = "TelescopePrompt"
 
 " GUI enhancements
 Plug 'gruvbox-community/gruvbox'
@@ -99,35 +100,30 @@ autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " Fuzzy finder
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-let g:fzf_history_dir = '~/.local/share/fzf-history'
-let g:fzf_action = {
-            \ 'ctrl-t': 'tab split',
-            \ 'ctrl-s': 'split',
-            \ 'ctrl-v': 'vsplit',
-            \ }
-
-nnoremap <leader>f :Files<CR>
-nnoremap <leader>F :GFiles?<CR>
-nnoremap <leader>b :Buffers<CR>
-nnoremap <leader>h :History<CR>
-nnoremap <leader>l :BLines<CR>
-nnoremap <leader>L :Lines<CR>
-nnoremap <leader>' :Marks<CR>
-nnoremap <leader>; :Commands<CR>
-nnoremap <leader>: :History:<CR>
-nnoremap <leader>S :Filetypes<CR>
-nnoremap <leader>H :Helptags<CR>
-nnoremap <leader>M :Maps<CR>
-nnoremap <leader>/ :Rg <CR>
-xnoremap <leader>/ y:Rg <C-R>"<CR>
-nnoremap <leader>? :Rg <C-R><C-W><CR>
-xnoremap <leader>? y:Rg <C-R>"<CR>
-nnoremap <leader>gh :Commits<CR>
-nnoremap <leader>gH :BCommits<CR>
-nnoremap <leader>, :Files ~/dotfiles<CR>v
-nnoremap <expr> <C-p> ':Files<CR>'.expand('%:t:r')
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
+nnoremap <leader>f <cmd>lua require('telescope.builtin').find_files({search_dirs=telescope_search_dirs()})<cr>
+nnoremap <leader>F <cmd>lua require('telescope.builtin').git_status()<cr>
+nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>h <cmd>lua require('telescope.builtin').oldfiles()<cr>
+nnoremap <leader>l <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>
+nnoremap <leader>L <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>' <cmd>lua require('telescope.builtin').marks()<cr>
+nnoremap <leader>; <cmd>lua require('telescope.builtin').commands()<cr>
+nnoremap <leader>: <cmd>lua require('telescope.builtin').command_history()<cr>
+nnoremap <leader>S <cmd>lua require('telescope.builtin').filetypes()<cr>
+nnoremap <leader>H <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap <leader>m <cmd>lua require('telescope.builtin').man_pages()<cr>
+nnoremap <leader>M <cmd>lua require('telescope.builtin').keymaps()<cr>
+nnoremap <leader>/ <cmd>lua require('telescope.builtin').live_grep({search_dirs=telescope_search_dirs(),shorten_path=true})<cr>
+xnoremap <leader>/ <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>? <cmd>lua require('telescope.builtin').grep_string({search_dirs=telescope_search_dirs(),shorten_path=true})<cr>
+xnoremap <leader>? <cmd>lua require('telescope.builtin').grep_string()<cr>
+nnoremap <leader>gh <cmd>lua require('telescope.builtin').git_commits()<cr>
+nnoremap <leader>gH <cmd>lua require('telescope.builtin').git_bcommits()<cr>
+nnoremap <leader>gc <cmd>lua require('telescope.builtin').git_branches()<cr>
 
 Plug 'airblade/vim-rooter'
 let g:rooter_silent_chdir = 1
@@ -151,9 +147,6 @@ Plug 'junegunn/gv.vim', { 'on': 'GV' }
 nnoremap <leader>gv :GV --all<CR>
 nnoremap <leader>gV :GV<CR>
 
-Plug 'stsewd/fzf-checkout.vim'
-nnoremap <leader>gc :GBranches<CR>
-
 " Semantic language support
 Plug 'ssh://git.amazon.com:2222/pkg/VimIon.git'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
@@ -171,7 +164,6 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 
 Plug 'neovim/nvim-lsp'
-Plug 'ojroques/nvim-lspfuzzy'
 Plug 'hrsh7th/nvim-compe'
 
 call plug#end()
@@ -306,7 +298,6 @@ augroup vimrc
 
     " termianl mode Esc map
     autocmd TermOpen * tnoremap <buffer> <Esc> <C-\><C-n>
-    autocmd FileType fzf tunmap <buffer> <Esc>
 
     " open help vertically
     autocmd BufEnter * if &filetype ==# 'help' | wincmd L | endif
@@ -496,4 +487,32 @@ EOF
 set completeopt=menuone,noselect
 inoremap <silent><expr> <C-Space> compe#complete()
 inoremap <silent><expr> <CR>      compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })
+"}}}
+
+" telescope {{{
+lua <<EOF
+local actions = require('telescope.actions')
+require('telescope').setup{
+  defaults = {
+    mappings = {
+      i = {
+        ["<esc>"] = actions.close,
+        ["<C-s>"] = actions.select_horizontal,
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-k>"] = actions.move_selection_previous,
+      },
+    },
+  }
+}
+require('telescope').load_extension('fzy_native')
+
+telescope_search_dirs = function()
+    local find_root = require'jdtls.setup'.find_root
+    local bufname = vim.fn.expand('%:t:r')
+    local root_dir = find_root({'packageInfo'}, bufname)
+    if root_dir then
+        return {root_dir .. "/src/"}
+    end
+end
+EOF
 "}}}
