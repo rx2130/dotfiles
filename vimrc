@@ -139,11 +139,8 @@ set nowrap
 set signcolumn=number
 set autowrite
 set statusline=%<%f\ %m%r%=%-14.(%l,%v%)\ %Y
+set diffopt=internal,filler,closeoff,hiddenoff,algorithm:histogram,indent-heuristic
 
-" https://vimways.org/2018/the-power-of-diff/
-set diffopt+=algorithm:patience
-set diffopt+=indent-heuristic
-set diffopt+=iwhite
 
 let g:vimsyn_embed = 'l' " get Lua syntax highlighting inside .vim files
 
