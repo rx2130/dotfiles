@@ -42,8 +42,7 @@ let g:delimitMate_expand_space = 1
 let g:delimitMate_excluded_ft = "TelescopePrompt"
 
 " GUI enhancements
-Plug 'gruvbox-community/gruvbox'
-let g:gruvbox_invert_selection='0'
+Plug 'lifepillar/vim-gruvbox8'
 
 " Fuzzy finder
 Plug 'nvim-lua/popup.nvim'
@@ -140,17 +139,11 @@ set signcolumn=number
 set autowrite
 set statusline=%<%f\ %m%r%=%-14.(%l,%v%)\ %Y
 set diffopt=internal,filler,closeoff,hiddenoff,algorithm:histogram,indent-heuristic
+set termguicolors
 
 
+colorscheme gruvbox8
 let g:vimsyn_embed = 'l' " get Lua syntax highlighting inside .vim files
-
-colorscheme gruvbox
-if has('termguicolors') && $COLORTERM =~# 'truecolor\|24bit'
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-    set termguicolors
-endif
-
 "}}}
 
 " Mappings {{{
