@@ -39,7 +39,7 @@ xmap <Leader>r  <Plug>ReplaceWithRegisterVisual
 Plug 'raimondi/delimitmate'
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
-let g:delimitMate_excluded_ft = "TelescopePrompt"
+let g:delimitMate_excluded_ft = "TelescopePrompt,DAP-REPL"
 
 " GUI enhancements
 Plug 'lifepillar/vim-gruvbox8'
@@ -529,6 +529,7 @@ augroup lsp
     autocmd!
     autocmd FileType java luado jdtls_setup()
     autocmd FileType python lua require('dap-python').setup('/home/linuxbrew/.linuxbrew/bin/python3')
+    autocmd FileType dap-repl lua require('dap.ext.autocompl').attach()
 augroup end
 
 function! s:OpenDiagnostics()
