@@ -148,16 +148,14 @@ set nowrap
 set signcolumn=number
 set statusline=%<%f\ %m%r%=%-14.(%l,%v%)\ %Y
 set diffopt=internal,filler,closeoff,hiddenoff,algorithm:histogram,indent-heuristic
+set diffopt+=vertical " Always use vertical diffs
 set termguicolors
 set smartindent " smart autoindenting when starting a new line
 set shortmess+=I
 set ttimeoutlen=0 " lower the delay of escaping out of other modes
 set makeprg=brazil-build
-
-if executable("rg")
-    set grepprg=rg\ --vimgrep\ --no-heading
-    set grepformat=%f:%l:%c:%m,%f:%l:%m
-endif
+set grepprg=rg\ --vimgrep\ --no-heading
+set grepformat=%f:%l:%c:%m,%f:%l:%m
 
 colorscheme gruvbox8
 let g:vimsyn_embed = 'l' " get Lua syntax highlighting inside .vim files
@@ -187,6 +185,7 @@ nnoremap <leader>T :split \| terminal<cr>
 nnoremap <leader>y :let @*=expand('%:t:r')<CR> :echo expand('%:t:r')<CR>
 nnoremap <leader>Y :let @*=expand('%:p')<CR> :echo expand('%:p')<CR>
 nnoremap <leader>, :e ~/dotfiles/vimrc<cr>
+nnoremap <leader>* *``
 nnoremap <Tab> za
 nnoremap <C-n>i <C-i>
 
@@ -290,6 +289,7 @@ augroup vimrc
                     \%-GANT_%.%#,
                     \%-G%.%#HappierTrails%.%#,
                     \%-G%[\ 0-9]%.%#\ errors
+    autocmd FileType go setlocal errorformat=%f:%l.%c-%[%^:]%#:\ %m,%f:%l:%c:\ %m
 augroup END
 
 " only show cursor line in active window
@@ -378,16 +378,10 @@ set foldlevelstart=99
 
 " LSP {{{
 lua << EOF
-local virtual_text_show = true
-function virtual_text_toggle()
-    virtual_text_show = not virtual_text_show
-    vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, 1), 0, 1, {virtual_text = virtual_text_show, underline = virtual_text_show, signs = false})
-end
-
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
         underline = true,
-        virtual_text = true,
+        virtual_text = false,
         signs = false,
         update_in_insert = false,
     }
@@ -413,11 +407,10 @@ local on_attach = function(client)
   buf_set_keymap('n', '<leader>C', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', ']g', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '[g', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', 'yot', '<cmd>lua virtual_text_toggle()<CR>', opts)
 end
 
 local nvim_lsp = require('lspconfig')
-local servers = { "jsonls", "html", "cssls", "pyls", "gopls", "tsserver", "yamlls", "texlab" }
+local servers = { "jsonls", "html", "cssls", "pyright", "gopls", "tsserver", "yamlls", "texlab" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { on_attach = on_attach }
 end
