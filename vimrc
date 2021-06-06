@@ -16,7 +16,7 @@ nnoremap <leader>u :UndotreeToggle<CR>
 
 Plug 'justinmk/vim-gtfo'
 Plug 'tpope/vim-eunuch'
-Plug 'justinmk/vim-dirvish'
+Plug 'kyazdani42/nvim-tree.lua'
 Plug 'tyru/open-browser.vim'
 let g:loaded_netrwPlugin = 1
 nmap gx <Plug>(openbrowser-smart-search)
@@ -587,4 +587,25 @@ telescope_search_dirs = function()
     end
 end
 EOF
+"}}}
+
+" nvim-tree {{{
+lua <<EOF
+vim.g.nvim_tree_auto_close = 1
+vim.g.nvim_tree_follow = 1
+vim.g.nvim_tree_width = 40
+vim.g.nvim_tree_icons = {
+    folder = {
+        default = "►",
+        open = "▼"
+    }
+}
+vim.g.nvim_tree_show_icons = { git = 0, folders = 1, files = 0 }
+local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+vim.g.nvim_tree_bindings = {
+    ['<C-s>'] = tree_cb('split')
+}
+EOF
+nnoremap <Leader>n :NvimTreeToggle<CR>
+nnoremap <Leader>N :NvimTreeFindFile<CR>
 "}}}
