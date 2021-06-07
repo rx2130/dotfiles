@@ -112,14 +112,21 @@ Plug 'hrsh7th/nvim-compe'
 Plug 'mfussenegger/nvim-dap'
 Plug 'mfussenegger/nvim-dap-python'
 nnoremap <silent> <leader>dc :lua require'dap'.continue()<CR>
-nnoremap <silent> <leader>ds :lua require'dap'.step_over()<CR>
+nnoremap <silent> <leader>dd :lua require'dap'.step_over()<CR>
 nnoremap <silent> <leader>di :lua require'dap'.step_into()<CR>
 nnoremap <silent> <leader>do :lua require'dap'.step_out()<CR>
 nnoremap <silent> <leader>db :lua require'dap'.toggle_breakpoint()<CR>
 nnoremap <silent> <leader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
 nnoremap <silent> <leader>dp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
-nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
+nnoremap <silent> <leader>dr :lua require'dap'.repl.toggle({height=15})<CR>
 nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
+nnoremap <silent> <leader>dC :lua require'dap'.run_to_cursor()<CR>
+nnoremap <silent> <leader>df :lua require('dap.ui.widgets').centered_float(require('dap.ui.widgets').frames)<CR>
+nnoremap <silent> <leader>ds :lua require('dap.ui.widgets').centered_float(require('dap.ui.widgets').scopes)<CR>
+nnoremap <silent> <leader>K  :lua require('dap.ui.widgets').hover()<CR>
+vnoremap <silent> <leader>K  :lua require('dap.ui.widgets').hover(require("dap.utils").get_visual_selection_text)<CR>
+command! -nargs=0 DapSidebar :lua local widgets = require('dap.ui.widgets'); local scopes_sidebar = widgets.sidebar(widgets.scopes); scopes_sidebar.open(); local frames_sidebar = widgets.sidebar(widgets.frames); frames_sidebar.open()
+command! -nargs=0 DapBreakpoints :lua require('dap').list_breakpoints()
 
 call plug#end()
 
@@ -505,7 +512,6 @@ jdtls_setup = function()
         name = "Debug (Attach) - Remote";
         hostName = "127.0.0.1";
         port = 5005;
-        projectName = "CBDSHeliosService";
       },
     }
 
