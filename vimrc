@@ -216,8 +216,8 @@ cnoremap <C-k> <C-\>e(strpart(getcmdline(), 0, getcmdpos() - 1))<CR>
 xnoremap <expr> I (mode()=~#'[vV]'?'<C-v>^o^I':'I')
 xnoremap <expr> A (mode()=~#'[vV]'?'<C-v>0o$A':'A')
 
-nmap <silent><leader>s *''cgn
-xmap <silent><leader>s *''cgn
+nmap <silent><leader>s *Ncgn
+xmap <silent><leader>s *Ncgn
 
 " Press * to search for the term under the cursor or a visual selection and
 " then press a key below to replace all instances of it in the current file.
