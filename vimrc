@@ -50,8 +50,8 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 nnoremap <leader>f <cmd>lua require('telescope.builtin').find_files{find_command={'fd', '--type', 'f', '--hidden', '--follow', '--exclude', '.git'},cwd=telescope_search_dirs()}<cr>
-nnoremap <leader>F <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>G <cmd>lua require('telescope.builtin').git_status()<cr>
+nnoremap <C-p>     <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>F <cmd>lua require('telescope.builtin').git_status()<cr>
 nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>h <cmd>lua require('telescope.builtin').oldfiles()<cr>
 nnoremap <leader>l <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>
@@ -66,7 +66,7 @@ nnoremap <leader>M <cmd>lua require('telescope.builtin').keymaps()<cr>
 nnoremap <leader>/ <cmd>lua require('telescope.builtin').live_grep({cwd=telescope_search_dirs()})<cr>
 xnoremap <leader>/ "vy<cmd>lua require('telescope.builtin').grep_string({search=vim.fn.getreg('v'),cwd=telescope_search_dirs()})<cr>
 nnoremap <leader>? <cmd>lua require('telescope.builtin').grep_string({cwd=telescope_search_dirs()})<cr>
-xnoremap <leader>? "vy<cmd>lua require('telescope.builtin').grep_string({search=vim.fn.getreg('v'),cwd=telescope_search_dirs()})<cr>
+xnoremap <leader>? "vy<cmd>lua require('telescope.builtin').grep_string({search=vim.fn.getreg('v')})<cr>
 nnoremap <leader>gh <cmd>lua require('telescope.builtin').git_commits()<cr>
 nnoremap <leader>gH <cmd>lua require('telescope.builtin').git_bcommits()<cr>
 nnoremap <leader>gc <cmd>lua require('telescope.builtin').git_branches()<cr>
@@ -585,9 +585,7 @@ require('telescope').setup{
 require('telescope').load_extension('fzy_native')
 
 telescope_search_dirs = function()
-    local find_root = require'jdtls.setup'.find_root
-    local bufname = vim.fn.expand('%:t:r')
-    local root_dir = find_root({'packageInfo'}, bufname)
+    local root_dir = require('jdtls.setup').find_root({'packageInfo'}, 'Config')
     if root_dir then
         return root_dir .. "/src/"
     end
