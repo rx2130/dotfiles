@@ -600,7 +600,7 @@ vim.g.nvim_tree_follow = 1
 vim.g.nvim_tree_width = 40
 vim.g.nvim_tree_icons = {
     folder = {
-        default = "►",
+        default = "▶︎",
         open = "▼"
     }
 }
