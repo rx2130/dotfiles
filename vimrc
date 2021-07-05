@@ -65,7 +65,7 @@ nnoremap <leader>m <cmd>lua require('telescope.builtin').man_pages()<cr>
 nnoremap <leader>M <cmd>lua require('telescope.builtin').keymaps()<cr>
 nnoremap <leader>/ <cmd>lua require('telescope.builtin').live_grep({cwd=telescope_search_dirs()})<cr>
 xnoremap <leader>/ "vy<cmd>lua require('telescope.builtin').grep_string({search=vim.fn.getreg('v'),cwd=telescope_search_dirs()})<cr>
-nnoremap <leader>? <cmd>lua require('telescope.builtin').grep_string({cwd=telescope_search_dirs()})<cr>
+nnoremap <leader>? <cmd>lua require('telescope.builtin').live_grep()<cr>
 xnoremap <leader>? "vy<cmd>lua require('telescope.builtin').grep_string({search=vim.fn.getreg('v')})<cr>
 nnoremap <leader>gh <cmd>lua require('telescope.builtin').git_commits()<cr>
 nnoremap <leader>gH <cmd>lua require('telescope.builtin').git_bcommits()<cr>
@@ -192,7 +192,7 @@ nnoremap <leader>T :split \| terminal<cr>
 nnoremap <leader>y :let @*=expand('%:t:r')<CR> :echo expand('%:t:r')<CR>
 nnoremap <leader>Y :let @*=expand('%:p')<CR> :echo expand('%:p')<CR>
 nnoremap <leader>, :e ~/dotfiles/vimrc<cr>
-nnoremap <leader>* *``
+nnoremap <leader>* *N
 nnoremap <Tab> za
 nnoremap <C-n>i <C-i>
 
@@ -564,13 +564,15 @@ require('telescope').setup{
   defaults = {
     vimgrep_arguments = {
       'rg',
+      '-g',
+      '!.git/',
       '--hidden',
       '--color=never',
       '--no-heading',
       '--with-filename',
       '--line-number',
       '--column',
-      '--smart-case'
+      '--smart-case',
     },
     mappings = {
       i = {
@@ -596,7 +598,6 @@ EOF
 " nvim-tree {{{
 lua <<EOF
 vim.g.nvim_tree_auto_close = 1
-vim.g.nvim_tree_follow = 1
 vim.g.nvim_tree_width = 40
 vim.g.nvim_tree_icons = {
     folder = {
@@ -607,7 +608,7 @@ vim.g.nvim_tree_icons = {
 vim.g.nvim_tree_show_icons = { git = 0, folders = 1, files = 0 }
 local tree_cb = require'nvim-tree.config'.nvim_tree_callback
 vim.g.nvim_tree_bindings = {
-    ['<C-s>'] = tree_cb('split')
+    { key = "<C-s>", cb = tree_cb("split") }
 }
 EOF
 nnoremap <Leader>n :NvimTreeToggle<CR>
