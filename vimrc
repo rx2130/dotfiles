@@ -580,6 +580,8 @@ require('telescope').setup{
         ["<C-s>"] = actions.select_horizontal,
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
+        ["<C-n>"] = require('telescope.actions').cycle_history_next,
+        ["<C-p>"] = require('telescope.actions').cycle_history_prev,
       },
     },
   }
