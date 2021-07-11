@@ -15,15 +15,14 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+export PATH="$PATH:$HOME/bin"
+export PATH=$PATH:$(go env GOPATH)/bin
+
 if [ $(uname) = "Darwin" ]; then
     # python
     export PATH="/usr/local/opt/python/libexec/bin:$PATH"
     # c/c++
     # export PATH="/usr/local/opt/llvm/bin:$PATH"
-    # go
-    export PATH=$PATH:$(go env GOPATH)/bin
-else
-    export PATH=~/.local/bin:$PATH
 fi
 
 if [[ $(hostname) == *"amazon.com" ]]; then
@@ -32,11 +31,12 @@ if [[ $(hostname) == *"amazon.com" ]]; then
     # JDK
     # export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-8.jdk/Contents/Home
     # export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/
+    # export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto.x86_64
     # RDE
-    fpath=(~/.zsh/completion $fpath)
-    autoload -Uz compinit && compinit -i
+    # fpath=(~/.zsh/completion $fpath)
+    # autoload -Uz compinit && compinit -i
     # CMPortalTools
-    export PATH="/Users/xuerx/workplace/CMPortalTools/src/CMPortalTools/bin:$PATH"
+    export PATH="$HOME/workplace/CMPortalTools/src/CMPortalTools/bin:$PATH"
     # curl-openssl alfred
     export PATH="/usr/local/opt/curl-openssl/bin:$PATH"
 fi
