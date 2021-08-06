@@ -41,6 +41,7 @@ customBindings = {
 }
 spoon.Lunette:bindHotkeys(customBindings)
 
+hs.window.animationDuration = 0
 
 -- Fancy config reload
 function reloadConfig(files)
