@@ -197,8 +197,8 @@ nnoremap <leader>* *N
 nnoremap <Tab> za
 nnoremap <C-n>i <C-i>
 
-inoremap <C-a> <C-o>^
-inoremap <C-e> <C-o>$
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
 inoremap <C-d> <Del>
