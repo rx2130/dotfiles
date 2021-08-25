@@ -163,6 +163,7 @@ set ttimeoutlen=0 " lower the delay of escaping out of other modes
 set makeprg=brazil-build
 set grepprg=rg\ --vimgrep\ --no-heading
 set grepformat=%f:%l:%c:%m,%f:%l:%m
+set matchpairs+=<:> " pairs for % command
 
 colorscheme gruvbox8
 let g:vimsyn_embed = 'l' " get Lua syntax highlighting inside .vim files
