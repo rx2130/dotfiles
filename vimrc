@@ -48,7 +48,7 @@ Plug 'lifepillar/vim-gruvbox8'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzy-native.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 nnoremap <leader>f <cmd>lua require('telescope.builtin').find_files{find_command={'fd', '--type', 'f', '--hidden', '--follow', '--exclude', '.git'},cwd=telescope_search_dirs()}<cr>
 nnoremap <C-p>     <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>F <cmd>lua require('telescope.builtin').git_status()<cr>
@@ -586,7 +586,7 @@ require('telescope').setup{
     },
   }
 }
-require('telescope').load_extension('fzy_native')
+require('telescope').load_extension('fzf')
 
 telescope_search_dirs = function()
     local root_dir = require('jdtls.setup').find_root({'packageInfo'}, 'Config')
