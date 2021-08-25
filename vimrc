@@ -14,8 +14,9 @@ nnoremap <silent><leader>Q :Sayonara!<CR>
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 nnoremap <leader>u :UndotreeToggle<CR>
 
-Plug 'justinmk/vim-gtfo'
+" Plug 'justinmk/vim-gtfo'
 Plug 'tpope/vim-eunuch'
+" Plug 'tpope/vim-sleuth'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'tyru/open-browser.vim'
 let g:loaded_netrwPlugin = 1
@@ -95,15 +96,16 @@ nnoremap <leader>gV :GV<CR>
 
 " Semantic language support
 Plug 'ssh://git.amazon.com:2222/pkg/VimIon.git'
-Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-let g:vim_markdown_folding_disabled = 1
+" Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+" let g:vim_markdown_folding_disabled = 1
+Plug 'npxbr/glow.nvim', {'for': 'markdown', 'branch': 'main'}
+nnoremap <leader>p :Glow<CR>
 
-Plug 'mzlogin/vim-markdown-toc', { 'for': 'markdown' }
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-nmap <leader>p <Plug>MarkdownPreviewToggle
-let g:mkdp_auto_close = 0
+" Plug 'mzlogin/vim-markdown-toc', { 'for': 'markdown' }
+" Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+" nmap <leader>p <Plug>MarkdownPreviewToggle
+" let g:mkdp_auto_close = 0
 
-Plug 'fatih/vim-go'
 Plug 'mfussenegger/nvim-jdtls'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
