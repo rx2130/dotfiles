@@ -110,7 +110,9 @@ Plug 'mfussenegger/nvim-jdtls'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'neovim/nvim-lsp'
-Plug 'hrsh7th/nvim-compe'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
 Plug 'mfussenegger/nvim-dap'
 Plug 'mfussenegger/nvim-dap-python'
 nnoremap <silent> <leader>dc :lua require'dap'.continue()<CR>
@@ -545,20 +547,24 @@ autocmd! BufWritePost * call <SID>OpenDiagnostics()
 
 " completion {{{
 lua <<EOF
-require'compe'.setup {
-  preselect = 'always';
-  source = {
-    path = true;
-    buffer = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-  };
+local cmp = require'cmp'
+cmp.setup {
+  mapping = {
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ['<C-Space>'] = cmp.mapping.complete(),
+  },
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'buffer' },
+  },
+  completion = {
+    completeopt = 'menu,menuone,noinsert',
+  }
 }
 EOF
-
-set completeopt=menuone,noselect
-inoremap <silent><expr> <C-Space> compe#complete()
-inoremap <silent><expr> <CR>      compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })
 "}}}
 
 " telescope {{{
