@@ -594,6 +594,7 @@ require('telescope').setup{
         ["<C-p>"] = require('telescope.actions').cycle_history_prev,
       },
     },
+    path_display = {'smart'},
   }
 }
 require('telescope').load_extension('fzf')
