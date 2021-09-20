@@ -611,14 +611,9 @@ EOF
 " nvim-tree {{{
 lua <<EOF
 vim.g.nvim_tree_auto_close = 1
+vim.g.nvim_tree_group_empty = 1
 vim.g.nvim_tree_width = 40
-vim.g.nvim_tree_icons = {
-    folder = {
-        default = "▶︎",
-        open = "▼"
-    }
-}
-vim.g.nvim_tree_show_icons = { git = 0, folders = 1, files = 0 }
+vim.g.nvim_tree_show_icons = { git = 0, folders = 0, files = 0 }
 local tree_cb = require'nvim-tree.config'.nvim_tree_callback
 vim.g.nvim_tree_bindings = {
     { key = "<C-s>", cb = tree_cb("split") }
