@@ -106,13 +106,8 @@ nnoremap <leader>p :Glow<CR>
 " nmap <leader>p <Plug>MarkdownPreviewToggle
 " let g:mkdp_auto_close = 0
 
-Plug 'mfussenegger/nvim-jdtls'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'neovim/nvim-lsp'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
+Plug 'mfussenegger/nvim-jdtls'
 Plug 'mfussenegger/nvim-dap'
 Plug 'mfussenegger/nvim-dap-python'
 nnoremap <silent> <leader>dc :lua require'dap'.continue()<CR>
@@ -131,6 +126,13 @@ nnoremap <silent> <leader>K  :lua require('dap.ui.widgets').hover()<CR>
 vnoremap <silent> <leader>K  :lua require('dap.ui.widgets').hover(require("dap.utils").get_visual_selection_text)<CR>
 command! -nargs=0 DapSidebar :lua local widgets = require('dap.ui.widgets'); local scopes_sidebar = widgets.sidebar(widgets.scopes); scopes_sidebar.open(); local frames_sidebar = widgets.sidebar(widgets.frames); frames_sidebar.open()
 command! -nargs=0 DapBreakpoints :lua require('dap').list_breakpoints()
+
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
 
 call plug#end()
 
@@ -259,7 +261,7 @@ augroup vimrc
     autocmd BufEnter * if &filetype ==# 'man' | wincmd L | endif
 
     " highlight yank
-    autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=100}
+    autocmd TextYankPost * silent! lua vim.highlight.on_yank()
 
     " File Type settings
     autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o " disable automatic comment insertion
@@ -289,7 +291,6 @@ augroup vimrc
     autocmd FileType lua    nnoremap <buffer> <leader><CR> :luafile %<CR>
 
     " makeprg
-    autocmd FileType java setlocal makeprg=brazil-build\ -emacs
     autocmd FileType java setlocal errorformat=%f:%l:\ %trror:\ %m,
                     \%-GReplacing%.%#,
                     \%-GBUILD\ FAILED%.%#,
@@ -452,7 +453,7 @@ nvim_lsp.sumneko_lua.setup {
 
 local jdtls_on_attach = function(client)
     on_attach(client)
-    require('jdtls').setup_dap()
+    require('jdtls').setup_dap({ hotcodereplace = 'auto' })
     require('jdtls.setup').add_commands()
     vim.api.nvim_buf_set_keymap(0, 'n', '<leader>a', "<cmd>lua require'jdtls'.code_action()<CR>", { noremap=true, silent=true })
 end
@@ -505,8 +506,8 @@ jdtls_setup = function()
         },
         settings = {
             java = {
-                signatureHelp = { enabled = true };
-                contentProvider = { preferred = 'fernflower' };
+                signatureHelp = { enabled = true },
+                contentProvider = { preferred = 'fernflower' },
             }
         },
     }
@@ -531,18 +532,14 @@ EOF
 
 augroup lsp
     autocmd!
-    autocmd FileType java luado jdtls_setup()
+    autocmd FileType java lua jdtls_setup()
     autocmd FileType python lua require('dap-python').setup('/home/linuxbrew/.linuxbrew/bin/python3')
     autocmd FileType dap-repl lua require('dap.ext.autocompl').attach()
+
+    " display errors and warnings on save
+    autocmd BufWritePost * lua vim.lsp.diagnostic.set_loclist{open_loclist = false, severity = "Error"}; vim.api.nvim_command('lwindow')
 augroup end
 
-function! s:OpenDiagnostics()
-    lua vim.lsp.diagnostic.set_loclist { open_loclist = false, severity = "Error" }
-    lwindow
-endfunction
-
-" display errors and warnings on save
-autocmd! BufWritePost * call <SID>OpenDiagnostics()
 "}}}
 
 " completion {{{
