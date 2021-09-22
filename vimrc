@@ -238,9 +238,6 @@ xnoremap <leader>R :s///g<Left><Left>
 augroup vimrc
     autocmd!
 
-    " Set vim to save the file on focus out
-    autocmd FocusLost * silent! :wa
-
     " Automatically source vimrc on save
     autocmd BufWritePost vimrc,$MYVIMRC nested source $MYVIMRC
 
