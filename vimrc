@@ -98,7 +98,7 @@ nnoremap <leader>gV :GV<CR>
 Plug 'ssh://git.amazon.com:2222/pkg/VimIon.git'
 " Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 " let g:vim_markdown_folding_disabled = 1
-Plug 'npxbr/glow.nvim', {'for': 'markdown', 'branch': 'main'}
+Plug 'ellisonleao/glow.nvim'
 nnoremap <leader>p :Glow<CR>
 
 " Plug 'mzlogin/vim-markdown-toc', { 'for': 'markdown' }
