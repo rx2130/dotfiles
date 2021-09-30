@@ -133,6 +133,7 @@ Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
 
 call plug#end()
 
@@ -553,6 +554,7 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'buffer' },
+    { name = 'path' },
   },
   completion = {
     completeopt = 'menu,menuone,noinsert',
