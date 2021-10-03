@@ -607,7 +607,8 @@ EOF
 " nvim-tree {{{
 lua <<EOF
 vim.g.nvim_tree_group_empty = 1
-vim.g.nvim_tree_show_icons = { git = 0, folders = 0, files = 0 }
+vim.g.nvim_tree_special_files = {}
+vim.g.nvim_tree_show_icons = {}
 local tree_cb = require'nvim-tree.config'.nvim_tree_callback
 require('nvim-tree').setup {
     width = 40,
@@ -620,7 +621,6 @@ require('nvim-tree').setup {
         }
     }
 }
-
 EOF
 nnoremap <Leader>n :NvimTreeToggle<CR>
 nnoremap <Leader>N :NvimTreeFindFile<CR>
