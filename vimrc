@@ -19,7 +19,6 @@ Plug 'tpope/vim-eunuch'
 " Plug 'tpope/vim-sleuth'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'tyru/open-browser.vim'
-let g:loaded_netrwPlugin = 1
 nmap gx <Plug>(openbrowser-smart-search)
 vmap gx <Plug>(openbrowser-smart-search)
 
@@ -71,6 +70,8 @@ xnoremap <leader>? "vy<cmd>lua require('telescope.builtin').grep_string({search=
 nnoremap <leader>gh <cmd>lua require('telescope.builtin').git_commits()<cr>
 nnoremap <leader>gH <cmd>lua require('telescope.builtin').git_bcommits()<cr>
 nnoremap <leader>gc <cmd>lua require('telescope.builtin').git_branches()<cr>
+nnoremap <leader>gs <cmd>lua require('telescope.builtin').git_stash()<cr>
+nnoremap <leader><BS> <cmd>lua require('telescope.builtin').resume()<cr>
 
 Plug 'airblade/vim-rooter'
 let g:rooter_silent_chdir = 1
@@ -403,15 +404,15 @@ local on_attach = function(client)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(0, ...) end
   local opts = { noremap=true, silent=true }
-  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', opts)
   buf_set_keymap('n', '<c-]>', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua require("telescope.builtin").lsp_implementations()<CR>', opts)
   buf_set_keymap('i', '<c-l>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', 'gs', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
-  buf_set_keymap('n', 'gS', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
+  buf_set_keymap('n', 'gD', '<cmd>lua require("telescope.builtin").lsp_type_definitions()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', opts)
+  buf_set_keymap('n', 'gs', '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', opts)
+  buf_set_keymap('n', 'gS', '<cmd>lua require("telescope.builtin").lsp_dynamic_workspace_symbols()<CR>', opts)
   buf_set_keymap('n', 'cr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   buf_set_keymap('v', '<leader>=', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
