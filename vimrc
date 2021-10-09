@@ -81,9 +81,9 @@ let g:rooter_silent_chdir = 1
 Plug 'tpope/vim-fugitive'
 nnoremap <leader>gg :Git<CR>
 nnoremap <leader>gd :Gdiffsplit<CR>
-nnoremap <leader>gp :Git push<CR>
-nnoremap <leader>gf :Git fetch<CR>
-nnoremap <leader>gl :Git pull<CR>
+nnoremap <leader>gp :Dispatch git push<CR>
+nnoremap <leader>gf :Dispatch git fetch<CR>
+nnoremap <leader>gl :Dispatch git pull<CR>
 nnoremap <leader>gb :Git blame<CR>
 vnoremap <leader>gb :Git blame<CR>
 nnoremap <leader>gB :GBrowse<CR>
