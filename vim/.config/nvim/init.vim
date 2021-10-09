@@ -200,7 +200,7 @@ nnoremap <leader>t :vsplit \| terminal<cr>
 nnoremap <leader>T :split \| terminal<cr>
 nnoremap <leader>y :let @*=expand('%:t:r')<CR> :echo expand('%:t:r')<CR>
 nnoremap <leader>Y :let @*=expand('%:p')<CR> :echo expand('%:p')<CR>
-nnoremap <leader>, :e ~/dotfiles/vimrc<cr>
+nnoremap <leader>, :e $MYVIMRC<cr>
 nnoremap <leader>* *N
 nnoremap <Tab> za
 nnoremap <C-n>i <C-i>

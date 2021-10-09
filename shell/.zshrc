@@ -63,7 +63,6 @@ if [[ $(hostname) == *"amazon.com" ]]; then
     alias bws='brazil ws'
     alias bwsuse='bws use --gitMode -p'
     alias bwscreate='bws create -n'
-    alias brc=brazil-recursive-cmd
     alias bbr='brc brazil-build'
     alias bball='brc --allPackages'
     alias bbb='brc --allPackages brazil-build'
