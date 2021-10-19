@@ -135,8 +135,11 @@ Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
+Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'L3MON4D3/LuaSnip'
 
 call plug#end()
 
@@ -174,6 +177,7 @@ set makeprg=brazil-build
 set grepprg=rg\ --vimgrep\ --no-heading
 set grepformat=%f:%l:%c:%m,%f:%l:%m
 set matchpairs+=<:> " pairs for % command
+set completeopt=menu,menuone,noselect
 
 colorscheme gruvbox8
 let g:vimsyn_embed = 'l' " get Lua syntax highlighting inside .vim files
@@ -547,21 +551,33 @@ augroup end
 lua <<EOF
 local cmp = require'cmp'
 cmp.setup {
+  snippet = {
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body)
+    end,
+  },
   mapping = {
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
     ['<C-Space>'] = cmp.mapping.complete(),
   },
   sources = {
+    { name = 'nvim_lua' },
+    { name = 'luasnip' },
     { name = 'nvim_lsp' },
-    { name = 'buffer' },
     { name = 'path' },
+    { name = 'buffer',
+      keyword_length = 3,
+      opts = {
+        get_bufnrs = function()
+          local bufs = {}
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            bufs[vim.api.nvim_win_get_buf(win)] = true
+          end
+          return vim.tbl_keys(bufs)
+        end
+      }
+    },
   },
-  completion = {
-    completeopt = 'menu,menuone,noinsert',
-  }
 }
 EOF
 "}}}
