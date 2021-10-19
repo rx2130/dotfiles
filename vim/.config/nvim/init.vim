@@ -86,8 +86,10 @@ nnoremap <leader>gf :Dispatch git fetch<CR>
 nnoremap <leader>gl :Dispatch git pull<CR>
 nnoremap <leader>gb :Git blame<CR>
 vnoremap <leader>gb :Git blame<CR>
-nnoremap <leader>gB :GBrowse<CR>
-vnoremap <leader>gB :GBrowse<CR>
+nnoremap <leader>gx :GBrowse<CR>
+vnoremap <leader>gx :GBrowse<CR>
+nnoremap <leader>gy :GBrowse!<CR>
+vnoremap <leader>gy :GBrowse!<CR>
 
 Plug 'tpope/vim-rhubarb'
 Plug 'ssh://git.amazon.com:2222/pkg/Vim-code-browse'
