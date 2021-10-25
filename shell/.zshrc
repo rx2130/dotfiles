@@ -36,7 +36,7 @@ if [[ $(hostname) == *"amazon.com" ]]; then
     # fpath=(~/.zsh/completion $fpath)
     # autoload -Uz compinit && compinit -i
     # CMPortalTools
-    export PATH="$HOME/workplace/CMPortalTools/src/CMPortalTools/bin:$PATH"
+    # export PATH="$HOME/workplace/CMPortalTools/src/CMPortalTools/bin:$PATH"
     # curl-openssl alfred
     export PATH="/usr/local/opt/curl-openssl/bin:$PATH"
 fi
@@ -67,6 +67,7 @@ if [[ $(hostname) == *"amazon.com" ]]; then
     alias bball='brc --allPackages'
     alias bbb='brc --allPackages brazil-build'
     alias bbra='bbr apollo-pkg'
+    alias sam="brazil-build-tool-exec sam"
 fi
 # }}}
 

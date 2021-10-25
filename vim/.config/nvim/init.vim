@@ -25,6 +25,8 @@ vmap gx <Plug>(openbrowser-smart-search)
 Plug 'tpope/vim-dispatch'
 let g:dispatch_no_tmux_make = 1
 
+Plug 'AndrewRadev/linediff.vim'
+
 " Edit enhancements
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -39,39 +41,35 @@ xmap <Leader>r  <Plug>ReplaceWithRegisterVisual
 Plug 'raimondi/delimitmate'
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
-let g:delimitMate_excluded_ft = "TelescopePrompt,DAP-REPL"
+let g:delimitMate_excluded_ft = "DAP-REPL"
 
 " GUI enhancements
 Plug 'lifepillar/vim-gruvbox8'
 
 " Fuzzy finder
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-nnoremap <leader>f <cmd>lua require('telescope.builtin').find_files{find_command={'fd', '--type', 'f', '--hidden', '--follow', '--exclude', '.git'},cwd=telescope_search_dirs()}<cr>
-nnoremap <C-p>     <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>F <cmd>lua require('telescope.builtin').git_status()<cr>
-nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>h <cmd>lua require('telescope.builtin').oldfiles()<cr>
-nnoremap <leader>l <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>
-nnoremap <leader>L <cmd>lua require('telescope.builtin').builtin()<cr>
-nnoremap <leader>' <cmd>lua require('telescope.builtin').marks()<cr>
-nnoremap <leader>; <cmd>lua require('telescope.builtin').commands()<cr>
-nnoremap <leader>: <cmd>lua require('telescope.builtin').command_history()<cr>
-nnoremap <leader>S <cmd>lua require('telescope.builtin').filetypes()<cr>
-nnoremap <leader>H <cmd>lua require('telescope.builtin').help_tags()<cr>
-nnoremap <leader>m <cmd>lua require('telescope.builtin').man_pages()<cr>
-nnoremap <leader>M <cmd>lua require('telescope.builtin').keymaps()<cr>
-nnoremap <leader>/ <cmd>lua require('telescope.builtin').live_grep({cwd=telescope_search_dirs()})<cr>
-xnoremap <leader>/ "vy<cmd>lua require('telescope.builtin').grep_string({search=vim.fn.getreg('v'),cwd=telescope_search_dirs()})<cr>
-nnoremap <leader>? <cmd>lua require('telescope.builtin').live_grep()<cr>
-xnoremap <leader>? "vy<cmd>lua require('telescope.builtin').grep_string({search=vim.fn.getreg('v')})<cr>
-nnoremap <leader>gh <cmd>lua require('telescope.builtin').git_commits()<cr>
-nnoremap <leader>gH <cmd>lua require('telescope.builtin').git_bcommits()<cr>
-nnoremap <leader>gc <cmd>lua require('telescope.builtin').git_branches()<cr>
-nnoremap <leader>gs <cmd>lua require('telescope.builtin').git_stash()<cr>
-nnoremap <leader><BS> <cmd>lua require('telescope.builtin').resume()<cr>
+Plug 'ibhagwan/fzf-lua'
+Plug 'vijaymarupudi/nvim-fzf'
+nnoremap <leader>f <cmd>lua require('fzf-lua').files{cwd=fzf_cwd()}<cr>
+nnoremap <C-p>     <cmd>lua require('fzf-lua').files()<cr>
+nnoremap <leader>F <cmd>lua require('fzf-lua').git_status()<cr>
+nnoremap <leader>b <cmd>lua require('fzf-lua').buffers()<cr>
+nnoremap <leader>h <cmd>lua require('fzf-lua').oldfiles()<cr>
+nnoremap <leader>l <cmd>lua require('fzf-lua').blines()<cr>
+nnoremap <leader>L <cmd>lua require('fzf-lua').builtin()<cr>
+nnoremap <leader>' <cmd>lua require('fzf-lua').marks()<cr>
+nnoremap <leader>; <cmd>lua require('fzf-lua').commands()<cr>
+nnoremap <leader>: <cmd>lua require('fzf-lua').command_history()<cr>
+nnoremap <leader>S <cmd>lua require('fzf-lua').filetypes()<cr>
+nnoremap <leader>H <cmd>lua require('fzf-lua').help_tags()<cr>
+nnoremap <leader>m <cmd>lua require('fzf-lua').man_pages()<cr>
+nnoremap <leader>M <cmd>lua require('fzf-lua').keymaps()<cr>
+nnoremap <leader>/ <cmd>lua require('fzf-lua').live_grep({cwd=fzf_cwd()})<cr>
+xnoremap <leader>/ <cmd>lua require('fzf-lua').grep_visual({cwd=fzf_cwd()})<cr>
+nnoremap <leader>? <cmd>lua require('fzf-lua').live_grep()<cr>
+xnoremap <leader>? <cmd>lua require('fzf-lua').grep_visual()<cr>
+nnoremap <leader>gh <cmd>lua require('fzf-lua').git_commits()<cr>
+nnoremap <leader>gH <cmd>lua require('fzf-lua').git_bcommits()<cr>
+nnoremap <leader>gc <cmd>lua require('fzf-lua').git_branches()<cr>
 
 Plug 'airblade/vim-rooter'
 let g:rooter_silent_chdir = 1
@@ -260,10 +258,7 @@ augroup vimrc
 
     " termianl mode Esc map
     autocmd TermOpen * tnoremap <buffer> <Esc> <C-\><C-n>
-
-    " open help vertically
-    autocmd BufEnter * if &filetype ==# 'help' | wincmd L | endif
-    autocmd BufEnter * if &filetype ==# 'man' | wincmd L | endif
+    autocmd FileType fzf tunmap <buffer> <Esc>
 
     " highlight yank
     autocmd TextYankPost * silent! lua vim.highlight.on_yank()
@@ -410,15 +405,15 @@ local on_attach = function(client)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(0, ...) end
   local opts = { noremap=true, silent=true }
-  buf_set_keymap('n', 'gd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<cmd>lua require("fzf-lua").lsp_definitions({ jump_to_single_result = true })<CR>', opts)
   buf_set_keymap('n', '<c-]>', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua require("telescope.builtin").lsp_implementations()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua require("fzf-lua").lsp_implementations({ jump_to_single_result = true })<CR>', opts)
   buf_set_keymap('i', '<c-l>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', 'gD', '<cmd>lua require("telescope.builtin").lsp_type_definitions()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', opts)
-  buf_set_keymap('n', 'gs', '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', opts)
-  buf_set_keymap('n', 'gS', '<cmd>lua require("telescope.builtin").lsp_dynamic_workspace_symbols()<CR>', opts)
+  buf_set_keymap('n', 'gD', '<cmd>lua require("fzf-lua").lsp_typedefs({ jump_to_single_result = true })<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua require("fzf-lua").lsp_references({ jump_to_single_result = true })<CR>', opts)
+  buf_set_keymap('n', 'gs', '<cmd>lua require("fzf-lua").lsp_document_symbols()<CR>', opts)
+  buf_set_keymap('n', 'gS', '<cmd>lua require("fzf-lua").lsp_live_workspace_symbols()<CR>', opts)
   buf_set_keymap('n', 'cr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   buf_set_keymap('v', '<leader>=', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
@@ -434,33 +429,35 @@ for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { on_attach = on_attach }
 end
 
-nvim_lsp.sumneko_lua.setup {
-  cmd = {'lua-lsp.sh'};
-  on_attach = on_attach,
-  settings = {
-      Lua = {
-          runtime = {
-              version = 'LuaJIT',
-              path = vim.split(package.path, ';'),
-          },
-          diagnostics = {
-              globals = {'vim'},
-          },
-          workspace = {
-              library = {
-                  [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                  [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-              },
-          },
-      },
-  },
-}
+-- nvim_lsp.sumneko_lua.setup {
+--   cmd = {'lua-lsp.sh'};
+--   on_attach = on_attach,
+--   settings = {
+--       Lua = {
+--           runtime = {
+--               version = 'LuaJIT',
+--               path = vim.split(package.path, ';'),
+--           },
+--           diagnostics = {
+--               globals = {'vim'},
+--           },
+--           workspace = {
+--               library = {
+--                   [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+--                   [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+--               },
+--           },
+--       },
+--   },
+-- }
 
 local jdtls_on_attach = function(client)
     on_attach(client)
     require('jdtls').setup_dap({ hotcodereplace = 'auto' })
     require('jdtls.setup').add_commands()
     vim.api.nvim_buf_set_keymap(0, 'n', '<leader>a', "<cmd>lua require'jdtls'.code_action()<CR>", { noremap=true, silent=true })
+    vim.api.nvim_buf_set_keymap(0, 'n', '<leader>=', ":Dispatch! java -jar ~/Developer/google-java-format-1.6-all-deps.jar -a -i %<CR>", { noremap=true, silent=true })
+    -- vim.api.nvim_buf_set_keymap(0, 'n', '<leader>=', "<cmd>:%!java -jar ~/Developer/google-java-format-1.6-all-deps.jar -a -<CR>", { noremap=true, silent=true })
 end
 
 jdtls_setup = function()
@@ -582,39 +579,34 @@ cmp.setup {
 EOF
 "}}}
 
-" telescope {{{
+" fzf-lua {{{
 lua <<EOF
-local actions = require('telescope.actions')
-require('telescope').setup{
-  defaults = {
-    vimgrep_arguments = {
-      'rg',
-      '-g',
-      '!.git/',
-      '--hidden',
-      '--color=never',
-      '--no-heading',
-      '--with-filename',
-      '--line-number',
-      '--column',
-      '--smart-case',
-    },
-    mappings = {
-      i = {
-        ["<esc>"] = actions.close,
-        ["<C-s>"] = actions.select_horizontal,
-        ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous,
-        ["<C-n>"] = require('telescope.actions').cycle_history_next,
-        ["<C-p>"] = require('telescope.actions').cycle_history_prev,
+require('fzf-lua').setup{
+    keymap = {
+      builtin = {
+        ['/'] = 'toggle-preview',
+        ['?'] = "toggle-fullscreen",
       },
+      fzf = {
+        ["alt-a"] = "toggle-all",
+      }
     },
-    path_display = {'smart'},
-  }
+    lsp = {
+        async_or_timeout = 5000,
+    },
+    git = {
+        commits = {
+          actions = {
+            ["default"] = function(selected)   
+                            local sha = selected[1]:match("[^ ]+") 
+                            local uri = vim.fn.FugitiveFind(sha)
+                            vim.cmd('vsplit ' .. uri)
+                          end,
+          },
+        },
+    },
 }
-require('telescope').load_extension('fzf')
-
-telescope_search_dirs = function()
+fzf_cwd = function()
     local root_dir = require('jdtls.setup').find_root({'packageInfo'}, 'Config')
     if root_dir then
         return root_dir .. "/src/"
@@ -641,6 +633,6 @@ require('nvim-tree').setup {
     }
 }
 EOF
-nnoremap <Leader>n :NvimTreeToggle<CR>
+nnoremap <Leader>n :NvimTreeFindFileToggle<CR>
 nnoremap <Leader>N :NvimTreeFindFile<CR>
 "}}}
