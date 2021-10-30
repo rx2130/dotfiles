@@ -618,12 +618,17 @@ EOF
 " nvim-tree {{{
 lua <<EOF
 vim.g.nvim_tree_group_empty = 1
+vim.g.nvim_tree_ignore = { '.git' }
+vim.g.nvim_tree_quit_on_open = 1
 vim.g.nvim_tree_special_files = {}
 vim.g.nvim_tree_show_icons = {}
 local tree_cb = require'nvim-tree.config'.nvim_tree_callback
 require('nvim-tree').setup {
     width = 40,
     auto_close = true,
+    update_focused_file = {
+      enable = true,
+    },
     view = {
         mappings = {
             list = {
