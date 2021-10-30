@@ -633,6 +633,10 @@ require('fzf-lua').setup{
     lsp = {
         async_or_timeout = 5000,
     },
+    grep = {
+        rg_opts = "--hidden --column --line-number --no-heading " ..
+                  "--color=always --smart-case -g '!{.git,node_modules}/*'",
+    },
     git = {
         commits = {
           actions = {
