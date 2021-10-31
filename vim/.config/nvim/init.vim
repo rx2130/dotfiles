@@ -260,6 +260,10 @@ augroup vimrc
     autocmd TermOpen * tnoremap <buffer> <Esc> <C-\><C-n>
     autocmd FileType fzf tunmap <buffer> <Esc>
 
+    " open help vertically
+    autocmd BufEnter * if &filetype ==# 'help' | wincmd L | endif
+    autocmd BufEnter * if &filetype ==# 'man' | wincmd L | endif
+
     " highlight yank
     autocmd TextYankPost * silent! lua vim.highlight.on_yank()
 
@@ -648,6 +652,7 @@ require('fzf-lua').setup{
           },
         },
     },
+    helptags = { previewer = { _ctor = false } },
 }
 fzf_cwd = function()
     local root_dir = require('jdtls.setup').find_root({'packageInfo'}, 'Config')
