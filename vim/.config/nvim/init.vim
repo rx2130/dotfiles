@@ -666,7 +666,6 @@ EOF
 " nvim-tree {{{
 lua <<EOF
 vim.g.nvim_tree_group_empty = 1
-vim.g.nvim_tree_ignore = { '.git' }
 vim.g.nvim_tree_quit_on_open = 1
 vim.g.nvim_tree_special_files = {}
 vim.g.nvim_tree_show_icons = {}
@@ -676,6 +675,9 @@ require('nvim-tree').setup {
     auto_close = true,
     update_focused_file = {
       enable = true,
+    },
+    filters = {
+        custom = { '.git' },
     },
     view = {
         mappings = {
