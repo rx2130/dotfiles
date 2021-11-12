@@ -125,7 +125,7 @@ nnoremap <silent> <leader>df :lua require('dap.ui.widgets').centered_float(requi
 nnoremap <silent> <leader>ds :lua require('dap.ui.widgets').centered_float(require('dap.ui.widgets').scopes)<CR>
 nnoremap <silent> <leader>K  :lua require('dap.ui.widgets').hover()<CR>
 vnoremap <silent> <leader>K  :lua require('dap.ui.widgets').hover(require("dap.utils").get_visual_selection_text)<CR>
-command! -nargs=0 DapSidebar :lua local widgets = require('dap.ui.widgets'); local scopes_sidebar = widgets.sidebar(widgets.scopes); scopes_sidebar.open(); local frames_sidebar = widgets.sidebar(widgets.frames); frames_sidebar.open()
+nnoremap <silent> <leader>du :lua local widgets = require('dap.ui.widgets'); widgets.sidebar(widgets.scopes).open(); widgets.sidebar(widgets.frames).open()<CR>
 command! -nargs=0 DapBreakpoints :lua require('dap').list_breakpoints()
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -483,9 +483,12 @@ local jdtls_on_attach = function(client)
     on_attach(client)
     require('jdtls').setup_dap({ hotcodereplace = 'auto' })
     require('jdtls.setup').add_commands()
+
     vim.api.nvim_buf_set_keymap(0, 'n', '<leader>a', "<cmd>lua require'jdtls'.code_action()<CR>", { noremap=true, silent=true })
     vim.api.nvim_buf_set_keymap(0, 'n', '<leader>=', ":Dispatch! java -jar ~/Developer/google-java-format-1.6-all-deps.jar -a -i %<CR>", { noremap=true, silent=true })
     -- vim.api.nvim_buf_set_keymap(0, 'n', '<leader>=', "<cmd>:%!java -jar ~/Developer/google-java-format-1.6-all-deps.jar -a -<CR>", { noremap=true, silent=true })
+    vim.api.nvim_buf_set_keymap(0, 'n', "<leader>dt", "<Cmd>lua require'jdtls'.test_nearest_method()<CR>", { noremap=true, silent=true })
+    vim.api.nvim_buf_set_keymap(0, 'n', "<leader>dT", "<Cmd>lua require'jdtls'.test_class()<CR>", { noremap=true, silent=true })
 end
 
 jdtls_setup = function()
@@ -513,9 +516,7 @@ jdtls_setup = function()
     local jar_patterns = {
         '/Developer/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar',
         '/Developer/vscode-java-decompiler/server/*.jar',
-        '/Developer/vscode-java-test/java-extension/com.microsoft.java.test.plugin/target/*.jar',
-        '/Developer/vscode-java-test/java-extension/com.microsoft.java.test.runner/target/*.jar',
-        '/Developer/vscode-java-test/java-extension/com.microsoft.java.test.runner/lib/*.jar',
+        '/Developer/vscode-java-test/server/*.jar',
     }
     local bundles = {}
     for _, jar_pattern in ipairs(jar_patterns) do
