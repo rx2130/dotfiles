@@ -18,6 +18,9 @@ nnoremap <leader>u :UndotreeToggle<CR>
 Plug 'tpope/vim-eunuch'
 " Plug 'tpope/vim-sleuth'
 Plug 'kyazdani42/nvim-tree.lua'
+nnoremap <Leader>n :NvimTreeFindFileToggle<CR>
+nnoremap <Leader>N :NvimTreeFindFile<CR>
+
 Plug 'tyru/open-browser.vim'
 nmap gx <Plug>(openbrowser-smart-search)
 vmap gx <Plug>(openbrowser-smart-search)
@@ -126,7 +129,7 @@ nnoremap <silent> <leader>ds :lua require('dap.ui.widgets').centered_float(requi
 nnoremap <silent> <leader>K  :lua require('dap.ui.widgets').hover()<CR>
 vnoremap <silent> <leader>K  :lua require('dap.ui.widgets').hover(require("dap.utils").get_visual_selection_text)<CR>
 nnoremap <silent> <leader>du :lua local widgets = require('dap.ui.widgets'); widgets.sidebar(widgets.scopes).open(); widgets.sidebar(widgets.frames).open()<CR>
-command! -nargs=0 DapBreakpoints :lua require('dap').list_breakpoints()
+" command! -nargs=0 DapBreakpoints :lua require('dap').list_breakpoints()
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
@@ -176,6 +179,9 @@ set grepprg=rg\ --vimgrep\ --no-heading
 set grepformat=%f:%l:%c:%m,%f:%l:%m
 set matchpairs+=<:> " pairs for % command
 set completeopt=menu,menuone,noselect
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set foldlevelstart=99
 
 colorscheme gruvbox8
 let g:vimsyn_embed = 'l' " get Lua syntax highlighting inside .vim files
@@ -308,6 +314,14 @@ augroup vimrc
                     \%-G%.%#HappierTrails%.%#,
                     \%-G%[\ 0-9]%.%#\ errors
     autocmd FileType go setlocal errorformat=%f:%l.%c-%[%^:]%#:\ %m,%f:%l:%c:\ %m
+
+    " LSP
+    autocmd FileType java lua require('me.lsp').start_jdt()
+    autocmd FileType python lua require('dap-python').setup('/home/linuxbrew/.linuxbrew/bin/python3')
+    autocmd FileType dap-repl lua require('dap.ext.autocompl').attach()
+
+    " display errors and warnings on save
+    autocmd BufWritePost * lua vim.lsp.diagnostic.set_loclist{open_loclist = false, severity = "Error"}; vim.api.nvim_command('lwindow')
 augroup END
 
 " only show cursor line in active window
@@ -342,353 +356,6 @@ xnoremap <silent> ae gg0oG$
 onoremap <silent> ae :<C-U>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>
 "}}}
 
-" Treesitter {{{
-lua << EOF
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      keymaps = {
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-      },
-    },
-    swap = {
-      enable = true,
-      swap_next = {
-        [">p"] = "@parameter.inner",
-      },
-      swap_previous = {
-        ["<p"] = "@parameter.inner",
-      },
-    },
-    move = {
-      enable = true,
-      goto_next_start = {
-        ["]m"] = "@function.outer",
-        ["]]"] = "@class.outer",
-      },
-      goto_next_end = {
-        ["]M"] = "@function.outer",
-        ["]["] = "@class.outer",
-      },
-      goto_previous_start = {
-        ["[m"] = "@function.outer",
-        ["[["] = "@class.outer",
-      },
-      goto_previous_end = {
-        ["[M"] = "@function.outer",
-        ["[]"] = "@class.outer",
-      },
-    },
-  },
-}
-EOF
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-set foldlevelstart=99
-"}}}
 
-" LSP {{{
-lua << EOF
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics, {
-        underline = true,
-        virtual_text = false,
-        signs = false,
-        update_in_insert = false,
-    }
-)
-
-local on_attach = function(client)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(0, ...) end
-  local opts = { noremap=true, silent=true }
-  buf_set_keymap('n', 'gd', '<cmd>lua require("fzf-lua").lsp_definitions({ jump_to_single_result = true })<CR>', opts)
-  buf_set_keymap('n', '<c-]>', '<cmd>lua require("fzf-lua").lsp_declarations({ jump_to_single_result = true })<CR>', opts)
-  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua require("fzf-lua").lsp_implementations({ jump_to_single_result = true })<CR>', opts)
-  buf_set_keymap('i', '<c-l>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', 'gD', '<cmd>lua require("fzf-lua").lsp_typedefs({ jump_to_single_result = true })<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua require("fzf-lua").lsp_references({ jump_to_single_result = true })<CR>', opts)
-  buf_set_keymap('n', 'gs', '<cmd>lua require("fzf-lua").lsp_document_symbols()<CR>', opts)
-  buf_set_keymap('n', 'gS', '<cmd>lua require("fzf-lua").lsp_live_workspace_symbols()<CR>', opts)
-  buf_set_keymap('n', 'cr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-  buf_set_keymap('v', '<leader>=', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
-  buf_set_keymap('n', '<leader>a', '<cmd>lua require("fzf-lua").lsp_code_actions()<CR>', opts)
-  buf_set_keymap('n', '<leader>C', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap('n', ']g', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '[g', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-end
-
-local nvim_lsp = require('lspconfig')
-local servers = { "jsonls", "html", "cssls", "pyright", "gopls", "tsserver", "yamlls", "texlab" }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup { on_attach = on_attach }
-end
-
-local system_name
-if vim.fn.has("mac") == 1 then
-  system_name = "macOS"
-elseif vim.fn.has("unix") == 1 then
-  system_name = "Linux"
-elseif vim.fn.has('win32') == 1 then
-  system_name = "Windows"
-else
-  print("Unsupported system for sumneko")
-end
--- ~/.local/share/nvim/lsp_servers/sumneko_lua    
--- set the path to the sumneko installation; if you previously installed via the now deprecated :LspInstall, use
-local sumneko_root_path = '/Users/xuerx/.local/share/nvim/lsp_servers/sumneko_lua/extension/server/'
-local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
-
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, "lua/?.lua")
-table.insert(runtime_path, "lua/?/init.lua")
-
-nvim_lsp.sumneko_lua.setup {
-  cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"};
-  on_attach = on_attach,
-  settings = {
-    Lua = {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
-        -- Setup your lua path
-        path = runtime_path,
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
-      },
-      -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false,
-      },
-    },
-  },
-}
-
-local jdtls_on_attach = function(client)
-    on_attach(client)
-    require('jdtls').setup_dap({ hotcodereplace = 'auto' })
-    require('jdtls.setup').add_commands()
-
-    vim.api.nvim_buf_set_keymap(0, 'n', '<leader>a', "<cmd>lua require'jdtls'.code_action()<CR>", { noremap=true, silent=true })
-    vim.api.nvim_buf_set_keymap(0, 'n', '<leader>=', ":Dispatch! java -jar ~/Developer/google-java-format-1.6-all-deps.jar -a -i %<CR>", { noremap=true, silent=true })
-    -- vim.api.nvim_buf_set_keymap(0, 'n', '<leader>=', "<cmd>:%!java -jar ~/Developer/google-java-format-1.6-all-deps.jar -a -<CR>", { noremap=true, silent=true })
-    vim.api.nvim_buf_set_keymap(0, 'n', "<leader>dt", "<Cmd>lua require'jdtls'.test_nearest_method()<CR>", { noremap=true, silent=true })
-    vim.api.nvim_buf_set_keymap(0, 'n', "<leader>dT", "<Cmd>lua require'jdtls'.test_class()<CR>", { noremap=true, silent=true })
-end
-
-jdtls_setup = function()
-    local bufname = vim.api.nvim_buf_get_name(0)
-    if bufname:find("fugitive://") then return end
-    if bufname:find("[java] ") then return end
-
-    local root_dir = require('jdtls.setup').find_root({'packageInfo'}, 'Config')
-    local home = os.getenv('HOME')
-    local eclipse_workspace = home .. "/.local/share/eclipse/" .. vim.fn.fnamemodify(root_dir, ':p:h:t')
-
-    local ws_folders_lsp = {}
-    local ws_folders_jdtls = {}
-    if root_dir then
-        local file = io.open(root_dir .. "/.bemol/ws_root_folders", "r");
-        if file then
-            for line in file:lines() do
-                table.insert(ws_folders_lsp, line);
-                table.insert(ws_folders_jdtls, string.format("file://%s", line))
-            end
-            file:close()
-        end
-    end
-
-    local jar_patterns = {
-        '/Developer/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar',
-        '/Developer/vscode-java-decompiler/server/*.jar',
-        '/Developer/vscode-java-test/server/*.jar',
-    }
-    local bundles = {}
-    for _, jar_pattern in ipairs(jar_patterns) do
-        for _, bundle in ipairs(vim.split(vim.fn.glob(home .. jar_pattern), '\n')) do
-            if bundle ~= "" then
-                table.insert(bundles, bundle)
-            end
-        end
-    end
-
-    local config = {
-        on_attach = jdtls_on_attach,
-        cmd = {
-            'java',
-            '-Declipse.application=org.eclipse.jdt.ls.core.id1',
-            '-Dosgi.bundles.defaultStartLevel=4',
-            '-Declipse.product=org.eclipse.jdt.ls.core.product',
-            '-Dlog.protocol=true',
-            '-Dlog.level=ALL',
-            '-Xms1g',
-            '-javaagent:' .. home .. '/Developer/lombok.jar',
-            '-jar', vim.fn.glob(home .. '/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
-            '-configuration', home .. '/.local/share/nvim/lsp_servers/jdtls/config_linux',
-            '-data', eclipse_workspace,
-            '--add-modules=ALL-SYSTEM',
-            '--add-opens', 'java.base/java.util=ALL-UNNAMED',
-            '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-        },
-        root_dir = root_dir,
-        init_options = {
-            bundles = bundles,
-            workspaceFolders = ws_folders_jdtls,
-        },
-        settings = {
-            java = {
-                signatureHelp = { enabled = true },
-                contentProvider = { preferred = 'fernflower' },
-            }
-        },
-    }
-
-    require('dap').configurations.java = {
-      {
-        type = 'java';
-        request = 'attach';
-        name = "Debug (Attach) - Remote";
-        hostName = "127.0.0.1";
-        port = 5005;
-      },
-    }
-
-    require('jdtls').start_or_attach(config)
-
-    for _,line in ipairs(ws_folders_lsp) do
-        vim.lsp.buf.add_workspace_folder(line)
-    end
-end
-EOF
-
-augroup lsp
-    autocmd!
-    autocmd FileType java lua jdtls_setup()
-    autocmd FileType python lua require('dap-python').setup('/home/linuxbrew/.linuxbrew/bin/python3')
-    autocmd FileType dap-repl lua require('dap.ext.autocompl').attach()
-
-    " display errors and warnings on save
-    autocmd BufWritePost * lua vim.lsp.diagnostic.set_loclist{open_loclist = false, severity = "Error"}; vim.api.nvim_command('lwindow')
-augroup end
-
-"}}}
-
-" completion {{{
-lua <<EOF
-local cmp = require'cmp'
-cmp.setup {
-  snippet = {
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body)
-    end,
-  },
-  mapping = {
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    ['<C-Space>'] = cmp.mapping.complete(),
-  },
-  sources = {
-    { name = 'nvim_lua' },
-    { name = 'luasnip' },
-    { name = 'nvim_lsp' },
-    { name = 'path' },
-    { name = 'buffer',
-      keyword_length = 3,
-      opts = {
-        get_bufnrs = function()
-          local bufs = {}
-          for _, win in ipairs(vim.api.nvim_list_wins()) do
-            bufs[vim.api.nvim_win_get_buf(win)] = true
-          end
-          return vim.tbl_keys(bufs)
-        end
-      }
-    },
-  },
-}
-EOF
-"}}}
-
-" fzf-lua {{{
-lua <<EOF
-require('fzf-lua').setup{
-    keymap = {
-      builtin = {
-        ['/'] = 'toggle-preview',
-        ['?'] = "toggle-fullscreen",
-      },
-      fzf = {
-        ["alt-a"] = "toggle-all",
-      }
-    },
-    lsp = {
-        async_or_timeout = 5000,
-    },
-    grep = {
-        rg_opts = "--hidden --column --line-number --no-heading " ..
-                  "--color=always --smart-case -g '!{.git,node_modules}/*'",
-    },
-    git = {
-        commits = {
-          actions = {
-            ["default"] = function(selected)   
-                            local sha = selected[1]:match("[^ ]+") 
-                            local uri = vim.fn.FugitiveFind(sha)
-                            vim.cmd('vsplit ' .. uri)
-                          end,
-          },
-        },
-    },
-    helptags = { previewer = { _ctor = false } },
-}
-fzf_cwd = function()
-    local root_dir = require('jdtls.setup').find_root({'packageInfo'}, 'Config')
-    if root_dir then
-        return root_dir .. "/src/"
-    end
-end
-EOF
-"}}}
-
-" nvim-tree {{{
-lua <<EOF
-vim.g.nvim_tree_group_empty = 1
-vim.g.nvim_tree_quit_on_open = 1
-vim.g.nvim_tree_special_files = {}
-vim.g.nvim_tree_show_icons = {}
-local tree_cb = require'nvim-tree.config'.nvim_tree_callback
-require('nvim-tree').setup {
-    width = 40,
-    auto_close = true,
-    update_focused_file = {
-      enable = true,
-    },
-    filters = {
-        custom = { '.git' },
-    },
-    view = {
-        mappings = {
-            list = {
-                { key = "<C-s>", cb = tree_cb("split") },
-            }
-        }
-    }
-}
-EOF
-nnoremap <Leader>n :NvimTreeFindFileToggle<CR>
-nnoremap <Leader>N :NvimTreeFindFile<CR>
-"}}}
+lua require('me.lsp')
+lua require('me.plugin_options')
