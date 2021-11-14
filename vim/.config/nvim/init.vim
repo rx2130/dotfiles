@@ -47,7 +47,8 @@ let g:delimitMate_expand_space = 1
 let g:delimitMate_excluded_ft = "DAP-REPL"
 
 " GUI enhancements
-Plug 'lifepillar/vim-gruvbox8'
+Plug 'sainnhe/gruvbox-material'
+let g:gruvbox_material_better_performance = 1
 
 " Fuzzy finder
 Plug 'ibhagwan/fzf-lua'
@@ -183,7 +184,7 @@ set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set foldlevelstart=99
 
-colorscheme gruvbox8
+colorscheme gruvbox-material
 let g:vimsyn_embed = 'l' " get Lua syntax highlighting inside .vim files
 "}}}
 
