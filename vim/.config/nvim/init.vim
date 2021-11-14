@@ -16,7 +16,7 @@ nnoremap <leader>u :UndotreeToggle<CR>
 
 " Plug 'justinmk/vim-gtfo'
 Plug 'tpope/vim-eunuch'
-" Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-sleuth'
 Plug 'kyazdani42/nvim-tree.lua'
 nnoremap <Leader>n :NvimTreeFindFileToggle<CR>
 nnoremap <Leader>N :NvimTreeFindFile<CR>
