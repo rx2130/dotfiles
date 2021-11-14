@@ -16,14 +16,13 @@ export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 export PATH="$PATH:$HOME/bin"
-export PATH=$PATH:$(go env GOPATH)/bin
+# export PATH="$(brew --prefix)/opt/python@3.10/bin:$PATH"
+# export PATH=$PATH:$(go env GOPATH)/bin
 
-if [ $(uname) = "Darwin" ]; then
-    # python
-    export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+# if [ $(uname) = "Darwin" ]; then
     # c/c++
     # export PATH="/usr/local/opt/llvm/bin:$PATH"
-fi
+# fi
 
 if [[ $(hostname) == *"amazon.com" ]]; then
     # Builder toolbox
@@ -73,11 +72,7 @@ fi
 
 
 # powerlevel10k prompt {{{
-if [ $(uname) = "Darwin" ]; then
-    source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
-else
-    source /home/linuxbrew/.linuxbrew/opt/powerlevel10k/powerlevel10k.zsh-theme
-fi
+source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 # }}}
