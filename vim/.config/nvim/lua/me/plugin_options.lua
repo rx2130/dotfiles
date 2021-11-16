@@ -86,23 +86,25 @@ local function fugutive_open(selected, opts)
 	elseif opts == 2 then
 		vim.cmd("vsplit " .. uri)
 	elseif opts == 3 then
-		vim.cmd("tabnew " .. uri)
+		vim.cmd("tab split " .. uri)
 	else
 		vim.cmd("e " .. uri)
 	end
 end
-local function fugutive_edit(selected)
-	fugutive_open(selected, 0)
-end
-local function fugutive_split(selected)
-	fugutive_open(selected, 1)
-end
-local function fugutive_vsplit(selected)
-	fugutive_open(selected, 2)
-end
-local function fugutive_tabedit(selected)
-	fugutive_open(selected, 3)
-end
+local fugutive_actions = {
+	["default"] = function(selected)
+		fugutive_open(selected)
+	end,
+	["ctrl-s"] = function(selected)
+		fugutive_open(selected, 1)
+	end,
+	["ctrl-v"] = function(selected)
+		fugutive_open(selected, 2)
+	end,
+	["ctrl-t"] = function(selected)
+		fugutive_open(selected, 3)
+	end,
+}
 require("fzf-lua").setup({
 	keymap = {
 		builtin = {
@@ -122,20 +124,10 @@ require("fzf-lua").setup({
 	},
 	git = {
 		commits = {
-			actions = {
-				["default"] = fugutive_edit,
-				["ctrl-s"] = fugutive_split,
-				["ctrl-v"] = fugutive_vsplit,
-				["ctrl-t"] = fugutive_tabedit,
-			},
+			actions = fugutive_actions,
 		},
 		bcommits = {
-			actions = {
-				["default"] = fugutive_edit,
-				["ctrl-s"] = fugutive_split,
-				["ctrl-v"] = fugutive_vsplit,
-				["ctrl-t"] = fugutive_tabedit,
-			},
+			actions = fugutive_actions,
 		},
 	},
 	helptags = { previewer = { _ctor = false } },
