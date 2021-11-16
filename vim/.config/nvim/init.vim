@@ -56,7 +56,7 @@ let g:gruvbox_material_better_performance = 1
 Plug 'ibhagwan/fzf-lua'
 Plug 'vijaymarupudi/nvim-fzf'
 nnoremap <leader>f <cmd>lua require('fzf-lua').files{cwd=fzf_cwd()}<cr>
-nnoremap <C-p>     <cmd>lua require('fzf-lua').files()<cr>
+nnoremap <expr> <C-p> ":lua require('fzf-lua').files()<cr>".expand('%:t:r')
 nnoremap <leader>F <cmd>lua require('fzf-lua').git_status()<cr>
 nnoremap <leader>b <cmd>lua require('fzf-lua').buffers()<cr>
 nnoremap <leader>h <cmd>lua require('fzf-lua').oldfiles()<cr>
