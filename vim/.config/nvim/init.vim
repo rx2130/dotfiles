@@ -159,10 +159,8 @@ set smartcase " ... but not it begins with upper case
 set expandtab " tab byte (\x09) will be replaced with a number of space bytes (\x20)
 set tabstop=4 " how long each <tab> will be
 set shiftwidth=4 " indentation via =, > and <
-set hidden
 set mouse=a
 set undofile
-set inccommand=nosplit
 set noswapfile
 set lazyredraw
 set scrolloff=1
@@ -185,9 +183,9 @@ set completeopt=menu,menuone,noselect
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set foldlevelstart=99
+set tagfunc=v:lua.vim.lsp.tagfunc
 
 colorscheme gruvbox-material
-let g:vimsyn_embed = 'l' " get Lua syntax highlighting inside .vim files
 "}}}
 
 " Mappings {{{
@@ -196,7 +194,6 @@ nnoremap <C-h> <C-W>h
 nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
 nnoremap <C-l> <C-W>l
-nnoremap Y y$
 nnoremap Q @q
 vnoremap Q :norm @q<CR>
 vnoremap . :norm .<CR>
