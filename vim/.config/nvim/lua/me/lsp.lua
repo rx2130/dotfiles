@@ -60,10 +60,7 @@ do
 
 		nvim_lsp.sumneko_lua.setup({
 			cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
-			on_attach = function(client, bufnr)
-				on_attach(client, bufnr)
-				vim.api.nvim_buf_set_keymap(0, "n", "<leader>=", ":!stylua %<CR>", { noremap = true, silent = true })
-			end,
+			on_attach = on_attach,
 			settings = {
 				Lua = {
 					runtime = {
@@ -95,22 +92,6 @@ local function jdtls_on_attach(client, bufnr)
 	require("jdtls").setup_dap({ hotcodereplace = "auto" })
 	require("jdtls.setup").add_commands()
 
-	vim.api.nvim_buf_set_keymap(
-		0,
-		"n",
-		"<leader>a",
-		"<cmd>lua require'jdtls'.code_action()<CR>",
-		{ noremap = true, silent = true }
-	)
-	vim.api.nvim_buf_set_keymap(
-		0,
-		"n",
-		"<leader>=",
-		":Dispatch! java -jar ~/Developer/google-java-format-1.6-all-deps.jar -a -i %<CR>",
-		{ noremap = true, silent = true }
-	)
-	-- format inplace doesn't require save before format, but it will lose cursor position
-	-- vim.api.nvim_buf_set_keymap(0, 'n', '<leader>=', "<cmd>:%!java -jar ~/Developer/google-java-format-1.6-all-deps.jar -a -<CR>", { noremap=true, silent=true })
 	vim.api.nvim_buf_set_keymap(
 		0,
 		"n",
