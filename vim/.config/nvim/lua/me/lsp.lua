@@ -36,7 +36,7 @@ end
 
 do
 	local nvim_lsp = require("lspconfig")
-	local servers = { "jsonls", "html", "cssls", "pyright", "gopls", "tsserver", "yamlls", "texlab" }
+	local servers = { "jsonls", "html", "cssls", "pyright", "gopls", "tsserver", "yamlls", "texlab", "clangd" }
 	for _, lsp in ipairs(servers) do
 		nvim_lsp[lsp].setup({ on_attach = on_attach })
 	end

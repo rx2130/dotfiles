@@ -57,6 +57,8 @@ Plug 'ibhagwan/fzf-lua'
 Plug 'vijaymarupudi/nvim-fzf'
 nnoremap <leader>f <cmd>lua require('fzf-lua').files{cwd=fzf_cwd()}<cr>
 nnoremap <expr> <C-p> ":lua require('fzf-lua').files()<cr>".expand('%:t:r')
+nnoremap <leader>op <cmd>lua require('fzf-lua').files{cwd='~/.vim/plugged/'}<cr>
+nnoremap <leader>od <cmd>lua require('fzf-lua').files{cwd='~/dotfiles/'}<cr>
 nnoremap <leader>F <cmd>lua require('fzf-lua').git_status()<cr>
 nnoremap <leader>b <cmd>lua require('fzf-lua').buffers()<cr>
 nnoremap <leader>h <cmd>lua require('fzf-lua').oldfiles()<cr>
@@ -175,7 +177,9 @@ set termguicolors
 set smartindent " smart autoindenting when starting a new line
 set shortmess+=I
 set ttimeoutlen=0 " lower the delay of escaping out of other modes
-set makeprg=brazil-build
+if filereadable("./Config")
+    set makeprg=brazil-build
+end
 set grepprg=rg\ --vimgrep\ --no-heading
 set grepformat=%f:%l:%c:%m,%f:%l:%m
 set matchpairs+=<:> " pairs for % command
