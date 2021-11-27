@@ -64,7 +64,7 @@ cmp.setup({
 		{
 			name = "buffer",
 			keyword_length = 3,
-			opts = {
+			option = {
 				get_bufnrs = function()
 					local bufs = {}
 					for _, win in ipairs(vim.api.nvim_list_wins()) do
@@ -119,8 +119,7 @@ require("fzf-lua").setup({
 		async_or_timeout = 5000,
 	},
 	grep = {
-		rg_opts = "--hidden --column --line-number --no-heading "
-			.. "--color=always --smart-case -g '!{.git,node_modules}/*'",
+		rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=512 --hidden -g '!{.git,node_modules}/'",
 	},
 	git = {
 		commits = {
@@ -141,7 +140,6 @@ end
 
 -- nvim-tree
 vim.g.nvim_tree_group_empty = 1
-vim.g.nvim_tree_quit_on_open = 1
 vim.g.nvim_tree_special_files = {}
 vim.g.nvim_tree_show_icons = {}
 local tree_cb = require("nvim-tree.config").nvim_tree_callback
