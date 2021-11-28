@@ -202,6 +202,9 @@ nnoremap Q @q
 vnoremap Q :norm @q<CR>
 vnoremap . :norm .<CR>
 nnoremap <silent><esc> :nohlsearch<cr>
+nnoremap <Tab> za
+nnoremap <C-n>i <C-i>
+nnoremap <C-w>] :vert winc ]<CR>
 
 nnoremap <Space> <Nop>
 nnoremap <silent><leader><Space> zz:nohlsearch<CR>
@@ -216,8 +219,6 @@ nnoremap <leader>y :let @*=expand('%:t:r')<CR> :echo expand('%:t:r')<CR>
 nnoremap <leader>Y :let @*=expand('%:p')<CR> :echo expand('%:p')<CR>
 nnoremap <leader>, :e $MYVIMRC<cr>
 nnoremap <leader>* *N
-nnoremap <Tab> za
-nnoremap <C-n>i <C-i>
 
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
