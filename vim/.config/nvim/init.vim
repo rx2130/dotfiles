@@ -368,4 +368,5 @@ onoremap <silent> ae :<C-U>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>
 
 
 lua require('me.lsp')
+lua require('me.dap')
 lua require('me.plugin_options')
