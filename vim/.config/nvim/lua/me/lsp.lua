@@ -48,10 +48,10 @@ do
 		update_in_insert = false,
 	})
 
-	do
-		local home = os.getenv("HOME")
+	local home = os.getenv("HOME")
+	local sumneko_root_path = home .. "/.local/share/nvim/lsp_servers/sumneko_lua/extension/server"
+	if vim.fn.isdirectory(sumneko_root_path) == 1 then
 		local system_name = vim.fn.has("mac") == 1 and "macOS" or "Linux"
-		local sumneko_root_path = home .. "/.local/share/nvim/lsp_servers/sumneko_lua/extension/server/"
 		local sumneko_binary = sumneko_root_path .. "/bin/" .. system_name .. "/lua-language-server"
 
 		local runtime_path = vim.split(package.path, ";")
