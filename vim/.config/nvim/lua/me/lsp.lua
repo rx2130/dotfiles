@@ -1,7 +1,7 @@
 local M = {}
 
-local function on_attach(client, bufnr)
-	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+local function on_attach()
+	vim.api.nvim_buf_set_option(0, "omnifunc", "v:lua.vim.lsp.omnifunc")
 	local function buf_set_keymap(...)
 		vim.api.nvim_buf_set_keymap(0, ...)
 	end
@@ -26,8 +26,6 @@ local function on_attach(client, bufnr)
 	buf_set_keymap("n", "gs", '<cmd>lua require("fzf-lua").lsp_document_symbols()<CR>', opts)
 	buf_set_keymap("n", "gS", '<cmd>lua require("fzf-lua").lsp_live_workspace_symbols()<CR>', opts)
 	buf_set_keymap("n", "cr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-	buf_set_keymap("n", "<leader>=", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-	buf_set_keymap("v", "<leader>=", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
 	buf_set_keymap("n", "<leader>a", '<cmd>lua require("fzf-lua").lsp_code_actions()<CR>', opts)
 	buf_set_keymap("n", "<leader>C", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
 	buf_set_keymap("n", "]g", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
@@ -38,7 +36,12 @@ do
 	local nvim_lsp = require("lspconfig")
 	local servers = { "jsonls", "html", "cssls", "pyright", "gopls", "tsserver", "yamlls", "texlab", "clangd" }
 	for _, lsp in ipairs(servers) do
-		nvim_lsp[lsp].setup({ on_attach = on_attach })
+		nvim_lsp[lsp].setup({
+			on_attach = function()
+				on_attach()
+				vim.api.nvim_buf_set_option(0, "formatexpr", "v:lua.vim.lsp.formatexpr()")
+			end,
+		})
 	end
 
 	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -87,8 +90,8 @@ do
 	end
 end
 
-local function jdtls_on_attach(client, bufnr)
-	on_attach(client, bufnr)
+local function jdtls_on_attach(client)
+	on_attach(client)
 	require("jdtls").setup_dap({ hotcodereplace = "auto" })
 	require("jdtls.setup").add_commands()
 
