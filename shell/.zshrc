@@ -10,7 +10,7 @@ source $ZSH/oh-my-zsh.sh
 
 
 # export {{{
-export EDITOR='nvim'
+export VISUAL='nvim'
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -44,7 +44,7 @@ fi
 alias v="nvim"
 if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
     if [ -x "$(command -v nvr)" ]; then
-        export EDITOR='nvr'
+        export VISUAL="nvr -cc split --remote-wait +'setlocal bufhidden=wipe'"
         alias v=nvr
     fi
 fi
