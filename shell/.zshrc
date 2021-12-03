@@ -16,11 +16,8 @@ export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 export PATH="$PATH:$HOME/bin"
-export PATH="$(brew --prefix)/opt/python@3.9/bin:$PATH"
 
 if [ $(uname) = "Darwin" ]; then
-    # c/c++
-    export PATH="/usr/local/opt/llvm/bin:$PATH"
     # go
     export PATH=$PATH:$(go env GOPATH)/bin
 fi
