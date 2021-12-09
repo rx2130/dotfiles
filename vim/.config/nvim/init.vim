@@ -27,9 +27,6 @@ vmap gx <Plug>(openbrowser-smart-search)
 
 Plug 'tpope/vim-dispatch'
 Plug 'radenling/vim-dispatch-neovim'
-let g:dispatch_no_tmux_make = 1
-let g:dispatch_no_job_make = 1
-
 Plug 'AndrewRadev/linediff.vim'
 
 " Edit enhancements
