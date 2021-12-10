@@ -322,6 +322,8 @@ augroup vimrc
     autocmd FileType json setlocal formatprg=python\ -m\ json.tool
     autocmd FileType java setlocal formatprg=java\ -jar\ ~/Developer/google-java-format-1.6-all-deps.jar\ -a\ -
     autocmd FileType lua  setlocal formatprg=stylua\ -
+    autocmd FileType typescript setlocal formatprg=prettier\ --parser\ typescript formatexpr=
+    autocmd FileType markdown setlocal formatprg=prettier\ --parser\ markdown
 
     " LSP
     autocmd FileType java lua require('me.lsp').start_jdt()
