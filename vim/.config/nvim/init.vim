@@ -45,6 +45,8 @@ let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
 let g:delimitMate_excluded_ft = "DAP-REPL"
 
+Plug 'tommcdo/vim-exchange'
+
 " GUI enhancements
 Plug 'sainnhe/gruvbox-material'
 let g:gruvbox_material_better_performance = 1
