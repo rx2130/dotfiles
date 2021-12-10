@@ -53,7 +53,6 @@ let g:gruvbox_material_better_performance = 1
 
 " Fuzzy finder
 Plug 'ibhagwan/fzf-lua'
-Plug 'vijaymarupudi/nvim-fzf'
 nnoremap <leader>f <cmd>lua require('fzf-lua').files{cwd=fzf_cwd()}<cr>
 nnoremap <expr> <C-p> ":lua require('fzf-lua').files()<cr>".expand('%:t:r')
 nnoremap <leader>op <cmd>lua require('fzf-lua').files{cwd='~/.vim/plugged/'}<cr>
@@ -104,8 +103,6 @@ nnoremap <leader>gV :GV<CR>
 
 " Semantic language support
 Plug 'ssh://git.amazon.com:2222/pkg/VimIon.git'
-" Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-" let g:vim_markdown_folding_disabled = 1
 Plug 'ellisonleao/glow.nvim'
 nnoremap <leader>p :Glow<CR>
 
@@ -183,9 +180,9 @@ set grepprg=rg\ --vimgrep\ --no-heading
 set grepformat=%f:%l:%c:%m,%f:%l:%m
 set matchpairs+=<:> " pairs for % command
 set completeopt=menu,menuone,noselect
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-set foldlevelstart=99
+" set foldmethod=expr
+" set foldexpr=nvim_treesitter#foldexpr()
+" set foldlevelstart=99
 
 colorscheme gruvbox-material
 "}}}
@@ -202,7 +199,7 @@ vnoremap . :norm .<CR>
 nnoremap <silent><esc> :nohlsearch<cr>
 nnoremap <Tab> za
 nnoremap <C-n>i <C-i>
-nnoremap <C-w>] :vert winc ]<CR>
+nnoremap <silent><C-w>] :vert winc ]<CR>
 
 nnoremap <Space> <Nop>
 nnoremap <silent><leader><Space> zz:nohlsearch<CR>
@@ -304,18 +301,6 @@ augroup vimrc
     autocmd FileType lua    nnoremap <buffer> <leader><CR> :luafile %<CR>
 
     " makeprg
-    autocmd FileType java setlocal errorformat=%f:%l:\ %trror:\ %m,
-                    \%-GReplacing%.%#,
-                    \%-GBUILD\ FAILED%.%#,
-                    \%-GTotal\ time:%.%#,
-                    \%-GRunning%.%#,
-                    \%-GRemoving%.%#,
-                    \%-GUsing%.%#,
-                    \%-GTrying%.%#,
-                    \%-GDefining%.%#,
-                    \%-GANT_%.%#,
-                    \%-G%.%#HappierTrails%.%#,
-                    \%-G%[\ 0-9]%.%#\ errors
     autocmd FileType go setlocal errorformat=%f:%l.%c-%[%^:]%#:\ %m,%f:%l:%c:\ %m
 
     " formatprg

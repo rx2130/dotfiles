@@ -3,6 +3,9 @@ require("nvim-treesitter.configs").setup({
 	highlight = {
 		enable = true,
 	},
+	indent = {
+		enable = true,
+	},
 	textobjects = {
 		select = {
 			enable = true,
@@ -64,15 +67,15 @@ cmp.setup({
 		{
 			name = "buffer",
 			keyword_length = 3,
-			option = {
-				get_bufnrs = function()
-					local bufs = {}
-					for _, win in ipairs(vim.api.nvim_list_wins()) do
-						bufs[vim.api.nvim_win_get_buf(win)] = true
-					end
-					return vim.tbl_keys(bufs)
-				end,
-			},
+			-- option = {
+			-- 	get_bufnrs = function()
+			-- 		local bufs = {}
+			-- 		for _, win in ipairs(vim.api.nvim_list_wins()) do
+			-- 			bufs[vim.api.nvim_win_get_buf(win)] = true
+			-- 		end
+			-- 		return vim.tbl_keys(bufs)
+			-- 	end,
+			-- },
 		},
 	},
 })

@@ -42,7 +42,7 @@ end
 
 do
 	local nvim_lsp = require("lspconfig")
-	local servers = { "jsonls", "html", "cssls", "pyright", "gopls", "tsserver", "yamlls", "texlab", "clangd" }
+	local servers = { "pyright", "gopls", "tsserver", "texlab", "clangd" }
 	for _, lsp in ipairs(servers) do
 		nvim_lsp[lsp].setup({ on_attach = on_attach })
 	end
@@ -54,18 +54,16 @@ do
 		update_in_insert = false,
 	})
 
-	local home = os.getenv("HOME")
-	local sumneko_root_path = home .. "/.local/share/nvim/lsp_servers/sumneko_lua/extension/server"
-	if vim.fn.isdirectory(sumneko_root_path) == 1 then
-		local system_name = vim.fn.has("mac") == 1 and "macOS" or "Linux"
-		local sumneko_binary = sumneko_root_path .. "/bin/" .. system_name .. "/lua-language-server"
-
+	local sumneko_path = os.getenv("HOME") .. "/.local/share/nvim/lsp_servers/sumneko_lua/extension/server"
+	if vim.fn.isdirectory(sumneko_path) == 1 then
 		local runtime_path = vim.split(package.path, ";")
 		table.insert(runtime_path, "lua/?.lua")
 		table.insert(runtime_path, "lua/?/init.lua")
 
 		nvim_lsp.sumneko_lua.setup({
-			cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
+			cmd = {
+				sumneko_path .. "/bin/" .. (vim.fn.has("mac") == 1 and "macOS" or "Linux") .. "/lua-language-server",
+			},
 			on_attach = on_attach,
 			settings = {
 				Lua = {

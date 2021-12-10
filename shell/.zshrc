@@ -36,10 +36,8 @@ if [[ $(hostname) == *"amazon.com" ]]; then
     # RDE
     # fpath=(~/.zsh/completion $fpath)
     # autoload -Uz compinit && compinit -i
-    # CMPortalTools
-    # export PATH="$HOME/workplace/CMPortalTools/src/CMPortalTools/bin:$PATH"
-    # curl-openssl alfred
-    export PATH="/usr/local/opt/curl-openssl/bin:$PATH"
+    # envImprovement
+    export PATH="/apollo/env/envImprovement/bin:$PATH"
 fi
 # }}}
 
