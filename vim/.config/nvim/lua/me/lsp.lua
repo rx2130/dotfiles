@@ -2,6 +2,11 @@ local M = {}
 
 local function on_attach()
 	vim.api.nvim_buf_set_option(0, "omnifunc", "v:lua.vim.lsp.omnifunc")
+	vim.api.nvim_buf_set_option(0, "tagfunc", "v:lua.vim.lsp.tagfunc")
+	if not pcall(vim.api.nvim_buf_get_option, 0, "formatprg") then
+		vim.api.nvim_buf_set_option(0, "formatexpr", "v:lua.vim.lsp.formatexpr()")
+	end
+
 	local function buf_set_keymap(...)
 		vim.api.nvim_buf_set_keymap(0, ...)
 	end
@@ -36,12 +41,7 @@ do
 	local nvim_lsp = require("lspconfig")
 	local servers = { "jsonls", "html", "cssls", "pyright", "gopls", "tsserver", "yamlls", "texlab", "clangd" }
 	for _, lsp in ipairs(servers) do
-		nvim_lsp[lsp].setup({
-			on_attach = function()
-				on_attach()
-				vim.api.nvim_buf_set_option(0, "formatexpr", "v:lua.vim.lsp.formatexpr()")
-			end,
-		})
+		nvim_lsp[lsp].setup({ on_attach = on_attach })
 	end
 
 	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
