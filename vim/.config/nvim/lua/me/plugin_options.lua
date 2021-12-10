@@ -115,9 +115,6 @@ require("fzf-lua").setup({
 			["alt-a"] = "toggle-all",
 		},
 	},
-	lsp = {
-		async_or_timeout = 5000,
-	},
 	grep = {
 		rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=512 --hidden -g '!{.git,node_modules}/'",
 	},
