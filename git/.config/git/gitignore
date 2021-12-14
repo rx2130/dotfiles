@@ -1,0 +1,12 @@
+# java
+build
+.idea
+*.iml
+.classpath
+.settings
+# jdtls
+.factorypath
+.project
+
+# mac
+.DS_Store
