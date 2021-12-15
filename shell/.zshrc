@@ -17,6 +17,10 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 export PATH="$PATH:$HOME/bin"
 
+export HOMEBREW_NO_INSTALL_UPGRADE=1
+export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_INSTALL_CLEANUP=1
+
 if [ $(uname) = "Darwin" ]; then
     # go
     export PATH=$PATH:$(go env GOPATH)/bin
