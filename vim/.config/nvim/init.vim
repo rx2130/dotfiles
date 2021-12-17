@@ -16,7 +16,7 @@ nnoremap <leader>u :UndotreeToggle<CR>
 
 " Plug 'justinmk/vim-gtfo'
 Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-sleuth'
+" Plug 'tpope/vim-sleuth'
 Plug 'kyazdani42/nvim-tree.lua'
 nnoremap <Leader>n :NvimTreeFindFileToggle<CR>
 nnoremap <Leader>N :NvimTreeFindFile<CR>
@@ -157,6 +157,7 @@ set smartcase " ... but not it begins with upper case
 set expandtab " tab byte (\x09) will be replaced with a number of space bytes (\x20)
 set tabstop=4 " how long each <tab> will be
 set shiftwidth=4 " indentation via =, > and <
+set shiftround
 set mouse=a
 set undofile
 set noswapfile
