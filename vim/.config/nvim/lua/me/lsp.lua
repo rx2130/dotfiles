@@ -1,9 +1,6 @@
 local M = {}
 
 local function on_attach()
-	if vim.api.nvim_buf_get_name(0):match("^%a+://") then
-		return
-	end
 	vim.api.nvim_buf_set_option(0, "omnifunc", "v:lua.vim.lsp.omnifunc")
 	vim.api.nvim_buf_set_option(0, "tagfunc", "v:lua.vim.lsp.tagfunc")
 	if not pcall(vim.api.nvim_buf_get_option, 0, "formatprg") then
