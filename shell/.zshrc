@@ -39,17 +39,17 @@ if [[ $(hostname) == *"amazon.com" ]]; then
     # envImprovement
     export PATH="/apollo/env/envImprovement/bin:$PATH"
 fi
+
+export VISUAL="nvim"
+if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
+    export VISUAL="nvr -cc split --remote-wait +'setlocal bufhidden=wipe'"
+fi
+export MANPAGER="$VISUAL +Man! -"
 # }}}
 
 
 # alias {{{
-alias v="nvim"
-if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
-    if [ -x "$(command -v nvr)" ]; then
-        export VISUAL="nvr -cc split --remote-wait +'setlocal bufhidden=wipe'"
-        alias v=nvr
-    fi
-fi
+alias v=$VISUAL
 alias www="python3 -m http.server"
 alias tm='tmux attach || tmux new'
 
