@@ -310,6 +310,7 @@ augroup vimrc
     autocmd FileType lua  setlocal formatprg=stylua\ -
     autocmd FileType typescript setlocal formatprg=prettier\ --parser\ typescript formatexpr=
     autocmd FileType markdown setlocal formatprg=prettier\ --parser\ markdown
+    autocmd FileType python setlocal formatprg=black\ --quiet\ -
 
     " LSP
     autocmd FileType java lua require('me.lsp').start_jdt()
