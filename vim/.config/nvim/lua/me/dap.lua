@@ -10,6 +10,8 @@ dap.configurations.java = {
 	},
 }
 
+require('dap-python').setup('python3')
+
 dap.adapters.lldb = {
 	type = "executable",
 	command = "/home/linuxbrew/.linuxbrew/bin/lldb-vscode",
@@ -33,3 +35,5 @@ dap.configurations.cpp = {
 
 dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
+
+require('dap.ext.autocompl').attach()

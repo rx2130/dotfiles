@@ -314,8 +314,6 @@ augroup vimrc
 
     " LSP
     autocmd FileType java lua require('me.lsp').start_jdt()
-    autocmd FileType python lua require('dap-python').setup('python3')
-    autocmd FileType dap-repl lua require('dap.ext.autocompl').attach()
 
     " display errors and warnings on save
     autocmd BufWritePost * lua vim.lsp.diagnostic.set_loclist{open_loclist = false, severity = "Error"}; vim.api.nvim_command('lwindow')
