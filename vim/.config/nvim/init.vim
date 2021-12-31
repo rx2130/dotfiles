@@ -314,7 +314,7 @@ augroup vimrc
 
     " LSP
     autocmd FileType java lua require('me.lsp').start_jdt()
-    autocmd FileType python lua require('dap-python').setup('/home/linuxbrew/.linuxbrew/bin/python3')
+    autocmd FileType python lua require('dap-python').setup('python3')
     autocmd FileType dap-repl lua require('dap.ext.autocompl').attach()
 
     " display errors and warnings on save
