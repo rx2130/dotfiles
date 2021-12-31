@@ -24,11 +24,13 @@ export HOMEBREW_NO_INSTALL_CLEANUP=1
 if [ $(uname) = "Darwin" ]; then
     # go
     export PATH=$PATH:$(go env GOPATH)/bin
+    # c/c++
+    export PATH="$PATH:/usr/local/opt/llvm/bin"
 fi
 
 if [[ $(hostname) == *"amazon.com" ]]; then
     # Builder toolbox
-    export PATH=$HOME/.toolbox/bin:$PATH
+    export PATH=$PATH:$HOME/.toolbox/bin
     # JDK
     # export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-8.jdk/Contents/Home
     # export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/
@@ -37,7 +39,7 @@ if [[ $(hostname) == *"amazon.com" ]]; then
     # fpath=(~/.zsh/completion $fpath)
     # autoload -Uz compinit && compinit -i
     # envImprovement
-    export PATH="/apollo/env/envImprovement/bin:$PATH"
+    export PATH="$PATH:/apollo/env/envImprovement/bin"
 fi
 
 export VISUAL="nvim"
