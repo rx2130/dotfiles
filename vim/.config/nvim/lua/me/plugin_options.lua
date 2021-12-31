@@ -138,6 +138,38 @@ fzf_cwd = function()
 	end
 end
 
+-- Return the first index with the given value (or nil if not found).
+local function indexOf(array, value)
+	for i, v in ipairs(array) do
+		if v == value then
+			return i
+		end
+	end
+	return nil
+end
+-- https://github.com/neovim/neovim/blob/master/runtime/lua/vim/ui.lua
+vim.ui.select = function(items, opts, on_choice)
+	vim.validate({
+		items = { items, "table", false },
+		on_choice = { on_choice, "function", false },
+	})
+	opts = opts or {}
+	local choices = {}
+	local format_item = opts.format_item or tostring
+	for i, item in pairs(items) do
+		table.insert(choices, string.format("%d: %s", i, format_item(item)))
+	end
+	coroutine.wrap(function()
+		local selected = require("fzf-lua").fzf({
+			prompt = opts.prompt or "Code Actions>",
+		}, choices)
+		if selected then
+			local choice = indexOf(choices, selected[1])
+			on_choice(items[choice], choice)
+		end
+	end)()
+end
+
 -- nvim-tree
 vim.g.nvim_tree_group_empty = 1
 vim.g.nvim_tree_special_files = {}
