@@ -124,12 +124,19 @@ require("fzf-lua").setup({
 	git = {
 		commits = {
 			actions = fugutive_actions,
+			fzf_opts = {
+				["--no-sort"] = "",
+			},
 		},
 		bcommits = {
 			actions = fugutive_actions,
+			fzf_opts = {
+				["--no-sort"] = "",
+			},
 		},
 	},
 	helptags = { previewer = { _ctor = false } },
+	manpages = { previewer = { _ctor = false } },
 })
 fzf_cwd = function()
 	local root_dir = require("jdtls.setup").find_root({ "packageInfo" }, "Config")
