@@ -32,9 +32,9 @@ local function on_attach()
 	buf_set_keymap("n", "gS", '<cmd>lua require("fzf-lua").lsp_live_workspace_symbols()<CR>', opts)
 	buf_set_keymap("n", "cr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 	buf_set_keymap("n", "<leader>a", '<cmd>lua require("fzf-lua").lsp_code_actions()<CR>', opts)
-	buf_set_keymap("n", "<leader>C", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
-	buf_set_keymap("n", "]g", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
-	buf_set_keymap("n", "[g", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
+	buf_set_keymap("n", "<leader>C", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
+	buf_set_keymap("n", "]g", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+	buf_set_keymap("n", "[g", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
 end
 
 do

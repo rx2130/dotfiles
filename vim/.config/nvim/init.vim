@@ -316,7 +316,7 @@ augroup vimrc
     autocmd FileType java lua require('me.lsp').start_jdt()
 
     " display errors and warnings on save
-    autocmd BufWritePost * lua vim.lsp.diagnostic.set_loclist{open_loclist = false, severity = "Error"}; vim.api.nvim_command('lwindow')
+    autocmd BufWritePost * lua vim.diagnostic.setloclist{open_loclist = false, severity = "Error"}; vim.api.nvim_command('lwindow')
 augroup END
 
 " only show cursor line in active window
