@@ -181,6 +181,7 @@ set grepprg=rg\ --vimgrep\ --no-heading
 set grepformat=%f:%l:%c:%m,%f:%l:%m
 set matchpairs+=<:> " pairs for % command
 set completeopt=menu,menuone,noselect
+set updatetime=250
 " set foldmethod=expr
 " set foldexpr=nvim_treesitter#foldexpr()
 " set foldlevelstart=99
@@ -317,6 +318,11 @@ augroup vimrc
 
     " display errors and warnings on save
     autocmd BufWritePost * lua vim.diagnostic.setloclist{open_loclist = false, severity = "Error"}; vim.api.nvim_command('lwindow')
+
+    " highlight current var under cursor
+    autocmd CursorHold  * lua vim.lsp.buf.document_highlight()
+    autocmd CursorHoldI * lua vim.lsp.buf.document_highlight()
+    autocmd CursorMoved * lua vim.lsp.buf.clear_references()
 augroup END
 
 " only show cursor line in active window
