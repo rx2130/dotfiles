@@ -26,6 +26,8 @@ if [ $(uname) = "Darwin" ]; then
     export PATH=$PATH:$(go env GOPATH)/bin
     # c/c++
     export PATH="$PATH:/usr/local/opt/llvm/bin"
+    # rust
+    export PATH="$PATH:/Users/xuerx/.cargo/bin"
 fi
 
 if [[ $(hostname) == *"amazon.com" ]]; then
