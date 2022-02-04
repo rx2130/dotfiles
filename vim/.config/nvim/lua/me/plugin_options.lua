@@ -58,6 +58,7 @@ cmp.setup({
 	mapping = {
 		["<CR>"] = cmp.mapping.confirm({ select = true }),
 		["<C-Space>"] = cmp.mapping.complete(),
+		["<Tab>"] = cmp.mapping.confirm({ select = true }),
 	},
 	sources = {
 		{ name = "nvim_lua" },
@@ -77,6 +78,9 @@ cmp.setup({
 			-- 	end,
 			-- },
 		},
+	},
+	experimental = {
+		ghost_text = true,
 	},
 })
 
