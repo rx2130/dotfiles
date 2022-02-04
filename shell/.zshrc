@@ -15,7 +15,7 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-export PATH="$PATH:$HOME/bin"
+export PATH="$HOME/bin:$PATH"
 
 export HOMEBREW_NO_INSTALL_UPGRADE=1
 export HOMEBREW_NO_AUTO_UPDATE=1
