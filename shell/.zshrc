@@ -15,15 +15,15 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-export PATH="$HOME/bin:$PATH"
-
 export HOMEBREW_NO_INSTALL_UPGRADE=1
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
+export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1
+
+export PATH="$HOME/bin:$PATH"
+export PATH=$PATH:$(go env GOPATH)/bin
 
 if [ $(uname) = "Darwin" ]; then
-    # go
-    export PATH=$PATH:$(go env GOPATH)/bin
     # c/c++
     export PATH="$PATH:/usr/local/opt/llvm/bin"
     # rust
@@ -56,6 +56,7 @@ export MANPAGER="$VISUAL +Man! -"
 alias v=$VISUAL
 alias www="python3 -m http.server"
 alias tm='tmux attach || tmux new'
+alias lc=leetcode
 
 if [[ $(hostname) == *"amazon.com" ]]; then
     alias bb="brazil-build"
