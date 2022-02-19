@@ -314,6 +314,8 @@ augroup vimrc
     autocmd FileType java setlocal formatprg=java\ -jar\ ~/Developer/google-java-format-1.6-all-deps.jar\ -a\ -
     autocmd FileType lua  setlocal formatprg=stylua\ -
     autocmd FileType typescript setlocal formatprg=prettier\ --parser\ typescript formatexpr=
+    autocmd FileType javascript setlocal formatprg=prettier\ --parser\ typescript
+    autocmd FileType html setlocal formatprg=prettier\ --parser\ html
     autocmd FileType markdown setlocal formatprg=prettier\ --parser\ markdown
     autocmd FileType python setlocal formatprg=black\ --quiet\ -
 
