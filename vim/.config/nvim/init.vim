@@ -179,7 +179,7 @@ if filereadable("./Config")
 end
 set grepprg=rg\ --vimgrep\ --no-heading
 set grepformat=%f:%l:%c:%m,%f:%l:%m
-set matchpairs+=<:> " pairs for % command
+" set matchpairs+=<:> " pairs for % command
 set completeopt=menu,menuone,noselect
 set updatetime=250
 " set foldmethod=expr
