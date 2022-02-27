@@ -10,7 +10,9 @@ dap.configurations.java = {
 	},
 }
 
-require('dap-python').setup('python3')
+require("dap-python").setup("python3")
+
+require("dap-go").setup()
 
 dap.adapters.lldb = {
 	type = "executable",
@@ -36,4 +38,4 @@ dap.configurations.cpp = {
 dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
 
-require('dap.ext.autocompl').attach()
+require("dap.ext.autocompl").attach()

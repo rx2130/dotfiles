@@ -115,6 +115,7 @@ Plug 'neovim/nvim-lsp'
 Plug 'mfussenegger/nvim-jdtls'
 Plug 'mfussenegger/nvim-dap'
 Plug 'mfussenegger/nvim-dap-python'
+Plug 'leoluz/nvim-dap-go'
 nnoremap <silent> <leader>dc :lua require'dap'.continue()<CR>
 nnoremap <silent> <leader>dd :lua require'dap'.step_over()<CR>
 nnoremap <silent> <leader>di :lua require'dap'.step_into()<CR>
