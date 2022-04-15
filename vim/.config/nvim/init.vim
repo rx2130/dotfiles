@@ -325,11 +325,6 @@ augroup vimrc
 
     " display errors and warnings on save
     autocmd BufWritePost * lua vim.diagnostic.setloclist{open_loclist = false, severity = "Error"}; vim.api.nvim_command('lwindow')
-
-    " highlight current var under cursor
-    autocmd CursorHold  * lua vim.lsp.buf.document_highlight()
-    autocmd CursorHoldI * lua vim.lsp.buf.document_highlight()
-    autocmd CursorMoved * lua vim.lsp.buf.clear_references()
 augroup END
 
 " only show cursor line in active window

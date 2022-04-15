@@ -35,7 +35,20 @@ local function on_attach()
 	buf_set_keymap("n", "<leader>C", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
 	buf_set_keymap("n", "]g", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
 	buf_set_keymap("n", "[g", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-    buf_set_keymap("n", "<leader>=", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+	buf_set_keymap("n", "<leader>=", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+
+	-- highlight current var under cursor
+	local highlight_group = vim.api.nvim_create_augroup("document_highlight", { clear = true })
+	vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+		pattern = "*",
+		callback = vim.lsp.buf.document_highlight,
+		group = highlight_group,
+	})
+	vim.api.nvim_create_autocmd("CursorMoved", {
+		pattern = "*",
+		callback = vim.lsp.buf.clear_references,
+		group = highlight_group,
+	})
 end
 
 do
