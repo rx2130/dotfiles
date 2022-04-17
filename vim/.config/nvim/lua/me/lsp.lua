@@ -7,35 +7,33 @@ local function on_attach()
 		vim.api.nvim_buf_set_option(0, "formatexpr", "v:lua.vim.lsp.formatexpr()")
 	end
 
-	local function buf_set_keymap(...)
-		vim.api.nvim_buf_set_keymap(0, ...)
-	end
-	local opts = { noremap = true, silent = true }
-	buf_set_keymap("n", "gd", '<cmd>lua require("fzf-lua").lsp_definitions({ jump_to_single_result = true })<CR>', opts)
-	buf_set_keymap(
-		"n",
-		"<c-]>",
-		'<cmd>lua require("fzf-lua").lsp_declarations({ jump_to_single_result = true })<CR>',
-		opts
-	)
-	buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-	buf_set_keymap(
-		"n",
-		"gi",
-		'<cmd>lua require("fzf-lua").lsp_implementations({ jump_to_single_result = true })<CR>',
-		opts
-	)
-	buf_set_keymap("i", "<c-l>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-	buf_set_keymap("n", "gD", '<cmd>lua require("fzf-lua").lsp_typedefs({ jump_to_single_result = true })<CR>', opts)
-	buf_set_keymap("n", "gr", '<cmd>lua require("fzf-lua").lsp_references({ jump_to_single_result = true })<CR>', opts)
-	buf_set_keymap("n", "gs", '<cmd>lua require("fzf-lua").lsp_document_symbols()<CR>', opts)
-	buf_set_keymap("n", "gS", '<cmd>lua require("fzf-lua").lsp_live_workspace_symbols()<CR>', opts)
-	buf_set_keymap("n", "cr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-	buf_set_keymap("n", "<leader>a", '<cmd>lua require("fzf-lua").lsp_code_actions()<CR>', opts)
-	buf_set_keymap("n", "<leader>C", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
-	buf_set_keymap("n", "]g", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-	buf_set_keymap("n", "[g", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-	buf_set_keymap("n", "<leader>=", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+	local opts = { buffer = true }
+
+	vim.keymap.set("n", "gd", function()
+		require("fzf-lua").lsp_definitions({ jump_to_single_result = true })
+	end, opts)
+	vim.keymap.set("n", "<c-]>", function()
+		require("fzf-lua").lsp_declarations({ jump_to_single_result = true })
+	end, opts)
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+	vim.keymap.set("n", "gi", function()
+		require("fzf-lua").lsp_implementations({ jump_to_single_result = true })
+	end, opts)
+	vim.keymap.set("i", "<c-l>", vim.lsp.buf.signature_help, opts)
+	vim.keymap.set("n", "gD", function()
+		require("fzf-lua").lsp_typedefs({ jump_to_single_result = true })
+	end, opts)
+	vim.keymap.set("n", "gr", function()
+		require("fzf-lua").lsp_references({ jump_to_single_result = true })
+	end, opts)
+	vim.keymap.set("n", "gs", require("fzf-lua").lsp_document_symbols, opts)
+	vim.keymap.set("n", "gS", require("fzf-lua").lsp_live_workspace_symbols, opts)
+	vim.keymap.set("n", "cr", vim.lsp.buf.rename, opts)
+	vim.keymap.set("n", "<leader>a", require("fzf-lua").lsp_code_actions, opts)
+	vim.keymap.set("n", "<leader>C", vim.diagnostic.setloclist, opts)
+	vim.keymap.set("n", "]g", vim.diagnostic.goto_next, opts)
+	vim.keymap.set("n", "[g", vim.diagnostic.goto_prev, opts)
+	vim.keymap.set("n", "<leader>=", vim.lsp.buf.formatting, opts)
 
 	-- highlight current var under cursor
 	local highlight_group = vim.api.nvim_create_augroup("document_highlight", { clear = true })
@@ -107,20 +105,8 @@ local function jdtls_on_attach(client)
 	require("jdtls").setup_dap({ hotcodereplace = "auto" })
 	require("jdtls.setup").add_commands()
 
-	vim.api.nvim_buf_set_keymap(
-		0,
-		"n",
-		"<leader>dt",
-		"<Cmd>lua require'jdtls'.test_nearest_method()<CR>",
-		{ noremap = true, silent = true }
-	)
-	vim.api.nvim_buf_set_keymap(
-		0,
-		"n",
-		"<leader>dT",
-		"<Cmd>lua require'jdtls'.test_class()<CR>",
-		{ noremap = true, silent = true }
-	)
+	vim.keymap.set("n", "<leader>dt", require("jdtls").test_nearest_method, { buffer = true })
+	vim.keymap.set("n", "<leader>dT", require("jdtls").test_class, { buffer = true })
 end
 
 function M.start_jdt()
