@@ -186,6 +186,7 @@ set updatetime=250
 " set foldmethod=expr
 " set foldexpr=nvim_treesitter#foldexpr()
 " set foldlevelstart=99
+set laststatus=3
 
 colorscheme gruvbox-material
 "}}}
