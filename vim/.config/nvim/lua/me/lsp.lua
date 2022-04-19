@@ -38,12 +38,12 @@ local function on_attach()
 	-- highlight current var under cursor
 	local highlight_group = vim.api.nvim_create_augroup("document_highlight", { clear = true })
 	vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-		pattern = "*",
+        buffer = 0,
 		callback = vim.lsp.buf.document_highlight,
 		group = highlight_group,
 	})
 	vim.api.nvim_create_autocmd("CursorMoved", {
-		pattern = "*",
+        buffer = 0,
 		callback = vim.lsp.buf.clear_references,
 		group = highlight_group,
 	})
