@@ -53,7 +53,7 @@ local cmp = require("cmp")
 cmp.setup({
 	snippet = {
 		expand = function(args)
-			require("luasnip").lsp_expand(args.body)
+			luasnip.lsp_expand(args.body)
 		end,
 	},
 	mapping = {
@@ -77,20 +77,8 @@ cmp.setup({
 				fallback()
 			end
 		end, { "i", "s" }),
-		["<C-n>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-		["<C-p>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_prev_item()
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
+		["<C-n>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "s" }),
+		["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
 	},
 	sources = {
 		{ name = "nvim_lua" },
@@ -115,6 +103,9 @@ cmp.setup({
 	-- 	ghost_text = true,
 	-- },
 })
+
+-- nvim-autopairs
+require("nvim-autopairs").setup({})
 
 -- fzf-lua
 local function fugutive_open(selected, opts)
@@ -189,7 +180,6 @@ vim.g.nvim_tree_special_files = {}
 vim.g.nvim_tree_show_icons = {}
 local tree_cb = require("nvim-tree.config").nvim_tree_callback
 require("nvim-tree").setup({
-	width = 40,
 	update_focused_file = {
 		enable = true,
 	},

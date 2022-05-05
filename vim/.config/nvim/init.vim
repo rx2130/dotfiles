@@ -40,11 +40,7 @@ nmap <Leader>r  <Plug>ReplaceWithRegisterOperator
 nmap <Leader>rr <Plug>ReplaceWithRegisterLine
 xmap <Leader>r  <Plug>ReplaceWithRegisterVisual
 
-Plug 'raimondi/delimitmate'
-let g:delimitMate_expand_cr = 1
-let g:delimitMate_expand_space = 1
-let g:delimitMate_excluded_ft = "DAP-REPL"
-
+Plug 'windwp/nvim-autopairs'
 Plug 'tommcdo/vim-exchange'
 
 " GUI enhancements
