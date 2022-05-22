@@ -81,6 +81,7 @@ key_bindings:
   - { key: D,     mods: Alt,      chars: "\x1bd" }
   - { key: C,     mods: Alt,      chars: "\x1bc" }
   - { key: A,     mods: Alt,      chars: "\x1ba" }
+  - { key: Q,     mods: Alt,      chars: "\x1bq" }
   - { key: Left,  mods: Alt,      chars: "\x1bb" }
   - { key: Right, mods: Alt,      chars: "\x1bf" }
   - { key: Delete,mods: Alt,      chars: "\x1bd" }
