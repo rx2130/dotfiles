@@ -175,9 +175,6 @@ fzf_cwd = function()
 end
 
 -- nvim-tree
-vim.g.nvim_tree_group_empty = 1
-vim.g.nvim_tree_special_files = {}
-vim.g.nvim_tree_show_icons = {}
 local tree_cb = require("nvim-tree.config").nvim_tree_callback
 require("nvim-tree").setup({
 	update_focused_file = {
@@ -190,6 +187,18 @@ require("nvim-tree").setup({
 		mappings = {
 			list = {
 				{ key = "<C-s>", cb = tree_cb("split") },
+			},
+		},
+	},
+	renderer = {
+		group_empty = true,
+		special_files = {},
+		icons = {
+			show = {
+				file = false,
+				folder = false,
+				folder_arrow = false,
+				git = false,
 			},
 		},
 	},
