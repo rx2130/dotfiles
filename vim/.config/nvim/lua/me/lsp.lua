@@ -30,9 +30,6 @@ local function on_attach(client)
 	vim.keymap.set("n", "gS", require("fzf-lua").lsp_live_workspace_symbols, opts)
 	vim.keymap.set("n", "cr", vim.lsp.buf.rename, opts)
 	vim.keymap.set("n", "<leader>a", require("fzf-lua").lsp_code_actions, opts)
-	vim.keymap.set("n", "<leader>C", vim.diagnostic.setloclist, opts)
-	vim.keymap.set("n", "]g", vim.diagnostic.goto_next, opts)
-	vim.keymap.set("n", "[g", vim.diagnostic.goto_prev, opts)
 	vim.keymap.set("n", "<leader>=", vim.lsp.buf.formatting, opts)
 
 	-- highlight current var under cursor

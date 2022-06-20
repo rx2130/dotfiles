@@ -1,3 +1,7 @@
+vim.keymap.set("n", "<leader>C", vim.diagnostic.setloclist)
+vim.keymap.set("n", "]g", vim.diagnostic.goto_next)
+vim.keymap.set("n", "[g", vim.diagnostic.goto_prev)
+
 -- treesitter
 require("nvim-treesitter.configs").setup({
 	highlight = {
