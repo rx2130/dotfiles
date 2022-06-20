@@ -1,6 +1,6 @@
 local M = {}
 
-local function on_attach()
+local function on_attach(client)
 	vim.api.nvim_buf_set_option(0, "omnifunc", "v:lua.vim.lsp.omnifunc")
 	vim.api.nvim_buf_set_option(0, "tagfunc", "v:lua.vim.lsp.tagfunc")
 	if not pcall(vim.api.nvim_buf_get_option, 0, "formatprg") then
@@ -36,17 +36,19 @@ local function on_attach()
 	vim.keymap.set("n", "<leader>=", vim.lsp.buf.formatting, opts)
 
 	-- highlight current var under cursor
-	local highlight_group = vim.api.nvim_create_augroup("document_highlight", { clear = true })
-	vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-        buffer = 0,
-		callback = vim.lsp.buf.document_highlight,
-		group = highlight_group,
-	})
-	vim.api.nvim_create_autocmd("CursorMoved", {
-        buffer = 0,
-		callback = vim.lsp.buf.clear_references,
-		group = highlight_group,
-	})
+	if client.server_capabilities.documentHighlightProvider then
+		local highlight_group = vim.api.nvim_create_augroup("document_highlight", { clear = true })
+		vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+			buffer = 0,
+			callback = vim.lsp.buf.document_highlight,
+			group = highlight_group,
+		})
+		vim.api.nvim_create_autocmd("CursorMoved", {
+			buffer = 0,
+			callback = vim.lsp.buf.clear_references,
+			group = highlight_group,
+		})
+	end
 end
 
 do
