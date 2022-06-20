@@ -50,7 +50,7 @@ let g:gruvbox_material_better_performance = 1
 " Fuzzy finder
 Plug 'ibhagwan/fzf-lua'
 nnoremap <leader>f <cmd>lua require('fzf-lua').files{cwd=fzf_cwd()}<cr>
-nnoremap <expr> <C-p> ":lua require('fzf-lua').files()<cr>".expand('%:t:r')
+nnoremap <expr> <C-p> ":lua require('fzf-lua').files()<cr>i".expand('%:t:r')
 nnoremap <leader>op <cmd>lua require('fzf-lua').files{cwd='~/.vim/plugged/'}<cr>
 nnoremap <leader>od <cmd>lua require('fzf-lua').files{cwd='~/dotfiles/'}<cr>
 nnoremap <leader>F <cmd>lua require('fzf-lua').git_status()<cr>
@@ -179,9 +179,9 @@ set grepformat=%f:%l:%c:%m,%f:%l:%m
 " set matchpairs+=<:> " pairs for % command
 set completeopt=menu,menuone,noselect
 set updatetime=250
-" set foldmethod=expr
-" set foldexpr=nvim_treesitter#foldexpr()
-" set foldlevelstart=99
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set foldlevelstart=99
 set laststatus=3
 
 colorscheme gruvbox-material

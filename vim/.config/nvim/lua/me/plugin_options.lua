@@ -67,7 +67,10 @@ cmp.setup({
 			else
 				fallback()
 			end
-		end, { "i", "s" }),
+		end, {
+			"i",
+			"s",
+		}),
 		["<S-Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()
@@ -76,7 +79,10 @@ cmp.setup({
 			else
 				fallback()
 			end
-		end, { "i", "s" }),
+		end, {
+			"i",
+			"s",
+		}),
 		["<C-n>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "s" }),
 		["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
 	},
