@@ -20,7 +20,9 @@ export HOMEBREW_NO_INSTALL_CLEANUP=1
 export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1
 
 export PATH="$HOME/bin:$PATH"
-export PATH=$PATH:$(go env GOPATH)/bin
+if [ -x "$(command -v go)" ]; then
+    export PATH=$PATH:$(go env GOPATH)/bin
+fi
 
 if [ $(uname) = "Darwin" ]; then
     # c/c++
