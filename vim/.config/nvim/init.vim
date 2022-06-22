@@ -4,54 +4,30 @@ let mapleader = ' '
 
 " load plugins {{{
 
-call plug#begin('~/.vim/plugged')
-
 " Vim enhancements
-Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 nnoremap <silent><leader>q :Sayonara<CR>
 nnoremap <silent><leader>Q :Sayonara!<CR>
 
-Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 nnoremap <leader>u :UndotreeToggle<CR>
 
-" Plug 'justinmk/vim-gtfo'
-Plug 'tpope/vim-eunuch'
-" Plug 'tpope/vim-sleuth'
-Plug 'kyazdani42/nvim-tree.lua'
 nnoremap <Leader>n :NvimTreeFindFileToggle<CR>
 nnoremap <Leader>N :NvimTreeFindFile<CR>
 
-Plug 'tyru/open-browser.vim'
 nmap gx <Plug>(openbrowser-smart-search)
 vmap gx <Plug>(openbrowser-smart-search)
 
-Plug 'tpope/vim-dispatch'
-Plug 'radenling/vim-dispatch-neovim'
-Plug 'AndrewRadev/linediff.vim'
-
 " Edit enhancements
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-unimpaired'
-Plug 'nelstrom/vim-visual-star-search'
-Plug 'vim-scripts/ReplaceWithRegister'
 nmap <Leader>r  <Plug>ReplaceWithRegisterOperator
 nmap <Leader>rr <Plug>ReplaceWithRegisterLine
 xmap <Leader>r  <Plug>ReplaceWithRegisterVisual
 
-Plug 'windwp/nvim-autopairs'
-Plug 'tommcdo/vim-exchange'
-
 " GUI enhancements
-Plug 'sainnhe/gruvbox-material'
 let g:gruvbox_material_better_performance = 1
 
 " Fuzzy finder
-Plug 'ibhagwan/fzf-lua'
 nnoremap <leader>f <cmd>lua require('fzf-lua').files{cwd=fzf_cwd()}<cr>
 nnoremap <expr> <C-p> ":lua require('fzf-lua').files()<cr>i".expand('%:t:r')
-nnoremap <leader>op <cmd>lua require('fzf-lua').files{cwd='~/.vim/plugged/'}<cr>
+nnoremap <leader>op <cmd>lua require('fzf-lua').files{cwd='~/.local/share/nvim/site/pack/plugins/start/'}<cr>
 nnoremap <leader>od <cmd>lua require('fzf-lua').files{cwd='~/dotfiles/'}<cr>
 nnoremap <leader>F <cmd>lua require('fzf-lua').git_status()<cr>
 nnoremap <leader>b <cmd>lua require('fzf-lua').buffers()<cr>
@@ -73,12 +49,10 @@ nnoremap <leader>gh <cmd>lua require('fzf-lua').git_commits()<cr>
 nnoremap <leader>gH <cmd>lua require('fzf-lua').git_bcommits()<cr>
 nnoremap <leader>gc <cmd>lua require('fzf-lua').git_branches()<cr>
 
-Plug 'airblade/vim-rooter'
 let g:rooter_silent_chdir = 1
 " let g:rooter_change_directory_for_non_project_files = 'current'
 
 " Git enhancements
-Plug 'tpope/vim-fugitive'
 nnoremap <leader>gg :Git<CR>
 nnoremap <leader>gd :Gdiffsplit<CR>
 nnoremap <leader>gp :Dispatch git push<CR>
@@ -91,27 +65,11 @@ vnoremap <leader>gx :GBrowse<CR>
 nnoremap <leader>gy :GBrowse!<CR>
 vnoremap <leader>gy :GBrowse!<CR>
 
-Plug 'tpope/vim-rhubarb'
-Plug 'ssh://git.amazon.com:2222/pkg/Vim-code-browse'
-Plug 'junegunn/gv.vim', { 'on': 'GV' }
 nnoremap <leader>gv :GV --all<CR>
 nnoremap <leader>gV :GV<CR>
 
-" Semantic language support
-Plug 'ssh://git.amazon.com:2222/pkg/VimIon.git'
-Plug 'ellisonleao/glow.nvim'
 nnoremap <leader>p :Glow<CR>
 
-" Plug 'mzlogin/vim-markdown-toc', { 'for': 'markdown' }
-" Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-" nmap <leader>p <Plug>MarkdownPreviewToggle
-" let g:mkdp_auto_close = 0
-
-Plug 'neovim/nvim-lsp'
-Plug 'mfussenegger/nvim-jdtls'
-Plug 'mfussenegger/nvim-dap'
-Plug 'mfussenegger/nvim-dap-python'
-Plug 'leoluz/nvim-dap-go'
 nnoremap <silent> <leader>dc :lua require'dap'.continue()<CR>
 nnoremap <silent> <leader>dd :lua require'dap'.step_over()<CR>
 nnoremap <silent> <leader>di :lua require'dap'.step_into()<CR>
@@ -128,19 +86,6 @@ nnoremap <silent> <leader>K  :lua require('dap.ui.widgets').hover()<CR>
 vnoremap <silent> <leader>K  :lua require('dap.ui.widgets').hover(require("dap.utils").get_visual_selection_text)<CR>
 nnoremap <silent> <leader>du :lua local widgets = require('dap.ui.widgets'); widgets.sidebar(widgets.scopes).open(); widgets.sidebar(widgets.frames).open()<CR>
 " command! -nargs=0 DapBreakpoints :lua require('dap').list_breakpoints()
-
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-nvim-lua'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'saadparwaiz1/cmp_luasnip'
-Plug 'L3MON4D3/LuaSnip'
-
-call plug#end()
 
 "}}}
 
