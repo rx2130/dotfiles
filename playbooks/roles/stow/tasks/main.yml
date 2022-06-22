@@ -1,0 +1,10 @@
+- name: Create symlinks
+  command: /usr/local/bin/stow shell vim
+  args:
+    chdir: ~/dotfiles
+
+- name: Create Mac specific symlinks
+  when: ansible_distribution == 'MacOSX'
+  command: /usr/local/bin/stow alacritty hammerspoon karabiner
+  args:
+    chdir: ~/dotfiles

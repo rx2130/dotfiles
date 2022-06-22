@@ -1,0 +1,4 @@
+- name: Checkout dotfiles
+  git:
+    repo: https://github.com/rx2130/dotfiles
+    dest: ~/dotfiles

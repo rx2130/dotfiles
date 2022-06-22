@@ -1,0 +1,24 @@
+- name: Install packages
+  homebrew:
+    name:
+    - stow
+    - tmux
+    - romkatv/powerlevel10k/powerlevel10k
+    - fzf
+    - fd
+    - ripgrep
+    - neovim
+    - neovim-remote
+    - tldr
+    state: present
+
+- name: Install cask
+  when: ansible_distribution == 'MacOSX'
+  homebrew_cask:
+    name:
+    - alacritty
+    - hammerspoon
+    - karabiner-elements
+    - stats
+    - homebrew/cask-fonts/font-sf-mono
+    state: present

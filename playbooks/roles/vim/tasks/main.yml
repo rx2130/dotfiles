@@ -1,0 +1,58 @@
+- name: Checkout vim plugins
+  git:
+    repo: https://github.com/{{ item }}
+    dest: ~/.local/share/nvim/site/pack/plugins/start/{{ item | basename }}
+  loop:
+  - mhinz/vim-sayonara
+  - mbbill/undotree
+  - tpope/vim-eunuch
+  - kyazdani42/nvim-tree.lua
+  - tyru/open-browser.vim
+  - tpope/vim-dispatch
+  - radenling/vim-dispatch-neovim
+  - AndrewRadev/linediff.vim
+  - tpope/vim-repeat
+  - tpope/vim-surround
+  - tpope/vim-commentary
+  - tpope/vim-unimpaired
+  - nelstrom/vim-visual-star-search
+  - vim-scripts/ReplaceWithRegister
+  - windwp/nvim-autopairs
+  - tommcdo/vim-exchange
+  - sainnhe/gruvbox-material
+  - ibhagwan/fzf-lua
+  - airblade/vim-rooter
+  - tpope/vim-fugitive
+  - tpope/vim-rhubarb
+  # - ssh://git.amazon.com:2222/pkg/Vim-code-browse
+  - junegunn/gv.vim
+  # - ssh://git.amazon.com:2222/pkg/VimIon.git
+  - ellisonleao/glow.nvim
+  - neovim/nvim-lsp
+  - mfussenegger/nvim-jdtls
+  - mfussenegger/nvim-dap
+  - mfussenegger/nvim-dap-python
+  - leoluz/nvim-dap-go
+  - nvim-treesitter/nvim-treesitter
+  - nvim-treesitter/nvim-treesitter-textobjects
+  - hrsh7th/nvim-cmp
+  - hrsh7th/cmp-nvim-lsp
+  - hrsh7th/cmp-nvim-lua
+  - hrsh7th/cmp-buffer
+  - hrsh7th/cmp-path
+  - saadparwaiz1/cmp_luasnip
+  - L3MON4D3/LuaSnip
+
+# - name: Checkout opt vim plugins
+#   git:
+#     repo: https://github.com/{{ item }}
+#     dest: ~/.local/share/nvim/site/pack/plugins/opt/{{ item | basename }}
+#   loop:
+#   - nvim-treesitter/nvim-treesitter
+#   - nvim-treesitter/nvim-treesitter-textobjects
+
+# - name: Install nvim-treesitter parsers
+#   command: /usr/local/bin/nvim --headless +'TSInstallSync all' +qa
+
+# - name: Update Remote Plugins
+#   command: nvim +UpdateRemotePlugins +qa
