@@ -138,8 +138,6 @@ nnoremap <C-h> <C-W>h
 nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
 nnoremap <C-l> <C-W>l
-nnoremap Q @q
-vnoremap Q :norm @q<CR>
 vnoremap . :norm .<CR>
 nnoremap <silent><esc> :nohlsearch<cr>
 nnoremap <Tab> za
