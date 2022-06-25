@@ -2,6 +2,7 @@
   git:
     repo: https://github.com/{{ item }}
     dest: ~/.local/share/nvim/site/pack/plugins/start/{{ item | basename }}
+    force: true
   loop:
   - mhinz/vim-sayonara
   - mbbill/undotree
@@ -24,9 +25,7 @@
   - airblade/vim-rooter
   - tpope/vim-fugitive
   - tpope/vim-rhubarb
-  # - ssh://git.amazon.com:2222/pkg/Vim-code-browse
   - junegunn/gv.vim
-  # - ssh://git.amazon.com:2222/pkg/VimIon.git
   - ellisonleao/glow.nvim
   - neovim/nvim-lsp
   - mfussenegger/nvim-jdtls
@@ -42,6 +41,14 @@
   - hrsh7th/cmp-path
   - saadparwaiz1/cmp_luasnip
   - L3MON4D3/LuaSnip
+
+- name: Checkout amazon vim plugins
+  git:
+    repo: ssh://git.amazon.com:2222/pkg/{{ item }}
+    dest: ~/.local/share/nvim/site/pack/plugins/start/{{ item | basename }}
+  loop:
+  - Vim-code-browse
+  - VimIon.git
 
 # - name: Checkout opt vim plugins
 #   git:
