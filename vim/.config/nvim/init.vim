@@ -148,8 +148,6 @@ nnoremap <leader>w :w<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader><Tab> <C-^>
 nnoremap <leader>c :cclose<bar>lclose<cr>
-nnoremap <leader>t :vsplit \| terminal<cr>
-nnoremap <leader>T :split \| terminal<cr>
 nnoremap <leader>y :let @*=expand('%:t:r')<CR> :echo expand('%:t:r')<CR>
 nnoremap <leader>Y :let @*=expand('%:p')<CR> :echo expand('%:p')<CR>
 nnoremap <leader>, :e $MYVIMRC<cr>

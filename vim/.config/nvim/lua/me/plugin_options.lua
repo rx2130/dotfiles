@@ -15,6 +15,8 @@ vim.keymap.set({ "n", "v" }, "gx", function()
 	end
 end)
 
+vim.keymap.set("n", "<leader>t", require("me.term").toggle)
+
 -- treesitter
 require("nvim-treesitter.configs").setup({
 	highlight = {
