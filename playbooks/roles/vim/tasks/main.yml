@@ -43,12 +43,19 @@
   - L3MON4D3/LuaSnip
 
 - name: Checkout amazon vim plugins
+  when: '"amazon" in ansible_nodename'
   git:
     repo: ssh://git.amazon.com:2222/pkg/{{ item }}
     dest: ~/.local/share/nvim/site/pack/plugins/start/{{ item | basename }}
+    update: no
   loop:
   - Vim-code-browse
   - VimIon.git
+
+- name: Modify vim plugins
+  command: sed -i '' 's/call s:SaveCurrentBufferPid(a:request)/call s:SaveCurrentBufferPid(a:request)\n\t\t\texecute "normal G"/' neovim.vim
+  args:
+    chdir: ~/.local/share/nvim/site/pack/plugins/start/vim-dispatch-neovim/autoload/dispatch/
 
 # - name: Checkout opt vim plugins
 #   git:
