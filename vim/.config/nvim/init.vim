@@ -13,9 +13,6 @@ nnoremap <leader>u :UndotreeToggle<CR>
 nnoremap <Leader>n :NvimTreeFindFileToggle<CR>
 nnoremap <Leader>N :NvimTreeFindFile<CR>
 
-nmap gx <Plug>(openbrowser-smart-search)
-vmap gx <Plug>(openbrowser-smart-search)
-
 " Edit enhancements
 nmap <Leader>r  <Plug>ReplaceWithRegisterOperator
 nmap <Leader>rr <Plug>ReplaceWithRegisterLine

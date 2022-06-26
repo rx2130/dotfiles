@@ -8,7 +8,6 @@
   - mbbill/undotree
   - tpope/vim-eunuch
   - kyazdani42/nvim-tree.lua
-  - tyru/open-browser.vim
   - tpope/vim-dispatch
   - radenling/vim-dispatch-neovim
   - AndrewRadev/linediff.vim
