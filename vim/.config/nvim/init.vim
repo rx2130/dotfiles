@@ -246,6 +246,8 @@ augroup vimrc
     autocmd FileType go     nnoremap <buffer> <leader><CR> :exec '!go run' shellescape(@%, 1)<CR>
     autocmd FileType java   nnoremap <buffer> <leader><CR> :!javac %:t<CR> :!java %:t:r<CR>
     autocmd FileType lua    nnoremap <buffer> <leader><CR> :luafile %<CR>
+    autocmd FileType javascript nnoremap <buffer> <leader><CR> :!node %<CR>
+    autocmd FileType typescript nnoremap <buffer> <leader><CR> :!ts-node %<CR>
 
     " makeprg
     autocmd FileType go setlocal errorformat=%f:%l.%c-%[%^:]%#:\ %m,%f:%l:%c:\ %m
