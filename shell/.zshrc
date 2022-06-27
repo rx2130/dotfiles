@@ -46,7 +46,7 @@ if [[ $(hostname) == *"amazon.com" ]]; then
 fi
 
 export VISUAL="nvim"
-if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
+if [ -n "$NVIM" ]; then
     export VISUAL="nvr -cc split --remote-wait +'setlocal bufhidden=wipe'"
 fi
 export MANPAGER="$VISUAL +Man! -"
