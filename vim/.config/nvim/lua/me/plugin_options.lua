@@ -202,6 +202,7 @@ end
 -- nvim-tree
 local tree_cb = require("nvim-tree.config").nvim_tree_callback
 require("nvim-tree").setup({
+    disable_netrw = true,
 	update_focused_file = {
 		enable = true,
 	},
