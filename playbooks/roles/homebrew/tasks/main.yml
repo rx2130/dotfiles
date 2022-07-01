@@ -20,5 +20,7 @@
     - hammerspoon
     - karabiner-elements
     - stats
+    - hiddenbar
+    - alfred
     - homebrew/cask-fonts/font-sf-mono
     state: present
