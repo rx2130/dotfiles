@@ -13,21 +13,20 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1
 export HOMEBREW_NO_ANALYTICS=1
 
-export PATH="$HOME/bin:$PATH"
-if [ -x "$(command -v go)" ]; then
-    export PATH=$PATH:$(go env GOPATH)/bin
+if [ -n "$NVIM" ]; then
+    export VISUAL="nvr -cc split --remote-wait +'setlocal bufhidden=wipe'"
+else
+    export VISUAL="nvim"
 fi
+export MANPAGER="$VISUAL +Man! -"
 
-if [ $(uname) = "Darwin" ]; then
-    # c/c++
-    export PATH="$PATH:/usr/local/opt/llvm/bin"
-    # rust
-    export PATH="$PATH:/Users/xuerx/.cargo/bin"
-fi
+[[ ! -d ~/bin ]] || export PATH="$HOME/bin:$PATH"
+[[ ! -d ~/go ]] || export PATH="$HOME/go/bin:$PATH"
+[[ ! -d ~/.cargo/bin ]] || export PATH="$HOME/.cargo/bin:$PATH"
 
 if [[ $(hostname) == *"amazon.com" ]]; then
     # Builder toolbox
-    export PATH=$PATH:$HOME/.toolbox/bin
+    [[ ! -d ~/.toolbox/bin ]] || export PATH=$PATH:$HOME/.toolbox/bin
     # JDK
     # export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-8.jdk/Contents/Home
     # export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/
@@ -36,14 +35,10 @@ if [[ $(hostname) == *"amazon.com" ]]; then
     # fpath=(~/.zsh/completion $fpath)
     # autoload -Uz compinit && compinit -i
     # envImprovement
-    export PATH="$PATH:/apollo/env/envImprovement/bin"
+    [[ ! -d /apollo/env/envImprovement/bin ]] || export PATH="$PATH:/apollo/env/envImprovement/bin"
 fi
 
-export VISUAL="nvim"
-if [ -n "$NVIM" ]; then
-    export VISUAL="nvr -cc split --remote-wait +'setlocal bufhidden=wipe'"
-fi
-export MANPAGER="$VISUAL +Man! -"
+typeset -U PATH # remove duplicated entries in $PATH
 # }}}
 
 
