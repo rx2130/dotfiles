@@ -1,18 +1,12 @@
-# Oh My ZSH {{{
-export ZSH="$HOME/.oh-my-zsh"
-
-ZSH_THEME="robbyrussell"
-
-plugins=(git z colored-man-pages history docker fzf)
-
-source $ZSH/oh-my-zsh.sh
-# }}}
 
 
 # export {{{
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+export ZSH_TMUX_AUTOSTART="true"
+export ZSH_TMUX_DEFAULT_SESSION_NAME="main"
 
 export HOMEBREW_NO_INSTALL_UPGRADE=1
 export HOMEBREW_NO_AUTO_UPDATE=1
@@ -50,6 +44,14 @@ if [ -n "$NVIM" ]; then
     export VISUAL="nvr -cc split --remote-wait +'setlocal bufhidden=wipe'"
 fi
 export MANPAGER="$VISUAL +Man! -"
+# }}}
+
+
+# Oh My ZSH {{{
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
+plugins=(git z colored-man-pages history docker fzf tmux)
+source $ZSH/oh-my-zsh.sh
 # }}}
 
 
