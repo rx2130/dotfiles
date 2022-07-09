@@ -62,36 +62,25 @@ do
 		update_in_insert = false,
 	})
 
-	local sumneko_path = os.getenv("HOME") .. "/.local/share/nvim/lsp_servers/sumneko_lua/extension/server"
-	if vim.fn.isdirectory(sumneko_path) == 1 then
-		local runtime_path = vim.split(package.path, ";")
-		table.insert(runtime_path, "lua/?.lua")
-		table.insert(runtime_path, "lua/?/init.lua")
-
-		nvim_lsp.sumneko_lua.setup({
-			cmd = {
-				sumneko_path .. "/bin/" .. (vim.fn.has("mac") == 1 and "macOS" or "Linux") .. "/lua-language-server",
-			},
-			on_attach = on_attach,
-			settings = {
-				Lua = {
-					runtime = {
-						version = "LuaJIT",
-						path = runtime_path,
-					},
-					diagnostics = {
-						globals = { "vim", "hs" },
-					},
-					workspace = {
-						library = vim.api.nvim_get_runtime_file("", true),
-					},
-					telemetry = {
-						enable = false,
-					},
+	nvim_lsp.sumneko_lua.setup({
+		on_attach = on_attach,
+		settings = {
+			Lua = {
+				runtime = {
+					version = "LuaJIT",
+				},
+				diagnostics = {
+					globals = { "vim", "hs" },
+				},
+				workspace = {
+					library = vim.api.nvim_get_runtime_file("", true),
+				},
+				telemetry = {
+					enable = false,
 				},
 			},
-		})
-	end
+		},
+	})
 end
 
 local function jdtls_on_attach(client)
