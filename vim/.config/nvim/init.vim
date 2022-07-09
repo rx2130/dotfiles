@@ -161,6 +161,7 @@ inoremap <C-d> <Del>
 inoremap <C-p> <Up>
 inoremap <C-n> <Down>
 inoremap <C-k> <C-o>D
+imap <C-h> <BS>
 
 cnoremap <C-a> <Home>
 cnoremap <C-f> <Right>
@@ -209,8 +210,8 @@ augroup vimrc
     autocmd FileType fzf tunmap <buffer> <Esc>
 
     " open help vertically
-    autocmd BufEnter * if &filetype ==# 'help' | wincmd L | endif
-    autocmd BufEnter * if &filetype ==# 'man' | wincmd L | endif
+    " autocmd BufEnter * if &filetype ==# 'help' | wincmd L | endif
+    " autocmd BufEnter * if &filetype ==# 'man' | wincmd L | endif
 
     " highlight yank
     autocmd TextYankPost * silent! lua vim.highlight.on_yank()
