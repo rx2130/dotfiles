@@ -1,5 +1,5 @@
 - name: Create symlinks
-  command: stow shell vim
+  command: stow shell vim git
   args:
     chdir: ~/dotfiles
 

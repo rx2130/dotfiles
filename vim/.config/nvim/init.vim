@@ -10,8 +10,8 @@ nnoremap <silent><leader>Q :Sayonara!<CR>
 
 nnoremap <leader>u :UndotreeToggle<CR>
 
-nnoremap <Leader>n :NvimTreeFindFileToggle<CR>
-nnoremap <Leader>N :NvimTreeFindFile<CR>
+nnoremap <silent><Leader>n :NvimTreeFindFileToggle<CR>
+nnoremap <silent><Leader>N :NvimTreeFindFile<CR>
 
 " Edit enhancements
 nmap <Leader>r  <Plug>ReplaceWithRegisterOperator

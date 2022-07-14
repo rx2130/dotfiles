@@ -21,7 +21,7 @@ end
 
 local function hide_term()
 	if api.nvim_win_is_valid(winid) then
-		if table.getn(api.nvim_tabpage_list_wins(0)) > 1 then
+		if #api.nvim_tabpage_list_wins(0) > 1 then
 			api.nvim_win_hide(winid)
 		end
 	end

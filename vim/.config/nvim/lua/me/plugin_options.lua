@@ -1,3 +1,5 @@
+vim.g.loaded_netrwPlugin = 1
+
 vim.keymap.set("n", "<leader>C", vim.diagnostic.setloclist)
 vim.keymap.set("n", "]g", vim.diagnostic.goto_next)
 vim.keymap.set("n", "[g", vim.diagnostic.goto_prev)
@@ -200,10 +202,16 @@ local function fzf_cwd()
 	end
 end
 
-vim.keymap.set("n", "<leader>f", function() fzf.files({ cwd = fzf_cwd() }) end)
+vim.keymap.set("n", "<leader>f", function()
+	fzf.files({ cwd = fzf_cwd() })
+end)
 vim.keymap.set("n", "<C-p>", fzf.files)
-vim.keymap.set("n", "<leader>op", function() fzf.files({ cwd = "~/.local/share/nvim/site/pack/plugins/start/" }) end)
-vim.keymap.set("n", "<leader>od", function() fzf.files({ cwd = "~/dotfiles/" }) end)
+vim.keymap.set("n", "<leader>op", function()
+	fzf.files({ cwd = "~/.local/share/nvim/site/pack/plugins/start/" })
+end)
+vim.keymap.set("n", "<leader>od", function()
+	fzf.files({ cwd = "~/dotfiles/" })
+end)
 vim.keymap.set("n", "<leader>F", fzf.git_status)
 vim.keymap.set("n", "<leader>b", fzf.buffers)
 vim.keymap.set("n", "<leader>h", fzf.oldfiles)
@@ -216,8 +224,12 @@ vim.keymap.set("n", "<leader>S", fzf.filetypes)
 vim.keymap.set("n", "<leader>H", fzf.help_tags)
 vim.keymap.set("n", "<leader>m", fzf.man_pages)
 vim.keymap.set("n", "<leader>M", fzf.keymaps)
-vim.keymap.set("n", "<leader>/", function() fzf.live_grep({ cwd = fzf_cwd() }) end)
-vim.keymap.set("v", "<leader>/", function() fzf.grep_visual({ cwd = fzf_cwd() }) end)
+vim.keymap.set("n", "<leader>/", function()
+	fzf.live_grep({ cwd = fzf_cwd() })
+end)
+vim.keymap.set("v", "<leader>/", function()
+	fzf.grep_visual({ cwd = fzf_cwd() })
+end)
 vim.keymap.set("n", "<leader>?", fzf.live_grep)
 vim.keymap.set("v", "<leader>?", fzf.grep_visual)
 vim.keymap.set("n", "<leader>gh", fzf.git_commits)
@@ -227,7 +239,6 @@ vim.keymap.set("n", "<leader>gc", fzf.git_branches)
 -- nvim-tree
 local tree_cb = require("nvim-tree.config").nvim_tree_callback
 require("nvim-tree").setup({
-	disable_netrw = true,
 	update_focused_file = {
 		enable = true,
 	},
