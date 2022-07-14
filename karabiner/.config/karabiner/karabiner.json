@@ -16,18 +16,17 @@
                 },
                 "rules": [
                     {
-                        "description": "post left_shift + escape to tilde.",
+                        "description": "post left_shift + escape to tilde",
                         "manipulators": [
                             {
                                 "conditions": [
                                     {
                                         "identifiers": [
                                             {
-                                                "product_id": 256,
-                                                "vendor_id": 2131
+                                                "vendor_id": 1452
                                             }
                                         ],
-                                        "type": "device_if"
+                                        "type": "device_unless"
                                     }
                                 ],
                                 "from": {
@@ -52,18 +51,17 @@
                         ]
                     },
                     {
-                        "description": "post left_shift + delete to pipe.",
+                        "description": "post left_shift + delete to pipe",
                         "manipulators": [
                             {
                                 "conditions": [
                                     {
                                         "identifiers": [
                                             {
-                                                "product_id": 256,
-                                                "vendor_id": 2131
+                                                "vendor_id": 1452
                                             }
                                         ],
-                                        "type": "device_if"
+                                        "type": "device_unless"
                                     }
                                 ],
                                 "from": {
@@ -575,7 +573,7 @@
                         ]
                     },
                     {
-                        "description": "post left_command + escape to grave_accent.",
+                        "description": "post left_command + escape to left_command + grave_accent",
                         "manipulators": [
                             {
                                 "from": {
@@ -600,7 +598,7 @@
                         ]
                     },
                     {
-                        "description": "Post escape if left_control is pressed alone.",
+                        "description": "Post escape if left_control is pressed alone",
                         "manipulators": [
                             {
                                 "from": {
@@ -829,21 +827,21 @@
                         },
                         {
                             "from": {
-                                "key_code": "left_option"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "left_command"
-                                }
-                            ]
-                        },
-                        {
-                            "from": {
                                 "key_code": "left_control"
                             },
                             "to": [
                                 {
                                     "apple_vendor_top_case_key_code": "keyboard_fn"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "left_option"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "left_command"
                                 }
                             ]
                         }
