@@ -216,9 +216,6 @@ augroup vimrc
     autocmd FileType markdown setlocal formatprg=prettier\ --parser\ markdown
     autocmd FileType python setlocal formatprg=black\ --quiet\ -
 
-    " LSP
-    autocmd FileType java lua require('me.lsp').start_jdt()
-
     " display errors and warnings on save
     autocmd BufWritePost * lua vim.diagnostic.setloclist{open_loclist = false, severity = "Error"}; vim.api.nvim_command('lwindow')
 augroup END
