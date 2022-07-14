@@ -336,6 +336,16 @@
                         "description": "post left_command + escape to left_command + grave_accent",
                         "manipulators": [
                             {
+                                "conditions": [
+                                    {
+                                        "identifiers": [
+                                            {
+                                                "vendor_id": 1452
+                                            }
+                                        ],
+                                        "type": "device_unless"
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "escape",
                                     "modifiers": {
