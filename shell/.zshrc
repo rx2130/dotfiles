@@ -45,7 +45,7 @@ typeset -U PATH # remove duplicated entries in $PATH
 # Oh My ZSH {{{
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
-plugins=(git z colored-man-pages history docker fzf tmux)
+plugins=(git z fzf tmux)
 source $ZSH/oh-my-zsh.sh
 # }}}
 
