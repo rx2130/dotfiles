@@ -21,31 +21,6 @@ xmap <Leader>r  <Plug>ReplaceWithRegisterVisual
 " GUI enhancements
 let g:gruvbox_material_better_performance = 1
 
-" Fuzzy finder
-nnoremap <leader>f <cmd>lua require('fzf-lua').files{cwd=fzf_cwd()}<cr>
-nnoremap <expr> <C-p> ":lua require('fzf-lua').files()<cr>i".expand('%:t:r')
-nnoremap <leader>op <cmd>lua require('fzf-lua').files{cwd='~/.local/share/nvim/site/pack/plugins/start/'}<cr>
-nnoremap <leader>od <cmd>lua require('fzf-lua').files{cwd='~/dotfiles/'}<cr>
-nnoremap <leader>F <cmd>lua require('fzf-lua').git_status()<cr>
-nnoremap <leader>b <cmd>lua require('fzf-lua').buffers()<cr>
-nnoremap <leader>h <cmd>lua require('fzf-lua').oldfiles()<cr>
-nnoremap <leader>l <cmd>lua require('fzf-lua').blines()<cr>
-nnoremap <leader>L <cmd>lua require('fzf-lua').builtin()<cr>
-nnoremap <leader>' <cmd>lua require('fzf-lua').marks()<cr>
-nnoremap <leader>; <cmd>lua require('fzf-lua').commands()<cr>
-nnoremap <leader>: <cmd>lua require('fzf-lua').command_history()<cr>
-nnoremap <leader>S <cmd>lua require('fzf-lua').filetypes()<cr>
-nnoremap <leader>H <cmd>lua require('fzf-lua').help_tags()<cr>
-nnoremap <leader>m <cmd>lua require('fzf-lua').man_pages()<cr>
-nnoremap <leader>M <cmd>lua require('fzf-lua').keymaps()<cr>
-nnoremap <leader>/ <cmd>lua require('fzf-lua').live_grep({cwd=fzf_cwd()})<cr>
-xnoremap <leader>/ <cmd>lua require('fzf-lua').grep_visual({cwd=fzf_cwd()})<cr>
-nnoremap <leader>? <cmd>lua require('fzf-lua').live_grep()<cr>
-xnoremap <leader>? <cmd>lua require('fzf-lua').grep_visual()<cr>
-nnoremap <leader>gh <cmd>lua require('fzf-lua').git_commits()<cr>
-nnoremap <leader>gH <cmd>lua require('fzf-lua').git_bcommits()<cr>
-nnoremap <leader>gc <cmd>lua require('fzf-lua').git_branches()<cr>
-
 let g:rooter_silent_chdir = 1
 " let g:rooter_change_directory_for_non_project_files = 'current'
 
@@ -66,23 +41,6 @@ nnoremap <leader>gv :GV --all<CR>
 nnoremap <leader>gV :GV<CR>
 
 nnoremap <leader>p :Glow<CR>
-
-nnoremap <silent> <leader>dc :lua require'dap'.continue()<CR>
-nnoremap <silent> <leader>dd :lua require'dap'.step_over()<CR>
-nnoremap <silent> <leader>di :lua require'dap'.step_into()<CR>
-nnoremap <silent> <leader>do :lua require'dap'.step_out()<CR>
-nnoremap <silent> <leader>db :lua require'dap'.toggle_breakpoint()<CR>
-nnoremap <silent> <leader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
-nnoremap <silent> <leader>dp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
-nnoremap <silent> <leader>dr :lua require'dap'.repl.toggle({height=15})<CR>
-nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
-nnoremap <silent> <leader>dC :lua require'dap'.run_to_cursor()<CR>
-nnoremap <silent> <leader>df :lua require('dap.ui.widgets').centered_float(require('dap.ui.widgets').frames)<CR>
-nnoremap <silent> <leader>ds :lua require('dap.ui.widgets').centered_float(require('dap.ui.widgets').scopes)<CR>
-nnoremap <silent> <leader>K  :lua require('dap.ui.widgets').hover()<CR>
-vnoremap <silent> <leader>K  :lua require('dap.ui.widgets').hover(require("dap.utils").get_visual_selection_text)<CR>
-nnoremap <silent> <leader>du :lua local widgets = require('dap.ui.widgets'); widgets.sidebar(widgets.scopes).open(); widgets.sidebar(widgets.frames).open()<CR>
-" command! -nargs=0 DapBreakpoints :lua require('dap').list_breakpoints()
 
 "}}}
 

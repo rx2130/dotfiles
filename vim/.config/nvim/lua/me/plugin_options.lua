@@ -160,7 +160,8 @@ local fugutive_actions = {
 		fugutive_open(selected, 3)
 	end,
 }
-require("fzf-lua").setup({
+local fzf = require("fzf-lua")
+fzf.setup({
 	keymap = {
 		builtin = {
 			["/"] = "toggle-preview",
@@ -190,19 +191,43 @@ require("fzf-lua").setup({
 	helptags = { previewer = { _ctor = false } },
 	manpages = { previewer = { _ctor = false } },
 })
-require("fzf-lua").register_ui_select()
+fzf.register_ui_select()
 
-fzf_cwd = function()
+local function fzf_cwd()
 	local root_dir = require("jdtls.setup").find_root({ "packageInfo" }, "Config")
 	if root_dir then
 		return root_dir .. "/src/"
 	end
 end
 
+vim.keymap.set("n", "<leader>f", function() fzf.files({ cwd = fzf_cwd() }) end)
+vim.keymap.set("n", "<C-p>", fzf.files)
+vim.keymap.set("n", "<leader>op", function() fzf.files({ cwd = "~/.local/share/nvim/site/pack/plugins/start/" }) end)
+vim.keymap.set("n", "<leader>od", function() fzf.files({ cwd = "~/dotfiles/" }) end)
+vim.keymap.set("n", "<leader>F", fzf.git_status)
+vim.keymap.set("n", "<leader>b", fzf.buffers)
+vim.keymap.set("n", "<leader>h", fzf.oldfiles)
+vim.keymap.set("n", "<leader>L", fzf.blines)
+vim.keymap.set("n", "<leader>l", fzf.resume)
+vim.keymap.set("n", "<leader>'", fzf.marks)
+vim.keymap.set("n", "<leader>;", fzf.commands)
+vim.keymap.set("n", "<leader>:", fzf.command_history)
+vim.keymap.set("n", "<leader>S", fzf.filetypes)
+vim.keymap.set("n", "<leader>H", fzf.help_tags)
+vim.keymap.set("n", "<leader>m", fzf.man_pages)
+vim.keymap.set("n", "<leader>M", fzf.keymaps)
+vim.keymap.set("n", "<leader>/", function() fzf.live_grep({ cwd = fzf_cwd() }) end)
+vim.keymap.set("v", "<leader>/", function() fzf.grep_visual({ cwd = fzf_cwd() }) end)
+vim.keymap.set("n", "<leader>?", fzf.live_grep)
+vim.keymap.set("v", "<leader>?", fzf.grep_visual)
+vim.keymap.set("n", "<leader>gh", fzf.git_commits)
+vim.keymap.set("n", "<leader>gH", fzf.git_bcommits)
+vim.keymap.set("n", "<leader>gc", fzf.git_branches)
+
 -- nvim-tree
 local tree_cb = require("nvim-tree.config").nvim_tree_callback
 require("nvim-tree").setup({
-    disable_netrw = true,
+	disable_netrw = true,
 	update_focused_file = {
 		enable = true,
 	},
