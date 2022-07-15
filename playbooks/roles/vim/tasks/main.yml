@@ -16,7 +16,7 @@
   - tpope/vim-commentary
   - tpope/vim-unimpaired
   - nelstrom/vim-visual-star-search
-  - vim-scripts/ReplaceWithRegister
+  - inkarkat/vim-ReplaceWithRegister
   - windwp/nvim-autopairs
   - tommcdo/vim-exchange
   - sainnhe/gruvbox-material
