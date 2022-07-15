@@ -8,11 +8,13 @@ local utils = require("fzf-lua.utils")
 local open = vim.fn.has("macunix") == 1 and "open" or "xdg-open"
 vim.keymap.set({ "n", "v" }, "gx", function()
 	local query = vim.fn.mode() == "n" and vim.fn.expand("<cWORD>") or utils.get_visual_selection()
-	local url = string.match(query, "https?://[%w-_%.%?%.:/%+=&]+[^ >\"',;`]*")
+	local url = string.match(query, "https?://[%w%.%+%-%?_:/=&#]+")
 	if url ~= nil then
+		url = vim.fn.fnameescape(url)
 		vim.cmd(('!%s "%s"'):format(open, url))
 	else
 		query = query:gsub(" ", "+")
+		query = query:gsub("\n", "+")
 		vim.cmd(('!%s "https://www.google.com/search?q=%s"'):format(open, query))
 	end
 end)
