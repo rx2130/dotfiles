@@ -9,7 +9,6 @@
   - tpope/vim-eunuch
   - kyazdani42/nvim-tree.lua
   - tpope/vim-dispatch
-  - radenling/vim-dispatch-neovim
   - AndrewRadev/linediff.vim
   - tpope/vim-repeat
   - tpope/vim-surround
@@ -41,8 +40,17 @@
   - saadparwaiz1/cmp_luasnip
   - L3MON4D3/LuaSnip
 
+# https://github.com/radenling/vim-dispatch-neovim/pull/15
+- name: Checkout vim-dispatch-neovim and use pull request
+  git:
+    repo: https://github.com/radenling/vim-dispatch-neovim
+    dest: ~/.local/share/nvim/site/pack/plugins/start/vim-dispatch-neovim
+    refspec: pull/15/head:make-terminal-auto-scroll
+    version: make-terminal-auto-scroll
+    update: no
+
 - name: Checkout amazon vim plugins
-  when: '"amazon" in ansible_nodename'
+  when: ansible_distribution == "amazon"
   git:
     repo: ssh://git.amazon.com:2222/pkg/{{ item }}
     dest: ~/.local/share/nvim/site/pack/plugins/start/{{ item | basename }}
@@ -50,11 +58,6 @@
   loop:
   - Vim-code-browse
   - VimIon.git
-
-- name: Modify vim plugins
-  command: sed -i '' 's/call s:SaveCurrentBufferPid(a:request)/call s:SaveCurrentBufferPid(a:request)\n\t\t\texecute "normal G"/' neovim.vim
-  args:
-    chdir: ~/.local/share/nvim/site/pack/plugins/start/vim-dispatch-neovim/autoload/dispatch/
 
 # - name: Checkout opt vim plugins
 #   git:
