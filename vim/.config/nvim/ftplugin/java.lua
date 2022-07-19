@@ -10,14 +10,6 @@ local function jdtls_on_attach(client)
 end
 
 local function start_jdt()
-	local bufname = vim.api.nvim_buf_get_name(0)
-	if bufname:find("fugitive://") then
-		return
-	end
-	if bufname:find("[java] ") then
-		return
-	end
-
 	local root_dir = require("jdtls.setup").find_root({ "packageInfo" }, "Config")
 	local home = os.getenv("HOME")
 	local eclipse_workspace = home .. "/.local/share/eclipse/" .. vim.fn.fnamemodify(root_dir, ":p:h:t")

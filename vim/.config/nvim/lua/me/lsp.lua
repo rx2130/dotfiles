@@ -1,8 +1,6 @@
 local M = {}
 
 function M.on_attach(client)
-	vim.api.nvim_buf_set_option(0, "omnifunc", "v:lua.vim.lsp.omnifunc")
-	vim.api.nvim_buf_set_option(0, "tagfunc", "v:lua.vim.lsp.tagfunc")
 	if not pcall(vim.api.nvim_buf_get_option, 0, "formatprg") then
 		vim.api.nvim_buf_set_option(0, "formatexpr", "v:lua.vim.lsp.formatexpr()")
 	end
