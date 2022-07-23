@@ -64,7 +64,7 @@ set sidescrolloff=5
 set cursorline
 set nowrap
 set signcolumn=number
-set statusline=%<%f\ %m%r%=%-14.(%l,%v%)\ %Y
+set statusline=%!v:lua.require'me.statusline'.setup()
 set diffopt=internal,filler,closeoff,hiddenoff,algorithm:histogram,indent-heuristic
 set diffopt+=vertical " Always use vertical diffs
 set termguicolors
