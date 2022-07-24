@@ -55,6 +55,7 @@ set expandtab " tab byte (\x09) will be replaced with a number of space bytes (\
 set tabstop=4 " how long each <tab> will be
 set shiftwidth=4 " indentation via =, > and <
 set shiftround
+set smartindent " smart autoindenting when starting a new line
 set mouse=a
 set undofile
 set noswapfile
@@ -68,7 +69,6 @@ set statusline=%!v:lua.require'me.statusline'.setup()
 set diffopt=internal,filler,closeoff,hiddenoff,algorithm:histogram,indent-heuristic
 set diffopt+=vertical " Always use vertical diffs
 set termguicolors
-set smartindent " smart autoindenting when starting a new line
 set shortmess+=I
 set ttimeoutlen=0 " lower the delay of escaping out of other modes
 if filereadable("./Config")
@@ -161,7 +161,7 @@ augroup vimrc
                 \ endif
 
     " Resize panes when window/terminal gets resize
-    autocmd VimResized * wincmd =
+    " autocmd VimResized * wincmd =
 
     " termianl mode Esc map
     autocmd TermOpen * tnoremap <buffer> <Esc> <C-\><C-n>
@@ -217,12 +217,9 @@ augroup vimrc
     autocmd FileType python setlocal formatprg=black\ --quiet\ -
 
     " display errors and warnings on save
-    autocmd BufWritePost * lua vim.diagnostic.setloclist{open_loclist = false, severity = "Error"}; vim.api.nvim_command('lwindow')
-augroup END
+    " autocmd BufWritePost * lua vim.diagnostic.setloclist{open_loclist = false, severity = "Error"}; vim.api.nvim_command('lwindow')
 
-" only show cursor line in active window
-augroup cusorlineToggle
-    autocmd!
+    " only show cursor line in active window
     autocmd WinEnter * set cursorline
     autocmd WinLeave * set nocursorline
 augroup END
