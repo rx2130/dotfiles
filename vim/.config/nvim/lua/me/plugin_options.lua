@@ -5,18 +5,15 @@ vim.keymap.set("n", "]g", vim.diagnostic.goto_next)
 vim.keymap.set("n", "[g", vim.diagnostic.goto_prev)
 
 local utils = require("fzf-lua.utils")
-local open = vim.fn.has("macunix") == 1 and "open" or "xdg-open"
+local open = vim.fn.has("mac") == 1 and "open" or "xdg-open"
 vim.keymap.set({ "n", "v" }, "gx", function()
 	local query = vim.fn.mode() == "n" and vim.fn.expand("<cWORD>") or utils.get_visual_selection()
-	local url = string.match(query, "https?://[%w%.%+%-%?_:/=&#]+")
-	if url ~= nil then
-		url = vim.fn.fnameescape(url)
-		vim.cmd(('!%s "%s"'):format(open, url))
-	else
-		query = query:gsub(" ", "+")
-		query = query:gsub("\n", "+")
-		vim.cmd(('!%s "https://www.google.com/search?q=%s"'):format(open, query))
+	local url = query:match("https?://[%w%.%+%-%?_:/=&#]+")
+	if url == nil then
+		query = vim.fn.fnameescape(query)
+		url = "https://www.google.com/search?q=" .. query
 	end
+	vim.cmd(('!%s "%s"'):format(open, url))
 end)
 
 vim.keymap.set("n", "<leader>t", require("me.term").toggle)
