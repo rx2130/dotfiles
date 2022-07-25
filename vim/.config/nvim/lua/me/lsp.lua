@@ -27,7 +27,7 @@ function M.on_attach(client)
 	vim.keymap.set("n", "gs", require("fzf-lua").lsp_document_symbols, opts)
 	vim.keymap.set("n", "gS", require("fzf-lua").lsp_live_workspace_symbols, opts)
 	vim.keymap.set("n", "cr", vim.lsp.buf.rename, opts)
-	vim.keymap.set("n", "<leader>a", require("fzf-lua").lsp_code_actions, opts)
+	vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action, opts)
 	vim.keymap.set("n", "<leader>=", vim.lsp.buf.formatting, opts)
 
 	-- highlight current var under cursor
