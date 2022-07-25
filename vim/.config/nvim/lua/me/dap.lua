@@ -38,8 +38,6 @@ dap.configurations.cpp = {
 dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
 
-require("dap.ext.autocompl").attach()
-
 local dapWidgets = require("dap.ui.widgets")
 vim.keymap.set("n", "<leader>dc", dap.continue)
 vim.keymap.set("n", "<leader>dd", dap.step_over)
