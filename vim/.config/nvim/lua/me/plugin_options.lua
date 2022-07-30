@@ -13,7 +13,8 @@ vim.keymap.set({ "n", "v" }, "gx", function()
 		query = vim.fn.fnameescape(query)
 		url = "https://www.google.com/search?q=" .. query
 	end
-	vim.cmd(('!%s "%s"'):format(open, url))
+	print(url)
+	vim.fn.system(('%s "%s"'):format(open, url))
 end)
 
 vim.keymap.set("n", "<leader>t", require("me.term").toggle)
