@@ -1,3 +1,7 @@
+if vim.fn.filereadable("./gradlew") ~= 0 then
+	vim.o.makeprg = "./gradlew build"
+end
+
 local jdtls = require("jdtls")
 local on_attach = require("me.lsp").on_attach
 
