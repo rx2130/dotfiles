@@ -6,11 +6,16 @@ vim.keymap.set("n", "[g", vim.diagnostic.goto_prev)
 
 local utils = require("fzf-lua.utils")
 local open = vim.fn.has("mac") == 1 and "open" or "xdg-open"
+local char_to_hex = function(c)
+	return string.format("%%%02X", string.byte(c))
+end
 vim.keymap.set({ "n", "v" }, "gx", function()
 	local query = vim.fn.mode() == "n" and vim.fn.expand("<cWORD>") or utils.get_visual_selection()
 	local url = query:match("https?://[%w%.%+%-%?_:/=&#]+")
 	if url == nil then
-		query = vim.fn.fnameescape(query)
+		query = query:gsub("\n", " ")
+		query = query:gsub("([^%w ])", char_to_hex)
+		query = query:gsub(" ", "+")
 		url = "https://www.google.com/search?q=" .. query
 	end
 	print(url)
