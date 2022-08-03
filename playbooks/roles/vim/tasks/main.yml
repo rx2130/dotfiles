@@ -29,7 +29,6 @@
   - mfussenegger/nvim-jdtls
   - mfussenegger/nvim-dap
   - mfussenegger/nvim-dap-python
-  - leoluz/nvim-dap-go
   - nvim-treesitter/nvim-treesitter
   - nvim-treesitter/nvim-treesitter-textobjects
   - hrsh7th/nvim-cmp
