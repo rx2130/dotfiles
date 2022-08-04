@@ -244,6 +244,7 @@ vim.keymap.set("v", "<leader>?", fzf.grep_visual)
 vim.keymap.set("n", "<leader>gh", fzf.git_commits)
 vim.keymap.set("n", "<leader>gH", fzf.git_bcommits)
 vim.keymap.set("n", "<leader>gc", fzf.git_branches)
+vim.keymap.set("n", "<leader>gs", fzf.git_stash)
 
 -- nvim-tree
 local tree_cb = require("nvim-tree.config").nvim_tree_callback
