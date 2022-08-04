@@ -1,0 +1,62 @@
+---
+- name: Clone java-debug
+  git:
+    repo: https://github.com/microsoft/java-debug
+    dest: ~/Developer/microsoft/java-debug
+
+- name: Build java-debug
+  command: ./mvnw clean install
+  args:
+    chdir: ~/Developer/microsoft/java-debug
+
+
+- name: Clone vscode-java-test
+  git:
+    repo: https://github.com/microsoft/vscode-java-test
+    dest: ~/Developer/microsoft/vscode-java-test
+    force: true  # npm commands below modify the package.json
+
+- name: Build vscode-java-test
+  command: "{{ item }}"
+  with_items: 
+    - npm install
+    - npm run build-plugin
+  args:
+    chdir: ~/Developer/microsoft/vscode-java-test
+
+
+- name: Create apps folder
+  file:
+    path: ~/Developer/apps/
+    state: directory
+- name: Create async-profiler folder
+  file:
+    path: ~/Developer/apps/async-profiler/
+    state: directory
+
+- name: Get and unpack async-profiler
+  unarchive:
+    src: https://github.com/jvm-profiling-tools/async-profiler/releases/download/v2.8.3/async-profiler-2.8.3-linux-x64.tar.gz
+    dest: ~/Developer/apps/async-profiler/
+    remote_src: true
+    creates: ~/Developer/apps/async-profiler/profiler.sh
+    extra_opts:
+      - --strip-components=1
+
+
+- name: Clone vscode-java-decompiler
+  git:
+    repo: https://github.com/dgileadi/vscode-java-decompiler
+    dest: ~/Developer/dgileadi/vscode-java-decompiler
+
+
+- name: Get google-java-format
+  get_url:
+    url: https://github.com/google/google-java-format/releases/download/google-java-format-1.6/google-java-format-1.6-all-deps.jar
+    dest: ~/Developer/apps/google-java-format-1.6-all-deps.jar
+
+
+- name: Get lombok
+  get_url:
+    url: https://projectlombok.org/downloads/lombok.jar
+    dest: ~/Developer/apps/lombok.jar

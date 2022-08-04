@@ -1,6 +1,7 @@
 if vim.fn.filereadable("./gradlew") ~= 0 then
 	vim.o.makeprg = "./gradlew build"
 end
+vim.bo.formatprg = "java -jar ~/Developer/apps/google-java-format-1.6-all-deps.jar -a -"
 
 local jdtls = require("jdtls")
 local on_attach = require("me.lsp").on_attach
@@ -21,9 +22,9 @@ if root_dir then
 end
 
 local jar_patterns = {
-	"/Developer/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar",
-	"/Developer/vscode-java-decompiler/server/*.jar",
-	"/Developer/vscode-java-test/server/*.jar",
+	"/Developer/microsoft/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar",
+	"/Developer/dgileadi/vscode-java-decompiler/server/*.jar",
+	"/Developer/microsoft/vscode-java-test/server/*.jar",
 }
 local bundles = {}
 for _, jar_pattern in ipairs(jar_patterns) do
@@ -45,7 +46,7 @@ local config = {
 	end,
 	cmd = {
 		"jdtls",
-		"--jvm-arg=-javaagent:" .. home .. "/Developer/lombok.jar",
+		"--jvm-arg=-javaagent:" .. home .. "/Developer/apps/lombok.jar",
 		"-data",
 		eclipse_workspace,
 	},
