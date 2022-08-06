@@ -48,7 +48,7 @@ end
 
 do
 	local nvim_lsp = require("lspconfig")
-	local servers = { "pyright", "gopls", "tsserver", "texlab", "clangd", "rust_analyzer", "yamlls", "bashls" }
+	local servers = { "pyright", "gopls", "tsserver", "clangd", "rust_analyzer", "yamlls", "bashls" }
 	for _, lsp in ipairs(servers) do
 		nvim_lsp[lsp].setup({ on_attach = M.on_attach })
 	end
@@ -75,6 +75,23 @@ do
 				},
 				telemetry = {
 					enable = false,
+				},
+			},
+		},
+	})
+
+	nvim_lsp.texlab.setup({
+		on_attach = M.on_attach,
+		settings = {
+			texlab = {
+				build = {
+					executable = "tectonic",
+					args = {
+						"-X",
+						"compile",
+						"%f",
+					},
+					onSave = true,
 				},
 			},
 		},
