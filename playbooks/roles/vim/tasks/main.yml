@@ -24,7 +24,6 @@
   - tpope/vim-fugitive
   - tpope/vim-rhubarb
   - junegunn/gv.vim
-  - ellisonleao/glow.nvim
   - neovim/nvim-lsp
   - mfussenegger/nvim-jdtls
   - mfussenegger/nvim-dap

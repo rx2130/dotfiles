@@ -39,9 +39,6 @@ vnoremap <leader>gy :GBrowse!<CR>
 
 nnoremap <leader>gv :GV --all<CR>
 nnoremap <leader>gV :GV<CR>
-
-nnoremap <leader>p :Glow<CR>
-
 "}}}
 
 " Settings {{{
