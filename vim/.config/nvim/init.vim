@@ -189,7 +189,7 @@ augroup vimrc
     " commentstring
     autocmd FileType gitconfig setlocal commentstring=#\ %s
     autocmd FileType ftl setlocal commentstring=<#--\ %s\ -->
-    autocmd FileType ion setlocal commentstring=//\ %s
+    autocmd FileType ion,c setlocal commentstring=//\ %s
 
     " run file
     autocmd FileType sh     nnoremap <buffer> <leader><CR> :w !sh<CR>
