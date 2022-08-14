@@ -1,0 +1,16 @@
+[user]
+	name = Ray Xue
+	email = xuerx@amazon.com
+[core]
+	excludesFile = ~/.config/git/gitignore
+[advice]
+    statusHints = false
+[push]
+	default = current
+[pull]
+    rebase = true
+[rebase]
+    autosquash = true
+    autoStash = true
+[branch]
+    autoSetupRebase = always
