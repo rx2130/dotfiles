@@ -35,6 +35,7 @@ for _, jar_pattern in ipairs(jar_patterns) do
 	end
 end
 
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 local config = {
 	on_attach = function(client)
 		on_attach(client)
@@ -44,6 +45,7 @@ local config = {
 		vim.keymap.set("n", "<leader>dt", jdtls.test_nearest_method, { buffer = true })
 		vim.keymap.set("n", "<leader>dT", jdtls.test_class, { buffer = true })
 	end,
+    capabilities = capabilities,
 	cmd = {
 		"jdtls",
 		"--jvm-arg=-javaagent:" .. home .. "/Developer/apps/lombok.jar",

@@ -49,8 +49,9 @@ end
 do
 	local nvim_lsp = require("lspconfig")
 	local servers = { "pyright", "gopls", "tsserver", "clangd", "rust_analyzer", "yamlls", "bashls" }
+	local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 	for _, lsp in ipairs(servers) do
-		nvim_lsp[lsp].setup({ on_attach = M.on_attach })
+		nvim_lsp[lsp].setup({ on_attach = M.on_attach, capabilities = capabilities })
 	end
 
 	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -62,6 +63,7 @@ do
 
 	nvim_lsp.sumneko_lua.setup({
 		on_attach = M.on_attach,
+		capabilities = capabilities,
 		settings = {
 			Lua = {
 				runtime = {
@@ -82,6 +84,7 @@ do
 
 	nvim_lsp.texlab.setup({
 		on_attach = M.on_attach,
+		capabilities = capabilities,
 		settings = {
 			texlab = {
 				build = {
