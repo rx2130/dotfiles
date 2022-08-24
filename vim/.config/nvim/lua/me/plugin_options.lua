@@ -112,6 +112,7 @@ cmp.setup({
 		["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
 	},
 	sources = {
+		{ name = "nvim_lsp_signature_help" },
 		{ name = "nvim_lua" },
 		{ name = "luasnip" },
 		{ name = "nvim_lsp" },
