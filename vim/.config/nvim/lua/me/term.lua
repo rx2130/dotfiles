@@ -21,7 +21,7 @@ local function hide_term()
 end
 
 function M.toggle()
-	if winid and api.nvim_win_is_valid(winid) then
+	if winid and api.nvim_win_is_valid(winid) and vim.fn.bufwinid(bufid) == winid then
 		hide_term()
 	else
 		if bufid and api.nvim_buf_is_valid(bufid) then
