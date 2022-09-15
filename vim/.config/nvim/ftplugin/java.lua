@@ -15,7 +15,7 @@ if root_dir then
 	local file = io.open(root_dir .. "/.bemol/ws_root_folders")
 	if file then
 		for line in file:lines() do
-			table.insert(ws_folders_jdtls, string.format("file://%s", line))
+			table.insert(ws_folders_jdtls, "file://" .. line)
 		end
 		file:close()
 	end
@@ -36,6 +36,8 @@ for _, jar_pattern in ipairs(jar_patterns) do
 end
 
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local extendedClientCapabilities = jdtls.extendedClientCapabilities;
+extendedClientCapabilities.resolveAdditionalTextEditsSupport = true;
 local config = {
 	on_attach = function(client)
 		on_attach(client)
@@ -56,6 +58,7 @@ local config = {
 	init_options = {
 		bundles = bundles,
 		workspaceFolders = ws_folders_jdtls,
+        extendedClientCapabilities = extendedClientCapabilities;
 	},
 	settings = {
 		java = {
@@ -64,5 +67,7 @@ local config = {
 		},
 	},
 }
+
+vim.lsp.handlers["language/status"] = function() end
 
 jdtls.start_or_attach(config)
