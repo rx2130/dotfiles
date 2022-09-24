@@ -52,8 +52,7 @@ set expandtab " tab byte (\x09) will be replaced with a number of space bytes (\
 set tabstop=4 " how long each <tab> will be
 set shiftwidth=4 " indentation via =, > and <
 set shiftround
-set smartindent " smart autoindenting when starting a new line
-set mouse=a
+" set smartindent " smart autoindenting when starting a new line
 set undofile
 set noswapfile
 set lazyredraw
@@ -80,6 +79,9 @@ set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set foldlevelstart=99
 set laststatus=3
+set jumpoptions=view
+set mousescroll=ver:1,hor:1
+" set cmdheight=0
 
 colorscheme gruvbox-material
 "}}}

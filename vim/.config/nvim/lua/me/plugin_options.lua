@@ -1,3 +1,4 @@
+vim.g.loaded = 1
 vim.g.loaded_netrwPlugin = 1
 
 vim.keymap.set("n", "]g", vim.diagnostic.goto_next)
@@ -131,9 +132,9 @@ cmp.setup({
 			-- },
 		},
 	},
-	-- experimental = {
-	-- 	ghost_text = true,
-	-- },
+	experimental = {
+		ghost_text = true,
+	},
 })
 
 -- nvim-autopairs
@@ -201,7 +202,7 @@ fzf.setup({
 fzf.register_ui_select()
 
 local function fzf_cwd()
-	local root_dir = require("jdtls.setup").find_root({ "packageInfo" }, "Config")
+	local root_dir = vim.fs.dirname(vim.fs.find("packageInfo", { upward = true, type = "file" })[1])
 	if root_dir then
 		return root_dir .. "/src/"
 	end
@@ -256,6 +257,7 @@ require("nvim-tree").setup({
 		custom = { ".git" },
 	},
 	view = {
+		adaptive_size = true,
 		mappings = {
 			list = {
 				{ key = "<C-s>", cb = tree_cb("split") },

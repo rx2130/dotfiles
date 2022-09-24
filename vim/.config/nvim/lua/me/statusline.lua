@@ -1,5 +1,4 @@
 local M = {}
-local api = vim.api
 
 function M.setup()
 	local parts = {
@@ -62,7 +61,7 @@ end
 
 function M.file_or_lsp_status()
 	local messages = vim.lsp.util.get_progress_messages()
-	local mode = api.nvim_get_mode().mode
+	local mode = vim.api.nvim_get_mode().mode
 	if mode ~= "n" or vim.tbl_isempty(messages) then
 		return format_uri(vim.uri_from_bufnr(0))
 	end
