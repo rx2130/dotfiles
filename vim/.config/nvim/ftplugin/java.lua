@@ -4,7 +4,6 @@ end
 vim.bo.formatprg = "java -jar ~/Developer/apps/google-java-format-1.6-all-deps.jar -a -"
 
 local jdtls = require("jdtls")
-local on_attach = require("me.lsp").on_attach
 
 local root_dir = require("jdtls.setup").find_root({ "packageInfo" }, "Config")
 local home = os.getenv("HOME")
@@ -39,8 +38,7 @@ local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protoco
 local extendedClientCapabilities = jdtls.extendedClientCapabilities;
 extendedClientCapabilities.resolveAdditionalTextEditsSupport = true;
 local config = {
-	on_attach = function(client)
-		on_attach(client)
+	on_attach = function()
 		jdtls.setup_dap({ hotcodereplace = "auto" })
 		require("jdtls.setup").add_commands()
 
