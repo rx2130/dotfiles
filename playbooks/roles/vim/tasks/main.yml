@@ -24,7 +24,6 @@
   - tpope/vim-fugitive
   - tpope/vim-rhubarb
   - junegunn/gv.vim
-  - neovim/nvim-lsp
   - mfussenegger/nvim-jdtls
   - mfussenegger/nvim-dap
   - mfussenegger/nvim-dap-python
