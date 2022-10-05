@@ -1,3 +1,5 @@
+vim.bo.formatprg = "black --quiet -"
+
 vim.lsp.start({
     name = "pyright",
     cmd = { "pyright-langserver", "--stdio" },

@@ -1,3 +1,5 @@
+vim.bo.formatprg = "stylua -"
+
 vim.lsp.start({
     name = "lua-language-server",
     cmd = { "lua-language-server" },

@@ -202,17 +202,9 @@ augroup vimrc
     autocmd FileType javascript nnoremap <buffer> <leader><CR> :!node %<CR>
     autocmd FileType typescript nnoremap <buffer> <leader><CR> :!ts-node %<CR>
 
-    " makeprg
-    autocmd FileType go setlocal errorformat=%f:%l.%c-%[%^:]%#:\ %m,%f:%l:%c:\ %m
-
     " formatprg
-    autocmd FileType json setlocal formatprg=python3\ -m\ json.tool
-    autocmd FileType lua  setlocal formatprg=stylua\ -
-    autocmd FileType typescript setlocal formatprg=prettier\ --parser\ typescript formatexpr=
     autocmd FileType javascript setlocal formatprg=prettier\ --parser\ typescript
-    autocmd FileType html setlocal formatprg=prettier\ --parser\ html
     autocmd FileType markdown setlocal formatprg=prettier\ --parser\ markdown
-    autocmd FileType python setlocal formatprg=black\ --quiet\ -
 
     " display errors and warnings on save
     " autocmd BufWritePost * lua vim.diagnostic.setloclist{open_loclist = false, severity = "Error"}; vim.api.nvim_command('lwindow')

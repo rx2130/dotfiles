@@ -1,3 +1,5 @@
+vim.bo.errorformat="%f:%l.%c-%[%^:]%#: %m,%f:%l:%c: %m"
+
 vim.lsp.start({
     name = "gopls",
     cmd = { "gopls" },
