@@ -1,7 +1,7 @@
 vim.bo.formatprg = "python3 -m json.tool"
 
 vim.lsp.start({
-    name = "vscode-json-language-server",
-    cmd = { "vscode-json-language-server", "--stdio" },
+    name = "vscode-json-languageserver",
+    cmd = { "vscode-json-languageserver", "--stdio" },
     capabilities = require("cmp_nvim_lsp").default_capabilities(),
 })
