@@ -137,8 +137,36 @@ cmp.setup({
 	},
 })
 
--- nvim-autopairs
-require("nvim-autopairs").setup({})
+require("mini.comment").setup({})
+
+require("mini.pairs").setup({})
+
+require("mini.misc").setup({})
+MiniMisc.setup_auto_root()
+
+require("mini.surround").setup({
+	mappings = {
+		add = "ys",
+		delete = "ds",
+		find = "",
+		find_left = "",
+		highlight = "",
+		replace = "cs",
+		update_n_lines = "",
+
+		-- Add this only if you don't want to use extended mappings
+		suffix_last = "",
+		suffix_next = "",
+	},
+	search_method = "cover_or_next",
+})
+
+-- Remap adding surrounding to Visual mode selection
+vim.api.nvim_del_keymap("x", "ys")
+vim.api.nvim_set_keymap("x", "S", [[:<C-u>lua MiniSurround.add('visual')<CR>]], { noremap = true })
+
+-- Make special mapping for "add surrounding for line"
+vim.api.nvim_set_keymap("n", "yss", "ys_", { noremap = false })
 
 -- fzf-lua
 local function fugutive_open(selected, opts)
