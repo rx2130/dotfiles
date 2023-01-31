@@ -1,3 +1,5 @@
+vim.bo.makeprg = "tectonic %"
+
 vim.lsp.start({
     name = "texlab",
     cmd = { "texlab" },
