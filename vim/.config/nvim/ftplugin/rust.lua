@@ -1,3 +1,9 @@
+if vim.fn.filereadable("./Cargo.toml") ~= 0 then
+	vim.o.makeprg = "cargo build"
+else
+	vim.bo.makeprg = "rustc %"
+end
+
 vim.lsp.start({
     name = "rust-analyzer",
     cmd = { "rust-analyzer" },
