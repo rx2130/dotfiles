@@ -61,6 +61,7 @@ set signcolumn=number
 set statusline=%!v:lua.require'me.statusline'.setup()
 set diffopt=internal,filler,closeoff,hiddenoff,algorithm:histogram,indent-heuristic
 set diffopt+=vertical " Always use vertical diffs
+set diffopt+=linematch:60
 set termguicolors
 set shortmess+=I
 set ttimeoutlen=0 " lower the delay of escaping out of other modes
