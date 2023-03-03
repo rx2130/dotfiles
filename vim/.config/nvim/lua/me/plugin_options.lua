@@ -161,6 +161,8 @@ require("mini.surround").setup({
 	search_method = "cover_or_next",
 })
 
+require("mini.ai").setup()
+
 -- Remap adding surrounding to Visual mode selection
 vim.api.nvim_del_keymap("x", "ys")
 vim.api.nvim_set_keymap("x", "S", [[:<C-u>lua MiniSurround.add('visual')<CR>]], { noremap = true })
