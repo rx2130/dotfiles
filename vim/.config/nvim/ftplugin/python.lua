@@ -7,4 +7,8 @@ vim.lsp.start({
     capabilities = require("cmp_nvim_lsp").default_capabilities(),
 })
 
-require("dap-python").setup()
+local dap = require("dap")
+local dappy = require("dap-python")
+if not dap.adapters.python then
+	dappy.setup()
+end
