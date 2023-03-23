@@ -141,6 +141,8 @@ require("mini.comment").setup({})
 
 require("mini.pairs").setup({})
 
+require("mini.ai").setup()
+
 require("mini.misc").setup({})
 MiniMisc.setup_auto_root()
 
@@ -160,8 +162,6 @@ require("mini.surround").setup({
 	},
 	search_method = "cover_or_next",
 })
-
-require("mini.ai").setup()
 
 -- Remap adding surrounding to Visual mode selection
 vim.api.nvim_del_keymap("x", "ys")
