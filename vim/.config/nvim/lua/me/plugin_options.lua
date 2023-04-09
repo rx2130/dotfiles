@@ -137,9 +137,19 @@ cmp.setup({
 	},
 })
 
-require("mini.comment").setup({})
+require("mini.comment").setup({
+	options = {
+		ignore_blank_line = true,
+	},
+})
 
-require("mini.pairs").setup({})
+require("mini.pairs").setup({
+	mappings = {
+		["("] = { action = "open", pair = "()", neigh_pattern = "[^\\][^%w]" },
+		["["] = { action = "open", pair = "[]", neigh_pattern = "[^\\][^%w]" },
+		["{"] = { action = "open", pair = "{}", neigh_pattern = "[^\\][^%w]" },
+	},
+})
 
 require("mini.ai").setup()
 
