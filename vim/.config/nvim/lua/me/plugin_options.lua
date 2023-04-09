@@ -151,8 +151,6 @@ require("mini.pairs").setup({
 	},
 })
 
-require("mini.ai").setup()
-
 require("mini.misc").setup({})
 MiniMisc.setup_auto_root()
 
