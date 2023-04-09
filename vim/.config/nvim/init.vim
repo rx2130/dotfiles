@@ -78,9 +78,10 @@ set foldexpr=nvim_treesitter#foldexpr()
 set foldlevelstart=99
 set laststatus=3
 set jumpoptions=view
-set mousescroll=ver:1,hor:1
+set mousescroll=ver:1,hor:0
 set mousemodel=
 " set cmdheight=0
+set pumheight=20
 
 colorscheme gruvbox-material
 "}}}
