@@ -33,3 +33,21 @@ vim.keymap.set("n", "<leader>du", function()
 	widgets.sidebar(widgets.scopes).open()
 	widgets.sidebar(widgets.frames).open()
 end)
+
+dap.listeners.after.event_initialized["me.dap"] = function()
+	vim.keymap.set("n", "<up>", dap.restart_frame)
+	vim.keymap.set("n", "<down>", dap.step_over)
+	vim.keymap.set("n", "<left>", dap.step_out)
+	vim.keymap.set("n", "<right>", dap.step_into)
+end
+
+local after_session = function()
+	if not next(dap.sessions()) then
+		pcall(vim.keymap.del, "n", "<up>")
+		pcall(vim.keymap.del, "n", "<down>")
+		pcall(vim.keymap.del, "n", "<left>")
+		pcall(vim.keymap.del, "n", "<right>")
+	end
+end
+dap.listeners.after.event_terminated["me.dap"] = after_session
+dap.listeners.after.disconnect["me.dap"] = after_session
