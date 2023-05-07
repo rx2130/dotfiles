@@ -3,8 +3,11 @@ if vim.fn.filereadable("./gradlew") ~= 0 then
 end
 vim.bo.formatprg = "java -jar ~/Developer/apps/google-java-format-1.6-all-deps.jar -a -"
 
-local jdtls = require("jdtls")
+if vim.fn.executable("jdtls") then
+	return
+end
 
+local jdtls = require("jdtls")
 local root_dir = require("jdtls.setup").find_root({ "packageInfo" }, "Config")
 local home = os.getenv("HOME")
 local eclipse_workspace = home .. "/.local/share/eclipse/" .. vim.fn.fnamemodify(root_dir, ":p:h:t")
