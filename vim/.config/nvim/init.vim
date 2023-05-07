@@ -186,7 +186,7 @@ augroup vimrc
     autocmd BufNewFile,BufRead *.ftl setfiletype ftl
     autocmd BufNewFile,BufRead *.mustache setfiletype html
     autocmd BufNewFile,BufRead */git/config setfiletype gitconfig
-    autocmd BufNewFile,BufRead Config setfiletype conf
+    autocmd BufNewFile,BufRead Config setfiletype perl
 
     " commentstring
     autocmd FileType ftl setlocal commentstring=<#--\ %s\ -->
