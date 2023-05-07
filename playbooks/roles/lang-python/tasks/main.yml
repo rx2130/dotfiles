@@ -1,0 +1,7 @@
+- name: Python tools
+  pip:
+    name:
+      - black
+      - pyright
+      - debugpy
+      - ipython
