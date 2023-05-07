@@ -163,7 +163,6 @@ require("mini.surround").setup({
 		highlight = "",
 		replace = "cs",
 		update_n_lines = "",
-
 		-- Add this only if you don't want to use extended mappings
 		suffix_last = "",
 		suffix_next = "",
@@ -286,7 +285,6 @@ vim.keymap.set("n", "<leader>gc", fzf.git_branches)
 vim.keymap.set("n", "<leader>gs", fzf.git_stash)
 
 -- nvim-tree
-local tree_cb = require("nvim-tree.config").nvim_tree_callback
 require("nvim-tree").setup({
 	update_focused_file = {
 		enable = true,
@@ -296,11 +294,6 @@ require("nvim-tree").setup({
 	},
 	view = {
 		adaptive_size = true,
-		mappings = {
-			list = {
-				{ key = "<C-s>", cb = tree_cb("split") },
-			},
-		},
 	},
 	renderer = {
 		group_empty = true,
@@ -314,4 +307,9 @@ require("nvim-tree").setup({
 			},
 		},
 	},
+	on_attach = function(bufnr)
+		local api = require("nvim-tree.api")
+		api.config.mappings.default_on_attach(bufnr)
+		vim.keymap.set("n", "<C-s>", api.node.open.horizontal)
+	end,
 })
