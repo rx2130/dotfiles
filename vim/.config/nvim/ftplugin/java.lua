@@ -38,8 +38,8 @@ for _, jar_pattern in ipairs(jar_patterns) do
 end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
-local extendedClientCapabilities = jdtls.extendedClientCapabilities;
-extendedClientCapabilities.resolveAdditionalTextEditsSupport = true;
+local extendedClientCapabilities = jdtls.extendedClientCapabilities
+extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 local config = {
 	on_attach = function()
 		jdtls.setup_dap({ hotcodereplace = "auto" })
@@ -48,7 +48,7 @@ local config = {
 		vim.keymap.set("n", "<leader>dt", jdtls.test_nearest_method, { buffer = true })
 		vim.keymap.set("n", "<leader>dT", jdtls.test_class, { buffer = true })
 	end,
-    capabilities = capabilities,
+	capabilities = capabilities,
 	cmd = {
 		"jdtls",
 		"--jvm-arg=-javaagent:" .. home .. "/Developer/apps/lombok.jar",
@@ -59,7 +59,7 @@ local config = {
 	init_options = {
 		bundles = bundles,
 		workspaceFolders = ws_folders_jdtls,
-        extendedClientCapabilities = extendedClientCapabilities;
+		extendedClientCapabilities = extendedClientCapabilities,
 	},
 	settings = {
 		java = {
@@ -73,7 +73,6 @@ vim.lsp.handlers["language/status"] = function() end
 
 jdtls.start_or_attach(config)
 
-
 require("dap").configurations.java = {
 	{
 		type = "java",
@@ -83,4 +82,3 @@ require("dap").configurations.java = {
 		port = 5005,
 	},
 }
-

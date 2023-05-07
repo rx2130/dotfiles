@@ -1,12 +1,11 @@
-vim.bo.errorformat="%f:%l.%c-%[%^:]%#: %m,%f:%l:%c: %m"
+vim.bo.errorformat = "%f:%l.%c-%[%^:]%#: %m,%f:%l:%c: %m"
 
 vim.lsp.start({
-    name = "gopls",
-    cmd = { "gopls" },
-    root_dir = vim.fs.dirname(vim.fs.find({ ".git", "go.mod" }, { upward = true })[1]),
-    capabilities = require("cmp_nvim_lsp").default_capabilities(),
+	name = "gopls",
+	cmd = { "gopls" },
+	root_dir = vim.fs.dirname(vim.fs.find({ ".git", "go.mod" }, { upward = true })[1]),
+	capabilities = require("cmp_nvim_lsp").default_capabilities(),
 })
-
 
 local dap = require("dap")
 
@@ -22,22 +21,18 @@ dap.adapters.delve = {
 dap.configurations.go = {
 	{
 		type = "delve",
-		name = "Debug",
+		name = "Launch file",
 		request = "launch",
 		program = "${file}",
 	},
 	{
 		type = "delve",
-		name = "Debug test",
+		name = "Launch file with arguments",
 		request = "launch",
-		mode = "test",
 		program = "${file}",
-	},
-	{
-		type = "delve",
-		name = "Debug test (go.mod)",
-		request = "launch",
-		mode = "test",
-		program = "./${relativeFileDirname}",
+		args = function()
+			local args_string = vim.fn.input("Arguments: ")
+			return vim.split(args_string, " +")
+		end,
 	},
 }
