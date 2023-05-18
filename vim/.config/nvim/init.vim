@@ -203,7 +203,7 @@ augroup vimrc
     autocmd FileType typescript nnoremap <buffer> <leader><CR> :!ts-node %<CR>
 
     " formatprg
-    autocmd FileType javascript setlocal formatprg=prettier\ --parser\ typescript
+    autocmd FileType typescript setlocal formatexpr=
     autocmd FileType markdown setlocal formatprg=prettier\ --parser\ markdown
 
     " display errors and warnings on save
