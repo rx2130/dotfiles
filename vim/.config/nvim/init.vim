@@ -97,6 +97,7 @@ nnoremap <silent><esc> :nohlsearch<cr>
 nnoremap <Tab> za
 nnoremap <C-n>i <C-i>
 nnoremap <silent><C-w>] :vert winc ]<CR>
+nnoremap <silent><C-w>f :vert winc f<CR>
 
 nnoremap <Space> <Nop>
 nnoremap <silent><leader><Space> zz:nohlsearch<CR>
