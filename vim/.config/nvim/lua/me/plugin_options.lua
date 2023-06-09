@@ -217,7 +217,7 @@ fzf.setup({
 		},
 	},
 	grep = {
-		rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=512 --hidden -g '!{.git,node_modules}/'",
+		rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --multiline --hidden -g '!{.git,node_modules}/'",
 	},
 	git = {
 		commits = {
