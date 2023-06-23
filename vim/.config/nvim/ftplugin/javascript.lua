@@ -8,14 +8,15 @@ vim.lsp.start({
 })
 
 local dap = require("dap")
+local home = os.getenv("HOME")
 
 dap.adapters["pwa-node"] = {
 	type = "server",
-	host = "localhost",
+	-- host = "localhost",
 	port = "${port}",
 	executable = {
 		command = "node",
-		args = { "/Users/xuerx/Developer/vscode-js-debug/dist/src/dapDebugServer.js", "${port}" },
+		args = { home .. "/Developer/js-debug/src/dapDebugServer.js", "${port}" },
 	},
 }
 

@@ -8,14 +8,15 @@ vim.lsp.start({
 })
 
 local dap = require("dap")
+local home = os.getenv("HOME")
 
 dap.adapters["pwa-node"] = {
 	type = "server",
-	host = "localhost",
+	-- host = "localhost",
 	port = "${port}",
 	executable = {
 		command = "node",
-		args = { "/Users/xuerx/Developer/vscode-js-debug/dist/src/dapDebugServer.js", "${port}" },
+		args = { home .. "/Developer/js-debug/src/dapDebugServer.js", "${port}" },
 	},
 }
 
@@ -26,15 +27,31 @@ dap.configurations.typescript = {
 		name = "Launch file",
 		program = "${file}",
 		cwd = "${workspaceFolder}",
-		runtimeExecutable = "ts-node",
-		sourceMaps = true,
-		protocol = "inspector",
+		runtimeExecutable = "sls",
+		-- sourceMaps = true,
+		-- protocol = "inspector",
 		-- console = "integratedTerminal",
-		resolveSourceMapLocations = {
-			"${workspaceFolder}/dist/**/*.js",
-			"${workspaceFolder}/**",
-			"!**/node_modules/**",
-		},
+		-- resolveSourceMapLocations = {
+		-- 	"${workspaceFolder}/dist/**/*.js",
+		-- 	"${workspaceFolder}/**",
+		-- 	"!**/node_modules/**",
+		-- },
+	},
+	{
+		type = "pwa-node",
+		request = "launch",
+		name = "Launch file",
+		program = "${file}",
+		cwd = "${workspaceFolder}",
+		runtimeExecutable = "ts-node",
+		-- sourceMaps = true,
+		-- protocol = "inspector",
+		-- console = "integratedTerminal",
+		-- resolveSourceMapLocations = {
+		-- 	"${workspaceFolder}/dist/**/*.js",
+		-- 	"${workspaceFolder}/**",
+		-- 	"!**/node_modules/**",
+		-- },
 	},
 	{
 		type = "pwa-node",
@@ -45,6 +62,8 @@ dap.configurations.typescript = {
 		runtimeArgs = {
 			"./node_modules/jest/bin/jest.js",
 			"--runInBand",
+			"--testTimeout=10000000",
+			"--testPathPattern=__tests__/async-task-generation/generator.test.ts",
 		},
 		rootPath = "${workspaceFolder}",
 		cwd = "${workspaceFolder}",
@@ -55,5 +74,21 @@ dap.configurations.typescript = {
 			"${workspaceFolder}/**",
 			"!**/node_modules/**",
 		},
+	},
+	{
+		type = "pwa-node",
+		request = "attach",
+		name = "Debug (Attach) - Remote",
+		hostName = "127.0.0.1",
+		port = 3006,
+	},
+	{
+		type = "pwa-node",
+		request = "attach",
+		name = "Attach to process",
+		pid = require("dap.utils").pick_process,
+		args = {},
+		cwd = "${workspaceFolder}",
+		runtimeExecutable = "ts-node",
 	},
 }
