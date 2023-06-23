@@ -60,28 +60,12 @@ local function format_uri(uri)
 end
 
 function M.file_or_lsp_status()
-	local messages = vim.lsp.util.get_progress_messages()
+	local lsp_status = vim.lsp.status()
 	local mode = vim.api.nvim_get_mode().mode
-	if mode ~= "n" or vim.tbl_isempty(messages) then
-		return format_uri(vim.uri_from_bufnr(0))
+	if mode ~= "n" or lsp_status == "" then
+		return format_uri(vim.uri_from_bufnr(vim.api.nvim_get_current_buf()))
 	end
-	local percentage
-	local result = {}
-	for _, msg in pairs(messages) do
-		if msg.message then
-			table.insert(result, msg.title .. ": " .. msg.message)
-		else
-			table.insert(result, msg.title)
-		end
-		if msg.percentage then
-			percentage = math.max(percentage or 0, msg.percentage)
-		end
-	end
-	if percentage then
-		return string.format("%03d%%: %s", percentage, table.concat(result, ", "))
-	else
-		return table.concat(result, ", ")
-	end
+	return lsp_status
 end
 
 return M
