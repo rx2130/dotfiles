@@ -286,8 +286,8 @@ vim.keymap.set("n", "<leader>gs", fzf.git_stash)
 
 -- nvim-tree
 require("nvim-tree").setup({
-	update_focused_file = {
-		enable = true,
+	git = {
+		ignore = false,
 	},
 	filters = {
 		custom = { ".git" },
