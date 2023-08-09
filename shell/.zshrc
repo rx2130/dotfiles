@@ -11,10 +11,12 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1
 export HOMEBREW_NO_ANALYTICS=1
 
+export TLDR_AUTO_UPDATE_DISABLED=1
+
 if [ -n "$NVIM" ]; then
     export VISUAL="nvr -cc split --remote-wait +'setlocal bufhidden=wipe'"
 else
-    export VISUAL="nvim"
+    export VISUAL="/Users/ray/Developer/nvim-macos/bin/nvim"
 fi
 export MANPAGER="$VISUAL +Man! -"
 
