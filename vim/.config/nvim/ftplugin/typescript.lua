@@ -5,6 +5,18 @@ vim.lsp.start({
 	cmd = { "typescript-language-server", "--stdio" },
 	root_dir = vim.fs.dirname(vim.fs.find({ ".git", "package.json" }, { upward = true })[1]),
 	capabilities = require("cmp_nvim_lsp").default_capabilities(),
+	init_options = {
+		preferences = {
+			includeInlayParameterNameHints = "all",
+			includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+			includeInlayFunctionParameterTypeHints = true,
+			includeInlayVariableTypeHints = true,
+			includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+			includeInlayPropertyDeclarationTypeHints = true,
+			includeInlayFunctionLikeReturnTypeHints = true,
+			includeInlayEnumMemberValueHints = true,
+		},
+	},
 })
 
 local dap = require("dap")

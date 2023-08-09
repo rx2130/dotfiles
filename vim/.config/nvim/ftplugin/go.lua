@@ -5,6 +5,16 @@ vim.lsp.start({
 	cmd = { "gopls" },
 	root_dir = vim.fs.dirname(vim.fs.find({ ".git", "go.mod" }, { upward = true })[1]),
 	capabilities = require("cmp_nvim_lsp").default_capabilities(),
+	init_options = {
+		hints = {
+			assignVariableTypes = true,
+			compositeLiteralFields = true,
+			constantValues = true,
+			functionTypeParameters = true,
+			parameterNames = true,
+			rangeVariableTypes = true,
+		},
+	},
 })
 
 local dap = require("dap")

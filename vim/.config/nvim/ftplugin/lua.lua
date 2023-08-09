@@ -5,6 +5,9 @@ vim.lsp.start({
 	cmd = { "lua-language-server" },
 	root_dir = vim.fs.dirname(vim.fs.find({ ".git" }, { upward = true })[1]),
 	capabilities = require("cmp_nvim_lsp").default_capabilities(),
+	init_options = {
+        hint = { enable = true },
+	},
 	settings = {
 		Lua = {
 			runtime = {

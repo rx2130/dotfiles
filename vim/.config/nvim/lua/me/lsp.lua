@@ -43,6 +43,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 				group = highlight_group,
 			})
 		end
+
+        -- if client.server_capabilities.inlayHintProvider then
+        --     vim.lsp.buf.inlay_hint(0, true)
+        -- end
 	end,
 })
 
