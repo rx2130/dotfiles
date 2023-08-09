@@ -51,3 +51,9 @@ local after_session = function()
 end
 dap.listeners.after.event_terminated["me.dap"] = after_session
 dap.listeners.after.disconnect["me.dap"] = after_session
+
+vim.api.nvim_create_autocmd("User", {
+	group = vim.api.nvim_create_augroup("dap", { clear = true }),
+	pattern = "DapProgressUpdate",
+	command = "redrawstatus",
+})
