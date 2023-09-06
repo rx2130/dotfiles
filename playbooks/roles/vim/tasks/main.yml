@@ -3,6 +3,8 @@
     repo: https://github.com/{{ item }}
     dest: ~/.local/share/nvim/site/pack/plugins/start/{{ item | basename }}
     force: true
+  async: 1000
+  poll: 0
   loop:
   - mhinz/vim-sayonara
   - mbbill/undotree
