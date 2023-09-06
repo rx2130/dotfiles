@@ -5,7 +5,6 @@ vim.keymap.set("n", "]g", vim.diagnostic.goto_next)
 vim.keymap.set("n", "[g", vim.diagnostic.goto_prev)
 
 local utils = require("fzf-lua.utils")
-local open = vim.fn.has("mac") == 1 and "open" or "xdg-open"
 local char_to_hex = function(c)
 	return string.format("%%%02X", string.byte(c))
 end
@@ -18,8 +17,7 @@ vim.keymap.set({ "n", "v" }, "gx", function()
 		query = query:gsub(" ", "+")
 		url = "https://www.google.com/search?q=" .. query
 	end
-	print(url)
-	vim.fn.system(('%s "%s"'):format(open, url))
+	vim.ui.open(url)
 end)
 
 vim.keymap.set("n", "<leader>t", require("me.term").toggle)
