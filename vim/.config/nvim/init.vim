@@ -25,6 +25,7 @@ let g:gruvbox_material_better_performance = 1
 nnoremap <leader>gg :Git<CR>
 nnoremap <leader>gd :Gdiffsplit<CR>
 nnoremap <leader>gp :Dispatch git push<CR>
+nnoremap <leader>gP :Dispatch git push -f<CR>
 nnoremap <leader>gf :Dispatch git fetch<CR>
 nnoremap <leader>gl :Dispatch git pull<CR>
 nnoremap <leader>gb :Git blame<CR>
