@@ -16,7 +16,7 @@ export TLDR_AUTO_UPDATE_DISABLED=1
 if [ -n "$NVIM" ]; then
     export VISUAL="nvr -cc split --remote-wait +'setlocal bufhidden=wipe'"
 else
-    export VISUAL="/Users/ray/Developer/nvim-macos/bin/nvim"
+    export VISUAL="~/Developer/nvim-macos/bin/nvim"
 fi
 export MANPAGER="$VISUAL +Man! -"
 
