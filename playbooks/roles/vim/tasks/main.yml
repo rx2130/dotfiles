@@ -14,7 +14,6 @@
   - AndrewRadev/linediff.vim
   - tpope/vim-repeat
   - tpope/vim-unimpaired
-  - nelstrom/vim-visual-star-search
   - inkarkat/vim-ReplaceWithRegister
   - tommcdo/vim-exchange
   - sainnhe/gruvbox-material

@@ -16,7 +16,7 @@ export TLDR_AUTO_UPDATE_DISABLED=1
 if [ -n "$NVIM" ]; then
     export VISUAL="nvr -cc split --remote-wait +'setlocal bufhidden=wipe'"
 else
-    export VISUAL="~/Developer/nvim-macos/bin/nvim"
+    export VISUAL="nvim"
 fi
 export MANPAGER="$VISUAL +Man! -"
 
@@ -75,7 +75,7 @@ fi
 
 
 # powerlevel10k prompt {{{
-source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
+source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 # }}}
