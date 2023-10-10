@@ -3,7 +3,7 @@ if vim.fn.filereadable("./gradlew") ~= 0 then
 end
 vim.bo.formatprg = "java -jar ~/Developer/apps/google-java-format-1.6-all-deps.jar -a -"
 
-if vim.fn.executable("jdtls") then
+if vim.fn.executable("jdtls") == 0 then
 	return
 end
 
