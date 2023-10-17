@@ -6,6 +6,8 @@
 
 - name: Build java-debug
   command: ./mvnw clean install
+  environment:
+    JAVA_HOME: "/home/linuxbrew/.linuxbrew/opt/openjdk@17/"
   args:
     chdir: ~/Developer/microsoft/java-debug
 

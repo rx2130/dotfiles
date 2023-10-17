@@ -31,6 +31,7 @@ if [[ $(hostname) == *"amazon.com" ]]; then
     # export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-8.jdk/Contents/Home
     # export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/
     # export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto.x86_64
+    export JAVA_HOME=/home/linuxbrew/.linuxbrew/opt/openjdk@17/
     # RDE
     # fpath=(~/.zsh/completion $fpath)
     # autoload -Uz compinit && compinit -i
