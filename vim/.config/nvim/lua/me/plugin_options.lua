@@ -141,11 +141,12 @@ require("mini.comment").setup({
 	},
 })
 
+local neigh_pattern = ".[^%w(%[{'\"]"
 require("mini.pairs").setup({
 	mappings = {
-		["("] = { action = "open", pair = "()", neigh_pattern = "[^\\][^%w]" },
-		["["] = { action = "open", pair = "[]", neigh_pattern = "[^\\][^%w]" },
-		["{"] = { action = "open", pair = "{}", neigh_pattern = "[^\\][^%w]" },
+		["("] = { action = "open", pair = "()", neigh_pattern = neigh_pattern },
+		["["] = { action = "open", pair = "[]", neigh_pattern = neigh_pattern },
+		["{"] = { action = "open", pair = "{}", neigh_pattern = neigh_pattern },
 	},
 })
 
