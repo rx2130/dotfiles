@@ -45,4 +45,24 @@ dap.configurations.go = {
 			return vim.split(args_string, " +")
 		end,
 	},
+	{
+		type = "delve",
+		name = "Attach (Pick Process)",
+		request = "attach",
+		processId = require("dap.utils").pick_process,
+	},
+	{
+		type = "delve",
+		name = "Debug test",
+		request = "launch",
+		mode = "test",
+		program = "${file}",
+	},
+	{
+		type = "delve",
+		name = "Debug test (go.mod)",
+		request = "launch",
+		mode = "test",
+		program = "${workspaceFolder}",
+	},
 }
