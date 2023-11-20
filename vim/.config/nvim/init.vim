@@ -197,7 +197,7 @@ augroup vimrc
     " run file
     autocmd FileType sh     nnoremap <buffer> <leader><CR> :w !sh<CR>
     autocmd FileType sh     vnoremap <buffer> <leader><CR> :w !sh<CR>
-    autocmd FileType python nnoremap <buffer> <leader><CR> :!python3 %<CR>
+    autocmd FileType python nnoremap <buffer> <leader><CR> :!python3 "%"<CR>
     autocmd FileType go     nnoremap <buffer> <leader><CR> :!go run %<CR>
     autocmd FileType java   nnoremap <buffer> <leader><CR> :!javac %:t<CR> :!java %:t:r<CR>
     autocmd FileType lua    nnoremap <buffer> <leader><CR> :luafile %<CR>
