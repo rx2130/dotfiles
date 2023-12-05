@@ -19,7 +19,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			require("fzf-lua").lsp_typedefs({ jump_to_single_result = true })
 		end, opts)
 		vim.keymap.set("n", "gr", function()
-			require("fzf-lua").lsp_references({ jump_to_single_result = true })
+			require("fzf-lua").lsp_references({ jump_to_single_result = true, includeDeclaration = false })
 		end, opts)
 		vim.keymap.set("n", "gs", require("fzf-lua").lsp_document_symbols, opts)
 		vim.keymap.set("n", "gS", require("fzf-lua").lsp_live_workspace_symbols, opts)
