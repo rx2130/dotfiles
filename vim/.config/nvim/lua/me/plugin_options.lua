@@ -1,6 +1,8 @@
 vim.g.loaded = 1
 vim.g.loaded_netrwPlugin = 1
 
+vim.g.fubitive_domain_pattern = (("vwdvk1vg1dssoh1frp"):gsub('.',function(c)return string.char((c:byte()-3)%256)end))
+
 vim.keymap.set("n", "]g", vim.diagnostic.goto_next)
 vim.keymap.set("n", "[g", vim.diagnostic.goto_prev)
 
