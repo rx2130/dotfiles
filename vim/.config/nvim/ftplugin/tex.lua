@@ -1,5 +1,9 @@
 vim.bo.makeprg = "tectonic -X compile % --synctex --keep-logs --keep-intermediates"
 
+if vim.fn.executable("texlab") == 0 then
+	return
+end
+
 vim.lsp.start({
 	name = "texlab",
 	cmd = { "texlab" },

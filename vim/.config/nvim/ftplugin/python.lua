@@ -2,6 +2,10 @@ vim.bo.makeprg = "python3 %"
 
 vim.bo.formatprg = "black --quiet -"
 
+if vim.fn.executable("pylsp") == 0 then
+	return
+end
+
 vim.lsp.start({
 	name = "pylsp",
 	cmd = { "pylsp" },

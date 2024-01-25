@@ -1,5 +1,9 @@
 vim.bo.errorformat = "%f:%l.%c-%[%^:]%#: %m,%f:%l:%c: %m"
 
+if vim.fn.executable("gopls") == 0 then
+	return
+end
+
 vim.lsp.start({
 	name = "gopls",
 	cmd = { "gopls" },

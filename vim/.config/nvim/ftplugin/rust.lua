@@ -4,6 +4,10 @@ else
 	vim.bo.makeprg = "rustc %"
 end
 
+if vim.fn.executable("rust-analyzer") == 0 then
+	return
+end
+
 vim.lsp.start({
 	name = "rust-analyzer",
 	cmd = { "rust-analyzer" },

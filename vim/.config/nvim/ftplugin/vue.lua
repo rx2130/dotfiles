@@ -1,5 +1,9 @@
 vim.bo.formatprg = "prettier --parser vue"
 
+if vim.fn.executable("vls") == 0 then
+	return
+end
+
 vim.lsp.start({
 	name = "vuels",
 	cmd = { "vls" },

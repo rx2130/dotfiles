@@ -1,5 +1,9 @@
 vim.bo.formatprg = "prettier --parser typescript"
 
+if vim.fn.executable("typescript-language-server") == 0 then
+	return
+end
+
 vim.lsp.start({
 	name = "tsserver",
 	cmd = { "typescript-language-server", "--stdio" },

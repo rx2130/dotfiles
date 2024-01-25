@@ -1,3 +1,7 @@
+if vim.fn.executable("clangd") == 0 then
+	return
+end
+
 vim.lsp.start({
 	name = "clangd",
 	cmd = { "clangd" },
