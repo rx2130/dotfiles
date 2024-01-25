@@ -47,6 +47,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
         -- if client.server_capabilities.inlayHintProvider then
         --     vim.lsp.buf.inlay_hint(0, true)
         -- end
+
+        -- disable lsp semantic tokens
+        -- client.server_capabilities.semanticTokensProvider = nil
 	end,
 })
 
