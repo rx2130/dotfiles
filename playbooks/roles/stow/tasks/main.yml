@@ -5,6 +5,6 @@
 
 - name: Create Mac specific symlinks
   when: ansible_distribution == 'MacOSX'
-  command: stow alacritty hammerspoon karabiner
+  command: stow alacritty karabiner
   args:
     chdir: ~/dotfiles
