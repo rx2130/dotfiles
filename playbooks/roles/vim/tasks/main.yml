@@ -36,6 +36,7 @@
   - nvim-lua/plenary.nvim
   - scalameta/nvim-metals
   - tommcdo/vim-fubitive
+  - lewis6991/gitsigns.nvim
 
 # https://github.com/radenling/vim-dispatch-neovim/pull/15
 - name: Checkout vim-dispatch-neovim and use pull request
