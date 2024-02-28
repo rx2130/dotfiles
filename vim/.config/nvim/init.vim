@@ -202,6 +202,7 @@ augroup vimrc
     autocmd FileType python nnoremap <buffer> <leader><CR> :!python3 "%"<CR>
     autocmd FileType go     nnoremap <buffer> <leader><CR> :!go run %<CR>
     autocmd FileType java   nnoremap <buffer> <leader><CR> :!javac %:t<CR> :!java %:t:r<CR>
+    autocmd FileType scala  nnoremap <buffer> <leader><CR> :!scala %<CR>
     autocmd FileType lua    nnoremap <buffer> <leader><CR> :luafile %<CR>
     autocmd FileType javascript nnoremap <buffer> <leader><CR> :!node %<CR>
     autocmd FileType typescript nnoremap <buffer> <leader><CR> :!ts-node %<CR>

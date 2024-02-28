@@ -44,17 +44,17 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			})
 		end
 
-        -- if client.server_capabilities.inlayHintProvider then
-        --     vim.lsp.buf.inlay_hint(0, true)
-        -- end
+		-- if client.server_capabilities.inlayHintProvider then
+		--     vim.lsp.buf.inlay_hint(0, true)
+		-- end
 
-        -- disable lsp semantic tokens
-        -- client.server_capabilities.semanticTokensProvider = nil
+		-- disable lsp semantic tokens
+		client.server_capabilities.semanticTokensProvider = nil
 	end,
 })
 
 vim.diagnostic.config({
-	underline = true,
+	underline = { severity = vim.diagnostic.severity.ERROR },
 	virtual_text = false,
 	signs = false,
 	update_in_insert = false,
