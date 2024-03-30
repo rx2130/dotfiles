@@ -305,7 +305,10 @@ require("nvim-tree").setup({
 		custom = { ".git" },
 	},
 	view = {
-		adaptive_size = true,
+		signcolumn = "auto",
+		width = {
+			max = 50,
+		},
 	},
 	renderer = {
 		group_empty = true,
