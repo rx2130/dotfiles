@@ -41,29 +41,22 @@ nnoremap <leader>gV :GV<CR>
 
 " Settings {{{
 
+set nonumber
+set showmode
 set clipboard=unnamed
-set splitright
-set splitbelow
-set ignorecase " Search case insensitive...
-set smartcase " ... but not it begins with upper case
 set expandtab " tab byte (\x09) will be replaced with a number of space bytes (\x20)
 set tabstop=4 " how long each <tab> will be
 set shiftwidth=4 " indentation via =, > and <
 set shiftround
-" set smartindent " smart autoindenting when starting a new line
-set undofile
 set noswapfile
 set lazyredraw
 set scrolloff=1
 set sidescrolloff=5
-set cursorline
-set nowrap
 set signcolumn=number
 set statusline=%!v:lua.require'me.statusline'.setup()
 set diffopt=internal,filler,closeoff,hiddenoff,algorithm:histogram,indent-heuristic
 set diffopt+=vertical " Always use vertical diffs
 set diffopt+=linematch:60
-set termguicolors
 set shortmess+=I
 set ttimeoutlen=0 " lower the delay of escaping out of other modes
 if filereadable("./Config")
@@ -71,8 +64,6 @@ if filereadable("./Config")
 end
 set grepprg=rg\ --vimgrep\ --no-heading
 set grepformat=%f:%l:%c:%m,%f:%l:%m
-" set matchpairs+=<:> " pairs for % command
-set completeopt=menu,menuone,noselect
 set updatetime=250
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
@@ -83,7 +74,6 @@ set laststatus=3
 set jumpoptions=view
 set mousescroll=ver:1,hor:0
 set mousemodel=
-" set cmdheight=0
 set pumheight=20
 
 colorscheme gruvbox-material
@@ -91,10 +81,6 @@ colorscheme gruvbox-material
 
 " Mappings {{{
 
-nnoremap <C-h> <C-W>h
-nnoremap <C-j> <C-W>j
-nnoremap <C-k> <C-W>k
-nnoremap <C-l> <C-W>l
 vnoremap . :norm .<CR>
 nnoremap <silent><esc> :nohlsearch<cr>
 nnoremap <Tab> za
@@ -175,11 +161,7 @@ augroup vimrc
     " autocmd BufEnter * if &filetype ==# 'help' | wincmd L | endif
     " autocmd BufEnter * if &filetype ==# 'man' | wincmd L | endif
 
-    " highlight yank
-    autocmd TextYankPost * silent! lua vim.highlight.on_yank()
-
     " File Type settings
-    autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o " disable automatic comment insertion
     autocmd FileType gitcommit setlocal spell " spell check for git commits
     autocmd FileType git setlocal foldmethod=syntax foldlevel=0
 

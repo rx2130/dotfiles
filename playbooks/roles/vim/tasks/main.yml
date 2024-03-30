@@ -8,12 +8,10 @@
   loop:
   - mhinz/vim-sayonara
   - mbbill/undotree
-  - tpope/vim-eunuch
   - kyazdani42/nvim-tree.lua
   - tpope/vim-dispatch
   - AndrewRadev/linediff.vim
   - tpope/vim-repeat
-  - tpope/vim-unimpaired
   - inkarkat/vim-ReplaceWithRegister
   - tommcdo/vim-exchange
   - sainnhe/gruvbox-material

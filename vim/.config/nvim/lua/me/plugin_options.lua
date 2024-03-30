@@ -3,9 +3,6 @@ vim.g.loaded_netrwPlugin = 1
 
 vim.g.fubitive_domain_pattern = (("vwdvk1vg1dssoh1frp"):gsub('.',function(c)return string.char((c:byte()-3)%256)end))
 
-vim.keymap.set("n", "]g", vim.diagnostic.goto_next)
-vim.keymap.set("n", "[g", vim.diagnostic.goto_prev)
-
 local utils = require("fzf-lua.utils")
 local char_to_hex = function(c)
 	return string.format("%%%02X", string.byte(c))
@@ -169,6 +166,11 @@ require("mini.surround").setup({
 	},
 	search_method = "cover_or_next",
 })
+-- Remap adding surrounding to Visual mode selection
+vim.api.nvim_del_keymap("x", "ys")
+vim.api.nvim_set_keymap("x", "S", [[:<C-u>lua MiniSurround.add('visual')<CR>]], { noremap = true })
+-- Make special mapping for "add surrounding for line"
+vim.api.nvim_set_keymap("n", "yss", "ys_", { noremap = false })
 
 require("mini.diff").setup({
 	view = {
@@ -182,12 +184,30 @@ require("mini.diff").setup({
 	},
 })
 
--- Remap adding surrounding to Visual mode selection
-vim.api.nvim_del_keymap("x", "ys")
-vim.api.nvim_set_keymap("x", "S", [[:<C-u>lua MiniSurround.add('visual')<CR>]], { noremap = true })
+require("mini.basics").setup({
+	mappings = {
+		option_toggle_prefix = [[yo]],
+		windows = true,
+	},
+})
 
--- Make special mapping for "add surrounding for line"
-vim.api.nvim_set_keymap("n", "yss", "ys_", { noremap = false })
+require("mini.bracketed").setup({
+	comment = { suffix = "", options = {} },
+})
+
+vim.keymap.set("n", "[ ", "v:lua.MiniBasics.put_empty_line(v:true)", { expr = true, desc = "Put empty line above" })
+vim.keymap.set("n", "] ", "v:lua.MiniBasics.put_empty_line(v:false)", { expr = true, desc = "Put empty line below" })
+vim.keymap.set({ 'n', 'x' }, '[p', '<Cmd>exe "put! " . v:register<CR>', { desc = 'Paste Above' })
+vim.keymap.set({ 'n', 'x' }, ']p', '<Cmd>exe "put "  . v:register<CR>', { desc = 'Paste Below' })
+
+require("mini.move").setup({
+	mappings = {
+		up = "[e",
+		down = "]e",
+		line_up = "[e",
+		line_down = "]e",
+	},
+})
 
 -- fzf-lua
 local function fugutive_open(selected, opts)
