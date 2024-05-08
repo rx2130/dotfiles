@@ -4,7 +4,7 @@ function M.setup()
 	local parts = {
 		"%<",
 
-		[[%{luaeval("require'me.statusline'.file_or_lsp_status()")}]],
+		[[%{luaeval("require'me.statusline'.file()")}]],
 
 		" %m%r%=",
 
@@ -29,10 +29,23 @@ function M.setup()
 	return table.concat(parts)
 end
 
+local function count_workspace_errors()
+	local count = 0
+	for _, bufnr in pairs(vim.api.nvim_list_bufs()) do
+		local diagnostics = vim.diagnostic.get(bufnr, { severity = vim.diagnostic.severity.ERROR })
+		count = count + #diagnostics
+	end
+	return count
+end
+
 function M.diagnostic_status()
 	local num_errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
 	if num_errors > 0 then
 		return " 💀 " .. num_errors .. " "
+	end
+	local num_errors_workspace = count_workspace_errors()
+	if num_errors_workspace > 0 then
+		return " 🤡 " .. num_errors_workspace .. " "
 	end
 	local num_warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
 	if num_warnings > 0 then
@@ -59,13 +72,8 @@ local function format_uri(uri)
 	end
 end
 
-function M.file_or_lsp_status()
-	local lsp_status = vim.lsp.status()
-	local mode = vim.api.nvim_get_mode().mode
-	if mode ~= "n" or lsp_status == "" then
-		return format_uri(vim.uri_from_bufnr(vim.api.nvim_get_current_buf()))
-	end
-	return lsp_status
+function M.file()
+	return format_uri(vim.uri_from_bufnr(vim.api.nvim_get_current_buf()))
 end
 
 return M
