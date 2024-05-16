@@ -62,8 +62,6 @@ set ttimeoutlen=0 " lower the delay of escaping out of other modes
 if filereadable("./Config")
     set makeprg=brazil-build
 end
-set grepprg=rg\ --vimgrep\ --no-heading
-set grepformat=%f:%l:%c:%m,%f:%l:%m
 set updatetime=250
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()

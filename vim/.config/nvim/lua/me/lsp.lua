@@ -10,7 +10,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.keymap.set("n", "<c-]>", function()
 			require("fzf-lua").lsp_declarations({ jump_to_single_result = true })
 		end, opts)
-		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 		vim.keymap.set("n", "gi", function()
 			require("fzf-lua").lsp_implementations({ jump_to_single_result = true })
 		end, opts)
