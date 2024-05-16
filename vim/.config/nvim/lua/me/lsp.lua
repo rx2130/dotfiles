@@ -24,6 +24,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.keymap.set("n", "gS", require("fzf-lua").lsp_live_workspace_symbols, opts)
 		vim.keymap.set("n", "cr", vim.lsp.buf.rename, opts)
 		vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action, opts)
+		vim.keymap.set("n", "<leader>c", vim.lsp.codelens.run, opts)
 		vim.keymap.set("n", "<leader>=", function()
 			vim.lsp.buf.format({ async = true })
 		end, opts)

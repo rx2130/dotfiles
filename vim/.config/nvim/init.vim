@@ -92,8 +92,6 @@ vnoremap <silent><leader><Space> <esc>zz:nohlsearch<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 nnoremap <leader><Tab> <C-^>
-nnoremap <leader>C :copen<cr>
-nnoremap <leader>c :cclose<bar>lclose<cr>
 nnoremap <leader>y :let @*=expand('%:t:r')<CR> :echo expand('%:t:r')<CR>
 nnoremap <leader>Y :let @*=expand('%:p')<CR> :echo expand('%:p')<CR>
 nnoremap <leader>, :e $MYVIMRC<cr>
