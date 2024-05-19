@@ -20,6 +20,7 @@ xmap <Leader>r  <Plug>ReplaceWithRegisterVisual
 
 " GUI enhancements
 let g:gruvbox_material_better_performance = 1
+let g:gruvbox_material_transparent_background = 1
 
 " Git enhancements
 nnoremap <leader>gg :Git<CR>
