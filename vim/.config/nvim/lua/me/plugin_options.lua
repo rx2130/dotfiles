@@ -133,7 +133,8 @@ cmp.setup({
 	},
 })
 
-require('mini.notify').setup()
+-- mini
+require("mini.notify").setup()
 
 local neigh_pattern = ".[^%w(%[{'\"]"
 require("mini.pairs").setup({
@@ -193,8 +194,8 @@ require("mini.bracketed").setup({
 
 vim.keymap.set("n", "[ ", "v:lua.MiniBasics.put_empty_line(v:true)", { expr = true, desc = "Put empty line above" })
 vim.keymap.set("n", "] ", "v:lua.MiniBasics.put_empty_line(v:false)", { expr = true, desc = "Put empty line below" })
-vim.keymap.set({ 'n', 'x' }, '[p', '<Cmd>exe "put! " . v:register<CR>', { desc = 'Paste Above' })
-vim.keymap.set({ 'n', 'x' }, ']p', '<Cmd>exe "put "  . v:register<CR>', { desc = 'Paste Below' })
+vim.keymap.set({ "n", "x" }, "[p", '<Cmd>exe "put! " . v:register<CR>', { desc = "Paste Above" })
+vim.keymap.set({ "n", "x" }, "]p", '<Cmd>exe "put "  . v:register<CR>', { desc = "Paste Below" })
 
 require("mini.move").setup({
 	mappings = {
@@ -202,6 +203,26 @@ require("mini.move").setup({
 		down = "]e",
 		line_up = "[e",
 		line_down = "]e",
+	},
+})
+
+require("mini.operators").setup({
+	evaluate = {
+		prefix = "g=",
+	},
+	exchange = {
+		prefix = "cx",
+		reindent_linewise = true,
+	},
+	multiply = {
+		prefix = "gm",
+	},
+	replace = {
+		prefix = "<Leader>r",
+		reindent_linewise = true,
+	},
+	sort = {
+		prefix = "gs",
 	},
 })
 

@@ -11,9 +11,6 @@
   - kyazdani42/nvim-tree.lua
   - tpope/vim-dispatch
   - AndrewRadev/linediff.vim
-  - tpope/vim-repeat
-  - inkarkat/vim-ReplaceWithRegister
-  - tommcdo/vim-exchange
   - sainnhe/gruvbox-material
   - ibhagwan/fzf-lua
   - tpope/vim-fugitive

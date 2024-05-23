@@ -13,11 +13,6 @@ nnoremap <leader>u :UndotreeToggle<CR>
 nnoremap <silent><Leader>n :NvimTreeFindFileToggle<CR>
 nnoremap <silent><Leader>N :NvimTreeFindFile<CR>
 
-" Edit enhancements
-nmap <Leader>r  <Plug>ReplaceWithRegisterOperator
-nmap <Leader>rr <Plug>ReplaceWithRegisterLine
-xmap <Leader>r  <Plug>ReplaceWithRegisterVisual
-
 " GUI enhancements
 let g:gruvbox_material_better_performance = 1
 let g:gruvbox_material_transparent_background = 1
