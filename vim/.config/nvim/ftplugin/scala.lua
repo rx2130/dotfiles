@@ -8,6 +8,7 @@ metals_config.settings = {
 	showImplicitArguments = true,
 	excludedPackages = { "--com.apple", "--apple" },
 	autoImportBuild = "all",
+	useGlobalExecutable = true,
 }
 metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
 metals_config.on_attach = function(client, bufnr)
