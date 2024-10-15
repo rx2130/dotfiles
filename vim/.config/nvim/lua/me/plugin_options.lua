@@ -21,6 +21,13 @@ end)
 
 vim.keymap.set("n", "<leader>t", require("me.term").toggle)
 
+vim.api.nvim_create_user_command("Root", function()
+	local root = vim.fs.root(0, ".git")
+	if root then
+		vim.fn.chdir(root)
+	end
+end, {})
+
 -- treesitter
 require("nvim-treesitter.configs").setup({
 	highlight = {
