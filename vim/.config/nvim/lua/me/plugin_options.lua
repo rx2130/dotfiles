@@ -180,6 +180,7 @@ vim.api.nvim_set_keymap("n", "yss", "ys_", { noremap = false })
 require("mini.diff").setup({
 	view = {
 		signs = { add = "│", change = "│", delete = "_" },
+		priority = 0,
 	},
 	mappings = {
 		goto_first = "[C",
