@@ -147,6 +147,7 @@ require("mini.pairs").setup({
 
 require("mini.misc").setup({})
 MiniMisc.setup_auto_root()
+MiniMisc.setup_restore_cursor()
 
 require("mini.surround").setup({
 	mappings = {

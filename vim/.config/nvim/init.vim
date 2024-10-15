@@ -136,12 +136,6 @@ augroup vimrc
     " Automatically source vimrc on save
     autocmd BufWritePost vimrc,$MYVIMRC nested source $MYVIMRC
 
-    " Remember last cursor position
-    autocmd BufReadPost *
-                \ if line("'\"") > 1 && line("'\"") <= line("$") |
-                \   exe "normal! g`\"" |
-                \ endif
-
     " Resize panes when window/terminal gets resize
     " autocmd VimResized * wincmd =
 
