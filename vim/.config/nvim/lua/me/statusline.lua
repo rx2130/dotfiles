@@ -29,21 +29,12 @@ function M.setup()
 	return table.concat(parts)
 end
 
-local function count_workspace_errors()
-	local count = 0
-	for _, bufnr in pairs(vim.api.nvim_list_bufs()) do
-		local diagnostics = vim.diagnostic.get(bufnr, { severity = vim.diagnostic.severity.ERROR })
-		count = count + #diagnostics
-	end
-	return count
-end
-
 function M.diagnostic_status()
 	local num_errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
 	if num_errors > 0 then
 		return " 💀 " .. num_errors .. " "
 	end
-	local num_errors_workspace = count_workspace_errors()
+	local num_errors_workspace = #vim.diagnostic.get(nil, { severity = vim.diagnostic.severity.ERROR })
 	if num_errors_workspace > 0 then
 		return " 🤡 " .. num_errors_workspace .. " "
 	end
