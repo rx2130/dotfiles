@@ -22,5 +22,5 @@
     - stats
     - hiddenbar
     - raycast
-    - homebrew/cask-fonts/font-sf-mono
+    - font-sf-mono
     state: present
