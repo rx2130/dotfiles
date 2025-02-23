@@ -1,3 +1,15 @@
+# history {{{
+setopt EXTENDED_HISTORY          # Write the history file in the ':start:elapsed;command' format.
+setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_IGNORE_ALL_DUPS      # Delete an old recorded event if a new event is a duplicate.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming history.
+setopt HIST_FIND_NO_DUPS         # Do not display a previously found event.
+
+# Lists the ten most used commands.
+alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
+# }}}
+
 # export {{{
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
