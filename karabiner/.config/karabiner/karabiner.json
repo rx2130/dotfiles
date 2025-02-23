@@ -69,6 +69,7 @@
                                 "conditions": [
                                     {
                                         "bundle_identifiers": [
+                                            "^com\\.jetbrains\\.intellij$",
                                             "^com\\.apple\\.Terminal$",
                                             "^org\\.alacritty$"
                                         ],
@@ -89,6 +90,7 @@
                                 "conditions": [
                                     {
                                         "bundle_identifiers": [
+                                            "^com\\.jetbrains\\.intellij$",
                                             "^com\\.apple\\.Terminal$",
                                             "^org\\.alacritty$"
                                         ],
@@ -109,6 +111,7 @@
                                 "conditions": [
                                     {
                                         "bundle_identifiers": [
+                                            "^com\\.jetbrains\\.intellij$",
                                             "^com\\.apple\\.Terminal$",
                                             "^org\\.alacritty$"
                                         ],
@@ -129,6 +132,7 @@
                                 "conditions": [
                                     {
                                         "bundle_identifiers": [
+                                            "^com\\.jetbrains\\.intellij$",
                                             "^com\\.apple\\.Terminal$",
                                             "^org\\.alacritty$"
                                         ],
@@ -149,6 +153,7 @@
                                 "conditions": [
                                     {
                                         "bundle_identifiers": [
+                                            "^com\\.jetbrains\\.intellij$",
                                             "^com\\.apple\\.Terminal$",
                                             "^org\\.alacritty$"
                                         ],
@@ -169,6 +174,7 @@
                                 "conditions": [
                                     {
                                         "bundle_identifiers": [
+                                            "^com\\.jetbrains\\.intellij$",
                                             "^com\\.apple\\.Terminal$",
                                             "^org\\.alacritty$"
                                         ],
