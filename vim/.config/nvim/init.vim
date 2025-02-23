@@ -39,7 +39,7 @@ nnoremap <leader>gV :GV<CR>
 
 set nonumber
 set showmode
-set clipboard=unnamed
+set clipboard+=unnamedplus
 set expandtab " tab byte (\x09) will be replaced with a number of space bytes (\x20)
 set tabstop=4 " how long each <tab> will be
 set shiftwidth=4 " indentation via =, > and <
