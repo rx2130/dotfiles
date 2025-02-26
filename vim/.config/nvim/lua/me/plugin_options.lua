@@ -382,5 +382,6 @@ require("nvim-tree").setup({
 		local api = require("nvim-tree.api")
 		api.config.mappings.default_on_attach(bufnr)
 		vim.keymap.set("n", "<C-s>", api.node.open.horizontal)
+		vim.keymap.del("n", "<C-e>", { buffer = bufnr })
 	end,
 })
