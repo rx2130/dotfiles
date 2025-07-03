@@ -50,9 +50,8 @@ set scrolloff=1
 set sidescrolloff=5
 set signcolumn=number
 set statusline=%!v:lua.require'me.statusline'.setup()
-set diffopt=internal,filler,closeoff,hiddenoff,algorithm:histogram,indent-heuristic
+set diffopt+=hiddenoff,algorithm:histogram,indent-heuristic
 set diffopt+=vertical " Always use vertical diffs
-set diffopt+=linematch:60
 set shortmess+=I
 set ttimeoutlen=0 " lower the delay of escaping out of other modes
 if filereadable("./Config")
@@ -67,8 +66,9 @@ set fillchars=fold:\
 set laststatus=3
 set jumpoptions=view
 set mousescroll=ver:1,hor:0
-set mousemodel=
+set mousemodel=extend
 set pumheight=20
+set scrollback=100000
 
 colorscheme gruvbox-material
 "}}}
@@ -181,6 +181,9 @@ augroup vimrc
 
     " display errors and warnings on save
     " autocmd BufWritePost * lua vim.diagnostic.setloclist{open_loclist = false, severity = "Error"}; vim.api.nvim_command('lwindow')
+
+    " disable new line auto-commenting. other plugins modify it thus autocmd 
+    autocmd BufEnter * setlocal formatoptions-=o
 
     " only show cursor line in active window
     autocmd WinEnter * set cursorline
