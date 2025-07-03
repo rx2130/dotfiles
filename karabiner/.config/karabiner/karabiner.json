@@ -71,6 +71,7 @@
                                         "bundle_identifiers": [
                                             "^com\\.jetbrains\\.intellij$",
                                             "^com\\.apple\\.Terminal$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^org\\.alacritty$"
                                         ],
                                         "type": "frontmost_application_unless"
@@ -92,6 +93,7 @@
                                         "bundle_identifiers": [
                                             "^com\\.jetbrains\\.intellij$",
                                             "^com\\.apple\\.Terminal$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^org\\.alacritty$"
                                         ],
                                         "type": "frontmost_application_unless"
@@ -113,6 +115,7 @@
                                         "bundle_identifiers": [
                                             "^com\\.jetbrains\\.intellij$",
                                             "^com\\.apple\\.Terminal$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^org\\.alacritty$"
                                         ],
                                         "type": "frontmost_application_unless"
@@ -134,6 +137,7 @@
                                         "bundle_identifiers": [
                                             "^com\\.jetbrains\\.intellij$",
                                             "^com\\.apple\\.Terminal$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^org\\.alacritty$"
                                         ],
                                         "type": "frontmost_application_unless"
@@ -155,6 +159,7 @@
                                         "bundle_identifiers": [
                                             "^com\\.jetbrains\\.intellij$",
                                             "^com\\.apple\\.Terminal$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^org\\.alacritty$"
                                         ],
                                         "type": "frontmost_application_unless"
@@ -176,6 +181,7 @@
                                         "bundle_identifiers": [
                                             "^com\\.jetbrains\\.intellij$",
                                             "^com\\.apple\\.Terminal$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^org\\.alacritty$"
                                         ],
                                         "type": "frontmost_application_unless"
@@ -197,6 +203,17 @@
                         "description": "emacs key bindings [option+keys]",
                         "manipulators": [
                             {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com\\.jetbrains\\.intellij$",
+                                            "^com\\.apple\\.Terminal$",
+                                            "^com\\.mitchellh\\.ghostty$",
+                                            "^org\\.alacritty$"
+                                        ],
+                                        "type": "frontmost_application_unless"
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "f",
                                     "modifiers": {
@@ -213,6 +230,17 @@
                                 "type": "basic"
                             },
                             {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com\\.jetbrains\\.intellij$",
+                                            "^com\\.apple\\.Terminal$",
+                                            "^com\\.mitchellh\\.ghostty$",
+                                            "^org\\.alacritty$"
+                                        ],
+                                        "type": "frontmost_application_unless"
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "b",
                                     "modifiers": {
@@ -229,6 +257,17 @@
                                 "type": "basic"
                             },
                             {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com\\.jetbrains\\.intellij$",
+                                            "^com\\.apple\\.Terminal$",
+                                            "^com\\.mitchellh\\.ghostty$",
+                                            "^org\\.alacritty$"
+                                        ],
+                                        "type": "frontmost_application_unless"
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "h",
                                     "modifiers": {
@@ -245,6 +284,17 @@
                                 "type": "basic"
                             },
                             {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^com\\.jetbrains\\.intellij$",
+                                            "^com\\.apple\\.Terminal$",
+                                            "^com\\.mitchellh\\.ghostty$",
+                                            "^org\\.alacritty$"
+                                        ],
+                                        "type": "frontmost_application_unless"
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "d",
                                     "modifiers": {

@@ -11,13 +11,15 @@
     - neovim-remote
     - tldr
     - tree
+    - jq
+    - tokei
     state: present
 
 - name: Install cask
   when: ansible_distribution == 'MacOSX'
   homebrew_cask:
     name:
-    - alacritty
+    - ghostty
     - karabiner-elements
     - stats
     - hiddenbar
