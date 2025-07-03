@@ -17,17 +17,12 @@ if os.getenv("SSH_CLIENT") then
 end
 
 local utils = require("fzf-lua.utils")
-local char_to_hex = function(c)
-	return string.format("%%%02X", string.byte(c))
-end
-vim.keymap.set({ "n", "v" }, "gx", function()
+vim.keymap.set({ "n", "v" }, "gX", function()
 	local query = vim.fn.mode() == "n" and vim.fn.expand("<cWORD>") or utils.get_visual_selection()
 	local url = query:match("https?://[%w%.%+%-%?_:/=&#]+")
 	if url == nil then
-		query = query:gsub("\n", " ")
-		query = query:gsub("([^%w ])", char_to_hex)
-		query = query:gsub(" ", "+")
-		url = "https://www.google.com/search?q=" .. query
+		local escaped = vim.uri_encode(query)
+		url = ("https://www.google.com/search?q=%s"):format(escaped)
 	end
 	vim.ui.open(url)
 end)
