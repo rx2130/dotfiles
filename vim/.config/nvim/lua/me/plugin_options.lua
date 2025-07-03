@@ -161,7 +161,7 @@ require("mini.pairs").setup({
 })
 
 require("mini.misc").setup({})
-MiniMisc.setup_auto_root()
+MiniMisc.setup_auto_root({ ".git" })
 MiniMisc.setup_restore_cursor()
 
 require("mini.surround").setup({
@@ -203,10 +203,6 @@ require("mini.basics").setup({
 		option_toggle_prefix = [[yo]],
 		windows = true,
 	},
-})
-
-require("mini.bracketed").setup({
-	comment = { suffix = "", options = {} },
 })
 
 vim.keymap.set("n", "[ ", "v:lua.MiniBasics.put_empty_line(v:true)", { expr = true, desc = "Put empty line above" })
@@ -305,18 +301,31 @@ fzf.setup({
 fzf.register_ui_select()
 
 local function fzf_cwd()
-	local root_dir = vim.fs.dirname(vim.fs.find("packageInfo", { upward = true, type = "file" })[1])
-	if root_dir then
-		return root_dir .. "/src/"
+	local current_file_dir = vim.fn.expand("%:p:h")
+	if vim.startswith(current_file_dir, "fugitive://") then
+		return nil
 	end
+	local results = vim.fs.find("pom.xml", { upward = true, path = current_file_dir })
+	if #results > 0 then
+		return vim.fn.fnamemodify(results[1], ":h")
+	end
+	return nil
 end
 
-vim.keymap.set("n", "<leader>f", function()
-	fzf.files({ cwd = fzf_cwd() })
+vim.keymap.set("n", "<leader>f", fzf.files)
+vim.keymap.set("v", "<leader>f", function()
+	local file_name = utils.get_visual_selection()
+	fzf.files()
+	vim.api.nvim_feedkeys(file_name, "n", true)
 end)
 vim.keymap.set("n", "<C-p>", function()
 	local file_name = vim.fn.expand("%:t:r")
-	fzf.files()
+	fzf.files({ cwd = fzf_cwd() })
+	vim.api.nvim_feedkeys(file_name, "n", true)
+end)
+vim.keymap.set("v", "<C-p>", function()
+	local file_name = utils.get_visual_selection()
+	fzf.files({ cwd = fzf_cwd() })
 	vim.api.nvim_feedkeys(file_name, "n", true)
 end)
 vim.keymap.set("n", "<leader>op", function()
@@ -335,16 +344,21 @@ vim.keymap.set("n", "<leader>;", fzf.commands)
 vim.keymap.set("n", "<leader>:", fzf.command_history)
 vim.keymap.set("n", "<leader>S", fzf.filetypes)
 vim.keymap.set("n", "<leader>h", fzf.help_tags)
+vim.keymap.set("v", "<leader>h", function()
+	local visual = utils.get_visual_selection()
+	fzf.help_tags()
+	vim.api.nvim_feedkeys(visual, "n", true)
+end)
 vim.keymap.set("n", "<leader>m", fzf.man_pages)
 vim.keymap.set("n", "<leader>M", fzf.keymaps)
-vim.keymap.set("n", "<leader>/", function()
+vim.keymap.set("n", "<leader>/", fzf.live_grep)
+vim.keymap.set("v", "<leader>/", fzf.grep_visual)
+vim.keymap.set("n", "<leader>?", function()
 	fzf.live_grep({ cwd = fzf_cwd() })
 end)
-vim.keymap.set("v", "<leader>/", function()
+vim.keymap.set("v", "<leader>?", function()
 	fzf.grep_visual({ cwd = fzf_cwd() })
 end)
-vim.keymap.set("n", "<leader>?", fzf.live_grep)
-vim.keymap.set("v", "<leader>?", fzf.grep_visual)
 vim.keymap.set("n", "<leader>gh", fzf.git_commits)
 vim.keymap.set("n", "<leader>gH", fzf.git_bcommits)
 vim.keymap.set("n", "<leader>gc", fzf.git_branches)
