@@ -10,6 +10,16 @@ setopt HIST_FIND_NO_DUPS         # Do not display a previously found event.
 alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
 # }}}
 
+# keybind {{{
+bindkey -r '^[h'
+kill-backward-word() {
+  zle backward-word    # move back one word
+  zle kill-word        # kill forward from there
+}
+zle -N kill-backward-word
+bindkey '^[h' kill-backward-word
+# }}}
+
 # export {{{
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
@@ -66,7 +76,7 @@ source $ZSH/oh-my-zsh.sh
 # alias {{{
 alias v=$VISUAL
 alias www="python3 -m http.server"
-alias tm='tmux attach || tmux new'
+alias tm='tmux new -As main'
 alias lc=leetcode
 
 if [[ $(hostname) == *"amazon.com" ]]; then
