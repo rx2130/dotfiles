@@ -63,10 +63,15 @@ source $ZSH/oh-my-zsh.sh
 # }}}
 
 
+# keybind {{{
+bindkey '^[h' backward-kill-word
+# }}}
+
+
 # alias {{{
 alias v=$VISUAL
 alias www="python3 -m http.server"
-alias tm='tmux attach || tmux new'
+alias tm='tmux new -As main'
 alias lc=leetcode
 
 if [[ $(hostname) == *"amazon.com" ]]; then
