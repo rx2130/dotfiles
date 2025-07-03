@@ -1,0 +1,51 @@
+font-size = 16
+font-family = "SF Mono"
+
+theme = "GruvboxDark"
+
+mouse-hide-while-typing = true
+
+cursor-color = FF2600
+
+shell-integration = zsh
+
+macos-titlebar-style = hidden
+
+window-padding-balance = true
+
+confirm-close-surface = false
+
+maximize = true
+
+copy-on-select = clipboard
+
+# load your custom cursor shader
+custom-shader = "~/.config/ghostty/shaders/cursor_trail.glsl"
+
+# Keybindings
+# tmux-style bindings (Command key combinations)
+keybind = cmd+w=text:\x00x
+keybind = cmd+t=text:\x00c
+keybind = cmd+right_bracket=text:\x00o
+keybind = cmd+left_bracket=text:\x00;
+keybind = cmd+shift+right_bracket=text:\x00n
+keybind = cmd+shift+left_bracket=text:\x00p
+keybind = cmd+shift+enter=text:\x00z
+keybind = cmd+d=text:\x00v
+keybind = cmd+shift+d=text:\x00s
+keybind = ctrl+space=text:\x00
+keybind = ctrl+tab=text:\x00\t
+
+keybind = cmd+one=text:\x001
+keybind = cmd+two=text:\x002
+keybind = cmd+three=text:\x003
+keybind = cmd+four=text:\x004
+keybind = cmd+five=text:\x005
+keybind = cmd+six=text:\x006
+keybind = cmd+seven=text:\x007
+keybind = cmd+eight=text:\x008
+keybind = cmd+nine=text:\x009
+
+# vim tab fold
+keybind = ctrl+six=text:\x1e
+keybind = ctrl+i=text:\x0ei
