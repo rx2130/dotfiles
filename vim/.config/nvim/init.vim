@@ -69,6 +69,7 @@ set mousescroll=ver:1,hor:0
 set mousemodel=extend
 set pumheight=20
 set scrollback=100000
+set nomodeline
 
 colorscheme gruvbox-material
 "}}}
