@@ -49,3 +49,6 @@ keybind = cmd+nine=text:\x009
 # vim tab fold
 keybind = ctrl+six=text:\x1e
 keybind = ctrl+i=text:\x0ei
+
+# cmd+a copy-on-select disable
+keybind = cmd+a=unbind
