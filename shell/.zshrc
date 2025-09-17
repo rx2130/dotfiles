@@ -15,8 +15,10 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-export ZSH_TMUX_AUTOSTART="true"
-export ZSH_TMUX_DEFAULT_SESSION_NAME="main"
+if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
+    export ZSH_TMUX_AUTOSTART="true"
+    export ZSH_TMUX_DEFAULT_SESSION_NAME="main"
+fi
 
 export HOMEBREW_NO_INSTALL_UPGRADE=1
 export HOMEBREW_NO_AUTO_UPDATE=1
