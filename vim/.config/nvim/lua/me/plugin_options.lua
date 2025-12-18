@@ -4,16 +4,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.fubitive_domain_pattern = (("vwdvk1vg1dssoh1frp"):gsub('.',function(c)return string.char((c:byte()-3)%256)end))
 
 if os.getenv("SSH_CLIENT") then
-	local osc52 = require("vim.ui.clipboard.osc52")
-	vim.g.clipboard = {
-		name = "OSC 52",
-		copy = {
-			["+"] = osc52.copy("+"),
-		},
-		paste = {
-			["+"] = osc52.paste("+"),
-		},
-	}
+	vim.g.clipboard = "osc52"
 end
 
 local utils = require("fzf-lua.utils")
