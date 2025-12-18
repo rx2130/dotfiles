@@ -367,7 +367,13 @@ vim.keymap.set("n", "<leader>gs", fzf.git_stash)
 -- nvim-tree
 require("nvim-tree").setup({
 	git = {
-		ignore = false,
+		enable = false,
+	},
+	filters = {
+		enable = false,
+	},
+	filesystem_watchers = {
+		enable = false,
 	},
 	view = {
 		signcolumn = "auto",
