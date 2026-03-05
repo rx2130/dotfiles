@@ -41,16 +41,6 @@
     version: make-terminal-auto-scroll
     update: no
 
-# - name: Checkout amazon vim plugins
-#   when: ansible_distribution == "amazon"
-#   git:
-#     repo: ssh://git.amazon.com:2222/pkg/{{ item }}
-#     dest: ~/.local/share/nvim/site/pack/plugins/start/{{ item | basename }}
-#     update: no
-#   loop:
-#   - Vim-code-browse
-#   - VimIon.git
-
 # - name: Checkout opt vim plugins
 #   git:
 #     repo: https://github.com/{{ item }}

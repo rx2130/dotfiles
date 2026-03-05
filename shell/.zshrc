@@ -39,20 +39,6 @@ export MANPAGER="$VISUAL +Man! -"
 [[ ! -d ~/go ]] || export PATH="$HOME/go/bin:$PATH"
 [[ ! -d ~/.cargo/bin ]] || export PATH="$HOME/.cargo/bin:$PATH"
 
-if [[ $(hostname) == *"amazon.com" ]]; then
-    # Builder toolbox
-    [[ ! -d ~/.toolbox/bin ]] || export PATH=$PATH:$HOME/.toolbox/bin
-    # JDK
-    # export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-8.jdk/Contents/Home
-    # export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/
-    # export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto.x86_64
-    export JAVA_HOME=/home/linuxbrew/.linuxbrew/opt/openjdk@17/
-    # RDE
-    # fpath=(~/.zsh/completion $fpath)
-    # autoload -Uz compinit && compinit -i
-    # envImprovement
-    [[ ! -d /apollo/env/envImprovement/bin ]] || export PATH="$PATH:/apollo/env/envImprovement/bin"
-fi
 
 typeset -U PATH # remove duplicated entries in $PATH
 # }}}
@@ -76,22 +62,6 @@ alias v=$VISUAL
 alias www="python3 -m http.server"
 alias tm='tmux new -As main'
 alias lc=leetcode
-
-if [[ $(hostname) == *"amazon.com" ]]; then
-    alias bb="brazil-build"
-    alias b="brazil"
-    alias bba='brazil-build apollo-pkg'
-    alias bre='brazil-runtime-exec'
-    alias brc='brazil-recursive-cmd'
-    alias bws='brazil ws'
-    alias bwsuse='bws use --gitMode -p'
-    alias bwscreate='bws create -n'
-    alias bbr='brc brazil-build'
-    alias bball='brc --allPackages'
-    alias bbb='brc --allPackages brazil-build'
-    alias bbra='bbr apollo-pkg'
-    alias sam="brazil-build-tool-exec sam"
-fi
 # }}}
 
 

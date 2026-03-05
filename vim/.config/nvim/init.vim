@@ -54,9 +54,6 @@ set diffopt+=hiddenoff,algorithm:histogram,indent-heuristic
 set diffopt+=vertical " Always use vertical diffs
 set shortmess+=I
 set ttimeoutlen=0 " lower the delay of escaping out of other modes
-if filereadable("./Config")
-    set makeprg=brazil-build
-end
 set updatetime=250
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
@@ -156,10 +153,7 @@ augroup vimrc
     autocmd FileType fugitive nmap <buffer> <TAB> =
 
     " setfiletype
-    autocmd BufNewFile,BufRead *.ftl setfiletype ftl
-    autocmd BufNewFile,BufRead *.mustache setfiletype html
     autocmd BufNewFile,BufRead */git/config setfiletype gitconfig
-    autocmd BufNewFile,BufRead Config setfiletype perl
 
     " commentstring
     autocmd FileType ftl setlocal commentstring=<#--\ %s\ -->
