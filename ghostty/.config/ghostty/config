@@ -26,10 +26,10 @@ custom-shader = ~/.config/ghostty/shaders/cursor_trail.glsl
 # tmux-style bindings (Command key combinations)
 keybind = cmd+w=text:\x00x
 keybind = cmd+t=text:\x00c
-keybind = cmd+right_bracket=text:\x00o
-keybind = cmd+left_bracket=text:\x00;
-keybind = cmd+shift+right_bracket=text:\x00n
-keybind = cmd+shift+left_bracket=text:\x00p
+keybind = cmd+[=text:\x00;
+keybind = cmd+]=text:\x00o
+keybind = cmd+shift+]=text:\x00n
+keybind = cmd+shift+[=text:\x00p
 keybind = cmd+shift+enter=text:\x00z
 keybind = cmd+d=text:\x00v
 keybind = cmd+shift+d=text:\x00s
