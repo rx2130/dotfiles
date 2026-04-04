@@ -8,8 +8,6 @@ let mapleader = ' '
 nnoremap <silent><leader>q :Sayonara<CR>
 nnoremap <silent><leader>Q :Sayonara!<CR>
 
-nnoremap <leader>u :UndotreeToggle<CR>
-
 nnoremap <silent><Leader>n :NvimTreeFindFileToggle<CR>
 nnoremap <silent><Leader>N :NvimTreeFindFile<CR>
 

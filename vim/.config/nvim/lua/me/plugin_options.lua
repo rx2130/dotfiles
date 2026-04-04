@@ -1,7 +1,6 @@
 vim.g.loaded = 1
 vim.g.loaded_netrwPlugin = 1
 
-vim.g.fubitive_domain_pattern = (("vwdvk1vg1dssoh1frp"):gsub('.',function(c)return string.char((c:byte()-3)%256)end))
 
 if os.getenv("SSH_CLIENT") then
 	vim.g.clipboard = "osc52"

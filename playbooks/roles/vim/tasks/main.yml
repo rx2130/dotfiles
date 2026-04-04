@@ -7,7 +7,6 @@
   poll: 0
   loop:
   - mhinz/vim-sayonara
-  - mbbill/undotree
   - kyazdani42/nvim-tree.lua
   - tpope/vim-dispatch
   - AndrewRadev/linediff.vim
@@ -28,9 +27,6 @@
   - hrsh7th/cmp-path
   - hrsh7th/cmp-nvim-lsp-signature-help
   - echasnovski/mini.nvim
-  - nvim-lua/plenary.nvim
-  - scalameta/nvim-metals
-  - tommcdo/vim-fubitive
   - apple/pkl-neovim
 
 # https://github.com/radenling/vim-dispatch-neovim/pull/15
