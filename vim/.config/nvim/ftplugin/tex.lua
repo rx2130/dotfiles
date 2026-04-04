@@ -13,7 +13,6 @@ vim.lsp.start({
 	-- 	"--log-file",
 	-- 	"/Users/xuerx/Developer/resume/texlab.log",
 	-- },
-	capabilities = require("cmp_nvim_lsp").default_capabilities(),
 	settings = {
 		texlab = {
 			build = {

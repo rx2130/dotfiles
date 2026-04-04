@@ -57,3 +57,5 @@ vim.api.nvim_create_autocmd("User", {
 	pattern = "DapProgressUpdate",
 	command = "redrawstatus",
 })
+
+require("dap.ext.autocompl").attach()

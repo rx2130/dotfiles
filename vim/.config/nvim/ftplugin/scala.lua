@@ -10,7 +10,6 @@ metals_config.settings = {
 	autoImportBuild = "all",
 	useGlobalExecutable = true,
 }
-metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
 metals_config.on_attach = function(client, bufnr)
 	metals.setup_dap()
 end

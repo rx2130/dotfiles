@@ -29,6 +29,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			vim.lsp.buf.format({ async = true })
 		end, opts)
 
+		vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+
 		-- highlight current var under cursor
 		if client.server_capabilities.documentHighlightProvider then
 			local highlight_group = vim.api.nvim_create_augroup("document_highlight", { clear = true })

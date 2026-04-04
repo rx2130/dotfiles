@@ -65,6 +65,8 @@ set mousemodel=extend
 set pumheight=20
 set scrollback=100000
 set nomodeline
+set autocomplete
+set completeopt=fuzzy,menuone,noselect
 
 colorscheme gruvbox-material
 "}}}
