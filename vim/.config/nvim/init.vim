@@ -154,6 +154,7 @@ augroup vimrc
 
     " setfiletype
     autocmd BufNewFile,BufRead */git/config setfiletype gitconfig
+    autocmd BufNewFile,BufRead *.pcl setfiletype pkl
 
     " commentstring
     autocmd FileType ftl setlocal commentstring=<#--\ %s\ -->
