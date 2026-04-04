@@ -370,6 +370,14 @@
                 ]
             },
             "devices": [
+                {
+                    "identifiers": {
+                        "device_address": "ff-b9-f9-5e-cd-50",
+                        "is_keyboard": true,
+                        "is_pointing_device": true
+                    },
+                    "ignore": false
+                }
             ],
             "fn_function_keys": [
                 {
